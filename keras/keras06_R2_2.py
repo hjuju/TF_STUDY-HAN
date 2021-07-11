@@ -8,18 +8,18 @@ x = np.array([1,2,3,4,5])
 y = np.array([1,2,4,3,5])
 
 model = Sequential()
-model.add(Dense(12, input_dim=1))
-model.add(Dense(10)),
-model.add(Dense(8)),
-model.add(Dense(7)),
-model.add(Dense(6)),
-model.add(Dense(4)),
-model.add(Dense(3)),
-model.add(Dense(2)),
+model.add(Dense(20, input_dim=1))
+model.add(Dense(200)),
+model.add(Dense(150)),
+model.add(Dense(100)),
+model.add(Dense(100)),
+model.add(Dense(50)),
+model.add(Dense(30)),
+model.add(Dense(50)),
 model.add(Dense(1))
 
 model.compile(loss='mse', optimizer='adam')
-model.fit(x,y, epochs=500, batch_size=1)
+model.fit(x,y, epochs=1000, batch_size=1)
 
 loss = model.evaluate(x,y)
 ic(loss)

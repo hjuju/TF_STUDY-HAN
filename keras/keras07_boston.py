@@ -21,24 +21,24 @@ ic(dataset.DESCR) # 데이터셋 기술서
 
 
 model = Sequential()
-model.add(Dense(400, input_dim=13))
-model.add(Dense(500))
-model.add(Dense(600))
-model.add(Dense(400))
-model.add(Dense(300))
-model.add(Dense(200))
-model.add(Dense(100))
+model.add(Dense(10, input_dim=13))
+model.add(Dense(12))
+model.add(Dense(10))
+model.add(Dense(7))
+model.add(Dense(10))
+model.add(Dense(4))
+model.add(Dense(5))
 model.add(Dense(1))
 
 model.compile(loss='mse', optimizer='adam')
-model.fit(x_train, y_train, epochs=2000, batch_size=1)
+model.fit(x_train, y_train, epochs=1000, batch_size=1)
 
-loss = model.evaluate(x_test, y_test, )
+loss = model.evaluate(x_test, y_test)
 
 ic(loss)
-y_predict = model.predict(x)
+y_predict = model.predict(x_test)
 
-r2 = r2_score(y, y_predict)
+r2 = r2_score(y_test, y_predict)
 ic(r2)
 
 

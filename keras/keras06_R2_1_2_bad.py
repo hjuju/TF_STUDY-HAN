@@ -30,7 +30,7 @@ keras07_boston 완료하기
 x = np.array(range(100)) # 0~99 
 y = np.array(range(1, 101)) # 1~100
 
-x_train, x_test, y_train, y_test = train_test_split(x,y, train_size=0.7, shuffle=True, random_state=1000)
+x_train, x_test, y_train, y_test = train_test_split(x,y, train_size=0.7, shuffle=True, random_state=10)
 
 
 model = Sequential()
@@ -47,7 +47,7 @@ model.fit(x_train, y_train, epochs=100, batch_size=1)
 loss = model.evaluate(x_test, y_test)
 ic(loss)
 
-y_predict = model.predict(x_test)
+y_predict = model.predict(102)
 
 
 r2 = r2_score(y_test, y_predict)
