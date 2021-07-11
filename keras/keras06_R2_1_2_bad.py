@@ -30,26 +30,39 @@ keras07_boston 완료하기
 x = np.array(range(100)) # 0~99 
 y = np.array(range(1, 101)) # 1~100
 
-x_train, x_test, y_train, y_test = train_test_split(x,y, train_size=0.7, shuffle=True, random_state=66)
+x_train, x_test, y_train, y_test = train_test_split(x,y, train_size=0.7, shuffle=True, random_state=1000)
 
 
 model = Sequential()
 model.add(Dense(1, input_dim=1))
-model.add(Dense(125)),
-model.add(Dense(165)),
-model.add(Dense(123)),
-model.add(Dense(142)),
+model.add(Dense(10)),
+model.add(Dense(10)),
+model.add(Dense(10)),
+model.add(Dense(10)),
 model.add(Dense(1))
 
-model.compile(loss='mse', optimizer='adam')
+model.compile(loss='kld', optimizer='adam')
 model.fit(x_train, y_train, epochs=100, batch_size=1)
 
 loss = model.evaluate(x_test, y_test)
 ic(loss)
 
 y_predict = model.predict(x_test)
-ic(y_predict)
+
 
 r2 = r2_score(y_test, y_predict)
 ic(r2)
 
+
+'''
+loss='mae', optimizer='adam'
+ic| loss: 0.9858219027519226
+ic| r2: 0.9994628568530296
+
+loss='msle', optimizer='adam'
+ic| loss: 14.661601066589355
+ic| r2: -4.3184229990491065
+
+
+
+'''

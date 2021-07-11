@@ -31,7 +31,7 @@ model.add(Dense(100))
 model.add(Dense(1))
 
 model.compile(loss='mse', optimizer='adam')
-model.fit(x_train, y_train, epochs=2000, batch_size=2)
+model.fit(x_train, y_train, epochs=2000, batch_size=1)
 
 loss = model.evaluate(x_test, y_test, )
 
@@ -40,5 +40,6 @@ y_predict = model.predict(x)
 
 r2 = r2_score(y, y_predict)
 ic(r2)
+
 
 
