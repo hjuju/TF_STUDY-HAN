@@ -47,7 +47,7 @@ model.fit(x_train, y_train, epochs=100, batch_size=1)
 loss = model.evaluate(x_test, y_test)
 ic(loss)
 
-y_predict = model.predict(102)
+y_predict = model.predict(x_test)
 
 
 r2 = r2_score(y_test, y_predict)
