@@ -25,17 +25,17 @@ ic(dataset.DESCR) # 데이터셋 기술서
 
 model = Sequential()
 model.add(Dense(10, input_dim=13))
-model.add(Dense(8))
-model.add(Dense(4))
-model.add(Dense(7))
-model.add(Dense(7))
-model.add(Dense(5))
-model.add(Dense(4))
-model.add(Dense(3))
+model.add(Dense(20))
+model.add(Dense(30))
+model.add(Dense(20))
+model.add(Dense(20))
+model.add(Dense(10))
+model.add(Dense(20))
+model.add(Dense(10))
 model.add(Dense(1))
 
 model.compile(loss='mse', optimizer='adam')
-model.fit(x_train, y_train, epochs=300, batch_size=1, validation_split=0.3, shuffle=True)
+model.fit(x_train, y_train, epochs=100,verbose=3, batch_size=1, validation_split=0.3, shuffle=True)
 
 loss = model.evaluate(x_test, y_test)
 
