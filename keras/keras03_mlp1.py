@@ -51,7 +51,7 @@ model.add(Dense(2))
 
 #3. 컴파일, 훈련
 model.compile(loss='mse', optimizer='adam')
-model.fit(x,y, epochs=1000, batch_size=1)
+model.fit(x,y, epochs=1000, batch_size=1) # defalt batchsize=32
 
 
 #4. 평가, 예측

@@ -42,7 +42,7 @@ model.add(Dense(10)),
 model.add(Dense(1))
 
 model.compile(loss='kld', optimizer='adam')
-model.fit(x_train, y_train, epochs=100, batch_size=1)
+model.fit(x_train, y_train, epochs=1000)
 
 loss = model.evaluate(x_test, y_test)
 ic(loss)

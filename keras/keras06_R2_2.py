@@ -9,9 +9,9 @@ y = np.array([1,2,4,3,5])
 
 model = Sequential()
 model.add(Dense(20, input_dim=1))
-model.add(Dense(200, activation='selu')),
-model.add(Dense(150, activation='selu')),
-model.add(Dense(100, activation='selu')),
+model.add(Dense(200)),
+model.add(Dense(150)),
+model.add(Dense(100)),
 model.add(Dense(100)),
 model.add(Dense(50)),
 model.add(Dense(30)),
