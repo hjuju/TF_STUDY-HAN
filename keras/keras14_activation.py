@@ -11,6 +11,17 @@ from sklearn.metrics import r2_score
 import time
 
 
+'''
+과제 결과
+
+ic| loss: 1954.767578125
+ic| r2: 0.6763044229890984
+ic| end: 6.143572568893433
+
+'''
+
+
+
 #1. 데이터
 datasets = load_diabetes()
 
@@ -48,25 +59,14 @@ model.add(Dense(140,activation='selu'))
 model.add(Dense(130,activation='selu'))
 model.add(Dense(1))
 
-'''
-mmodel.add(Dense(256, input_shape=(10,),activation='selu')) 
-model.add(Dense(230,activation='selu'))
-model.add(Dense(190,activation='selu'))
-model.add(Dense(140,activation='selu'))
-model.add(Dense(130,activation='selu'))
-model.add(Dense(1))
-epochs=101, batch_size=32
-ic| loss: 1954.767578125
-ic| r2: 0.6763044229890984
-ic| end: 6.143572568893433
-'''
+
 
 
 #3. 컴파일, 훈련
 
 model.compile(loss='mse', optimizer='adam')
 start = time.time()
-model.fit(x_train, y_train, epochs=101, batch_size=32, validation_split=0.01, shuffle=True)
+model.fit(x_train, y_train, epochs=99, batch_size=32, validation_split=0.01, shuffle=True)
 end = time.time() - start
 
 #4. 평가, 예측
@@ -80,10 +80,3 @@ r2 = r2_score(y_test, y_predict)
 ic(r2)
 
 ic(end)
-
-
-
-# mse, R2
-
-
-# 과제 1 0.62까지 올리기
