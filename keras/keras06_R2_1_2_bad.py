@@ -63,6 +63,9 @@ loss='msle', optimizer='adam'
 ic| loss: 14.661601066589355
 ic| r2: -4.3184229990491065
 
+loss='kld', optimizer='adam'
+ic| loss: 0.0
+ic| r2: 0.36424262018679165
 
 
 '''
