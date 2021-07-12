@@ -36,7 +36,7 @@ model.add(Dense(1))
 
 
 #3. 컴파일, 훈련
-model.compile(loss='mse', optimizer='adam', metrics=['mae','mse']) # 로스는 mse로 계산하여 훈련에 영향을 끼치지만, mae는 훈련에 영향X, 어떤 결과가 나오는지만 출력
+model.compile(loss='mse', optimizer='adam', metrics=['mae']) # 로스는 mse로 계산하여 훈련에 영향을 끼치지만, mae는 훈련에 영향X, 어떤 결과가 나오는지만 출력, ['mae','mse']와 같이 여러개 가능
 start = time.time()
 model.fit(x,y, epochs=100, batch_size=1, verbose=1) 
 
@@ -56,7 +56,21 @@ print('x의 예측값:', x_pred)
 
 y_pred = model.predict(x)
 
+'''
+#1 mae란? mean absolute error -   평균절대오차 
 
-#1 mae란?
+​AE - absolute error - 절대오차 -
 
-#2 rmse란?
+        실제 값과 측정(예측) 값과의 차이 
+
+       Δx=xi−x 
+ 
+        xi - 측정값 / x - 실제값
+
+#2 rmse란? - 평균제곱근오차
+큰 오류값 차이에 대해서 크게 패널티를 준다
+
+#3 rmsle란?
+RMSE 계산에 Log 를 취하는 절차를 더 해서 큰 값이 계산 전체에 지나친 영향을 미치지 못하게 제어하는 것 
+
+'''
