@@ -69,7 +69,7 @@ r2 = r2_score(y_test, y_predict)
 ic(r2)
 
 '''
-ic| loss: 29.452917098999023
-ic| r2: 0.6959580450076983
+ic| loss: 28.90374755859375
+ic| r2: 0.701627082219785
 model.fit(x_train, y_train, epochs=1000,verbose=1, batch_size=32, shuffle=True)
 '''

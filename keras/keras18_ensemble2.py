@@ -39,7 +39,7 @@ from tensorflow.keras.layers import concatenate, Concatenate
 # 과제
 Concatenate = Concatenate()
 # merge1 = Concatenate()([output1, output2])
-merge1 = Concatenate([output1, output2]) # 첫번째 와 마지막 모델의 아웃풋을 병합 / merge도 layer
+merge1 = Concatenate([output1, output2]) # 첫번째 와 마지막 모델의 아웃풋을 병합 / merge도 layer /분기점
 merge2 = Dense(10)(merge1)
 merge3 = Dense(5, activation='relu')(merge2)
 # last_output = Dense(1)(merge3) # 마지막 layer 표현 방식(함수형 모델의 마지막 아웃풋 처럼 만들어주면 됨)
