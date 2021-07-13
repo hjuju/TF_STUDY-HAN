@@ -5,11 +5,11 @@
 from textwrap import dedent
 from sklearn.datasets import load_boston
 from tensorflow.keras.models import Sequential, Model
-from tensorflow.keras.layers import Dense, InputLayer
+from tensorflow.keras.layers import Dense, Input
 from icecream import ic
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import r2_score
-from tensorflow.python.keras.engine.input_layer import Input
+
 
 dataset = load_boston()
 

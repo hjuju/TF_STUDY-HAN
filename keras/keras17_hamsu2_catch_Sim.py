@@ -6,11 +6,11 @@
 
 from operator import mod
 from tensorflow.keras.models import Sequential, Model
-from tensorflow.keras.layers import Dense, InputLayer
+from tensorflow.keras.layers import Dense, Input
 import numpy as np
 from icecream import ic
 from sklearn.metrics import r2_score
-from tensorflow.python.keras.engine.input_layer import Input
+f
 
 x = np.array([1,2,3,4,5])
 y = np.array([1,2,4,3,5])

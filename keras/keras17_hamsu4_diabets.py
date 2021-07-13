@@ -5,13 +5,12 @@ from numpy.matrixlib.defmatrix import matrix
 from sklearn.datasets import load_diabetes
 from icecream import ic
 from tensorflow.keras.models import Sequential, Model
-from tensorflow.keras.layers import Dense, InputLayer
+from tensorflow.keras.layers import Dense, Input
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import r2_score
 import time
 from tensorflow.python.keras import activations
 
-from tensorflow.python.keras.engine.input_layer import Input
 
 
 '''
