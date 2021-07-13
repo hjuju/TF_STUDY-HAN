@@ -35,8 +35,9 @@ output2 = Dense(12, name='output2')(dense14) # concatenate할 땐 1을 안줘도
 
 from tensorflow.keras.layers import concatenate, Concatenate
 
-Concatenate = Concatenate()
-merge1 = Concatenate([output1, output2]) # 첫번째 와 마지막 모델의 아웃풋을 병합 / merge도 layer
+# 과제
+
+merge1 = Concatenate()([output1, output2]) # 첫번째 와 마지막 모델의 아웃풋을 병합 / merge도 layer
 merge2 = Dense(10)(merge1)
 merge3 = Dense(5, activation='relu')(merge2)
 last_output = Dense(1)(merge3) # 마지막 layer 표현 방식(함수형 모델의 마지막 아웃풋 처럼 만들어주면 됨)
@@ -50,7 +51,7 @@ model.summary()
 
 #3. 컴파일, 훈련
 model.compile(loss='mse', optimizer='adam', metrics=['mae'])
-model.fit([x1_train, x2_train], y_train, epochs=100, batch_size=8, verbose=1)
+model.fit([x1_train, x2_train], y_train, epochs=100, batch_size=8, verbose=1) # concatenate에서 순서가 정해짐 -> output이 지정된 순서로 트레인 데이터를 넣어줘야함
 
 #4. 평가, 예측
 results = model.evaluate([x1_test, x2_test], y_test)
