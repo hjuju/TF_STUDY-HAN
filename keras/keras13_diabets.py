@@ -32,12 +32,9 @@ x_train, x_test, y_train, y_test = train_test_split(x,y, train_size=0.7, random_
 #2. 모델 구성
 model = Sequential()
 model.add(Dense(256, input_shape=(10,)))
-model.add(Dense(128))
-model.add(Dense(64,activation='selu'))
-model.add(Dense(64, activation='selu'))
-model.add(Dense(128,activation='selu'))
-model.add(Dense(64))
-model.add(Dense(32,activation='selu'))
+model.add(Dense(128, activation='relu'))
+model.add(Dense(64, activation='relu'))
+model.add(Dense(64, activation='relu'))
 model.add(Dense(1))
 
 
@@ -45,7 +42,7 @@ model.add(Dense(1))
 
 model.compile(loss='mse', optimizer='adam', metrics=['mae'])
 start = time.time()
-model.fit(x_train, y_train, epochs=400, verbose=2, batch_size=100, validation_split=0.3, shuffle=True)
+model.fit(x_train, y_train, epochs=500, verbose=2, batch_size=32, validation_split=0.3, shuffle=True)
 end = time.time() - start
 
 #4. 평가, 예측
