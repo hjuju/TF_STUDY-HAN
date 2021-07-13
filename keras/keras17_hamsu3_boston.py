@@ -42,14 +42,14 @@ model1.add(Dense(1))
 
 model1.summary()
 # 함수형 모델로 변환
-input1 = Input(shape=(5,))
-dense1 = Dense(10)(input1)
-dense2 = Dense(30)(dense1)
-dense3 = Dense(20)(dense2)
-dense4 = Dense(20)(dense3)
-dense5 = Dense(10)(dense4)
-dense6 = Dense(20)(dense5)
-dense7 = Dense(10)(dense6)
+input1 = Input(shape=(13,))
+dense1 = Dense(512)(input1)
+dense2 = Dense(400)(dense1)
+dense3 = Dense(300)(dense2)
+dense4 = Dense(256)(dense3)
+dense5 = Dense(200)(dense4)
+dense6 = Dense(128)(dense5)
+dense7 = Dense(100)(dense6)
 output1 = Dense(1)(dense7)
 
 model = Model(inputs=input1, outputs=output1)
@@ -57,13 +57,19 @@ model.summary()
 
 
 
-# model.compile(loss='mse', optimizer='adam')
-# model.fit(x_train, y_train, epochs=100,verbose=3, batch_size=1, validation_split=0.3, shuffle=True)
+model.compile(loss='mse', optimizer='adam')
+model.fit(x_train, y_train, epochs=1000,verbose=1, batch_size=32, shuffle=True)
 
-# loss = model.evaluate(x_test, y_test)
+loss = model.evaluate(x_test, y_test)
 
-# ic(loss)
-# y_predict = model.predict(x_test)
+ic(loss)
+y_predict = model.predict(x_test)
 
-# r2 = r2_score(y_test, y_predict)
-# ic(r2)
+r2 = r2_score(y_test, y_predict)
+ic(r2)
+
+'''
+ic| loss: 29.452917098999023
+ic| r2: 0.6959580450076983
+model.fit(x_train, y_train, epochs=1000,verbose=1, batch_size=32, shuffle=True)
+'''

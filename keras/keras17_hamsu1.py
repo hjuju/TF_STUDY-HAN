@@ -21,7 +21,7 @@ ic(y.shape) # (100, 2)  input = 5 , output = 2
 #2 모델구성
 
 from tensorflow.keras.models import Sequential, Model
-from tensorflow.keras.layers import Dense, InputLayer
+from tensorflow.keras.layers import Dense, Input
 
 
 
