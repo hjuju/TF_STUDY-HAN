@@ -46,11 +46,11 @@ x_test = scaler.transform(x_test) # 비율에 맞춰서 스케일링
 
 #2. 모델 구성
 model = Sequential()
-model.add(Dense(512, input_shape=(10,), activation='relu'))
-model.add(Dense(256, activation='relu'))
-model.add(Dense(256, activation='relu'))
-model.add(Dense(128, activation='relu'))
-model.add(Dense(64, activation='relu'))
+model.add(Dense(500, input_shape=(10,), activation='relu'))
+model.add(Dense(400, activation='relu'))
+model.add(Dense(300, activation='relu'))
+model.add(Dense(200, activation='relu'))
+model.add(Dense(100, activation='relu'))
 model.add(Dense(1))
 
 
@@ -58,7 +58,7 @@ model.add(Dense(1))
 
 model.compile(loss='mse', optimizer='adam', metrics=['mae'])
 start = time.time()
-model.fit(x_train, y_train, epochs=100, verbose=2, batch_size=32, shuffle=True)
+model.fit(x_train, y_train, epochs=500, verbose=2, batch_size=32,  shuffle=True)
 end = time.time() - start
 
 #4. 평가, 예측
