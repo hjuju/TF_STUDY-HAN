@@ -113,6 +113,13 @@ model.fit(x_train, y_train, epochs=400, verbose=2, batch_size=32, shuffle=True)
 
 # PowerTransformer
 
+model.add(Dense(512, input_shape=(13,), activation='relu'))
+model.add(Dense(400, activation='relu'))
+model.add(Dense(256, activation='relu'))
+model.add(Dense(200, activation='relu'))
+model.add(Dense(100, activation='relu'))
+model.add(Dense(1))
+
 ic| loss: [6.781839370727539, 1.9480767250061035]
 ic| r2: 0.9060320691551077
 ic| end: 18.702990531921387
@@ -121,6 +128,13 @@ model.fit(x_train, y_train, epochs=500, verbose=2, batch_size=32, validation_spl
 
 
 # RobustScaler
+
+model.add(Dense(512, input_shape=(13,), activation='relu'))
+model.add(Dense(400, activation='relu'))
+model.add(Dense(256, activation='relu'))
+model.add(Dense(200, activation='relu'))
+model.add(Dense(100, activation='relu'))
+model.add(Dense(1))
 
 ic| loss: [8.540543556213379, 2.1857354640960693]
 ic| r2: 0.88166378905062
