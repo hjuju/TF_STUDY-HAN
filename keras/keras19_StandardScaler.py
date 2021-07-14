@@ -26,17 +26,18 @@ print(np.min(x), np.max(x)) # 0,0 711.0 numpy의 소수점 연산 빠름 / 데�
 
 # x = (x - np.min(x)) / (np.max(x) - np.min(x)) # 정규화 처리식
 
-from sklearn.preprocessing import MinMaxScaler
-scaler = MinMaxScaler()
-scaler.fit(x)
-x_scale = scaler.PowerTransform(x)
 
-print(x_scale[:10])
-print(np.min(x_scale), np.max(x_scale))
+x_train, x_test, y_train, y_test = train_test_split(x, y, train_size=0.7, shuffle=True, random_state=70) # Train과 test의 스케일이 다름
 
 
+from sklearn.preprocessing import MinMaxScaler, StandardScaler # 전처리로 이것저것 해보고, 하이퍼 파라미터 튜닝을 하며
+# scaler = MinMaxScaler()
+scaler = StandardScaler() # 표준정규분포로 변환 
+scaler.fit(x_train) # xtrain에 대해서만 스케일러 해줌
+x_train = scaler.transform(x_train) # 전체 데이터로 스케일링 하면 과적합이 될 수 있기때문에 나누어서 스케일링 해줌
+x_test = scaler.transform(x_test) # 비율에 맞춰서 스케일링
 
-x_train, x_test, y_train, y_test = train_test_split(x_scale, y, train_size=0.7, shuffle=True, random_state=70) # Train과 test의 스케일이 다름
+
 
 ic(x.shape)
 ic(y.shape)
@@ -47,10 +48,11 @@ ic(dataset.DESCR) # 데이터셋 기술서
 
 
 model1 = Sequential()
-model1.add(Dense(128, input_dim=13, activation='relu'))
-model1.add(Dense(128, activation='relu'))
-model1.add(Dense(64, activation='relu'))
-model1.add(Dense(32, activation='relu'))
+model1.add(Dense(512, input_dim=13, activation='relu'))
+model1.add(Dense(200, activation='relu'))
+model1.add(Dense(100, activation='relu'))
+model1.add(Dense(100, activation='relu'))
+model1.add(Dense(70, activation='relu'))
 model1.add(Dense(1))
 
 model1.summary()
@@ -72,7 +74,7 @@ model.summary()
 
 
 model1.compile(loss='mse', optimizer='adam')
-model1.fit(x_train, y_train, epochs=200,verbose=1, batch_size=32, shuffle=True)
+model1.fit(x_train, y_train, epochs=300,verbose=1, batch_size=8, shuffle=True)
 
 loss = model1.evaluate(x_test, y_test)
 
@@ -88,4 +90,7 @@ ic| loss: 16.062705993652344
 ic| r2: 0.834184951918662
 model1.fit(x_train, y_train, epochs=1000,verbose=1, batch_size=32, shuffle=True)
 
+데이터 전처리(MinMaxScaler)
+ic| loss: 8.533263206481934
+ic| r2: 0.911911260644259
 '''
