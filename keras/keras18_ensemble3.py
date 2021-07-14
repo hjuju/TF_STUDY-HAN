@@ -26,26 +26,7 @@ dense2 = Dense(114, activation='relu', name='dense2')(dense1)
 dense3 = Dense(96, activation='relu',name='dense3')(dense2)
 output1 = Dense(96,name='output1')(dense3)
 
-'''
-#2-2 모델2
-input2 = Input(shape=(3,))
-dense11 = Dense(256, activation='relu', name='dense11')(input2)
-dense12 = Dense(10, activation='relu', name='dense12')(dense11)
-dense13 = Dense(10, activation='relu', name='dense13')(dense12)
-dense14 = Dense(10, activation='relu', name='dense14')(dense13)
-output2 = Dense(12, name='output2')(dense14) # concatenate할 땐 1을 안줘도 됨
 
-
-from tensorflow.keras.layers import concatenate, Concatenate
-
-# 과제
-Concatenate = Concatenate()
-# merge1 = Concatenate()([output1, output2])
-merge1 = Concatenate([output1, output2]) # 첫번째 와 마지막 모델의 아웃풋을 병합 / merge도 layer /분기점
-merge2 = Dense(10)(merge1)
-merge3 = Dense(5, activation='relu')(merge2)
-# last_output = Dense(1)(merge3) # 마지막 layer 표현 방식(함수형 모델의 마지막 아웃풋 처럼 만들어주면 됨)
-'''
 
 output21 = Dense(7, name='Branch1')(output1)
 last_output1 = Dense(1,name='dense_output1')(output21) # 첫번째 아웃풋
