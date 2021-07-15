@@ -79,7 +79,7 @@ from tensorflow.keras.callbacks import EarlyStopping
 
 es = EarlyStopping(monitor='loss', patience=20, mode='auto', verbose=1) # mode=max, auto (accuracy측정,)
 # patience= 최소 로스값이 갱신되지 n번까지 갱신되지 않으면 끝냄(n번 내에서 다시 최저점으로 갱신되면 그때부터 n번 다시 카운트,반복), mode='min' 값이 최소면 거기부터 다시 patioence n번 
-hist = model1.fit(x_train, y_train, epochs=1000, verbose=1, batch_size=8, validation_split=0.2, shuffle=True, callbacks=[es])
+hist = model1.fit(x_train, y_train, epochs=10, verbose=1, batch_size=8, validation_split=0.2, shuffle=True, callbacks=[es])
 
 print(hist.history.keys()) # dict_keys(['loss', 'val_loss'])
 print("="*200)
@@ -89,9 +89,10 @@ print(hist.history['val_loss']) # val_loss의 히스토리를 반환함
 
 import matplotlib.pyplot as plt
 
+
 plt.plot(hist.history['loss']) # x= epoch, y = hist.history['loss']
 plt.plot(hist.history['val_loss'])
-
+plt.rc('font', family='Arial')
 plt.title("로스, 발로스") 
 plt.xlabel('epochs')
 plt.ylabel("loss, val_loss")

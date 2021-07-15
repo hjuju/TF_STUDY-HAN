@@ -61,6 +61,18 @@ ic('accuracy', loss[1])
 # r2 = r2_score(y_test, y_predict)
 # ic(r2)
 
+print("====================평가, 예측====================")
+
+loss = model.evaluate(x_test, y_test) # loss와 metrics 반환
+ic('loss:', loss[0])
+ic('accuracy', loss[1])
+# ic(loss)
+
+print("====================예측====================")
+ic(y_test[-5:-1]) # 원래 값([1,1,1,0,1])
+y_predict = model.predict(x_test[-5:-1])
+ic(y_predict) # 소프트 맥스를 통과한 값(이 중 값이 큰것이 1할당 그것과 원래값 과 비교 후 accuracy 도출)
+
 # import matplotlib.pyplot as plt
 
 # plt.plot(hist.history['loss']) # x= epoch, y = hist.history['loss']
