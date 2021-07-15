@@ -88,12 +88,16 @@ print("="*200)
 print(hist.history['val_loss']) # val_loss의 히스토리를 반환함
 
 import matplotlib.pyplot as plt
+from matplotlib import font_manager as fm
+
+
+
+
 
 
 plt.plot(hist.history['loss']) # x= epoch, y = hist.history['loss']
 plt.plot(hist.history['val_loss'])
-plt.rc('font', family='Arial')
-plt.title("로스, 발로스") 
+plt.title("로스, 발로스", fontproperties=fm.FontProperties(fname='C:/Windows/Fonts/gulim.ttc', size=13))
 plt.xlabel('epochs')
 plt.ylabel("loss, val_loss")
 plt.legend(['train loss', 'val loss']) # 범례 추가(순서대로 첫번째, 두번째 매치)
@@ -108,7 +112,7 @@ r2 = r2_score(y_test, y_predict)
 ic(r2)
 
 
- 
+
 '''
 StandardScaler
 ic| loss: 10.260350227355957

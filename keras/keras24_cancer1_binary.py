@@ -69,9 +69,9 @@ ic('accuracy', loss[1])
 # ic(loss)
 
 print("====================예측====================")
-ic(y_test[-5:-1]) # 원래 값([1,1,1,0,1])
+ic(y_test[-5:-1]) 
 y_predict = model.predict(x_test[-5:-1])
-ic(y_predict) # 소프트 맥스를 통과한 값(이 중 값이 큰것이 1할당 그것과 원래값 과 비교 후 accuracy 도출)
+ic(y_predict) # 시그모이드를 통과한 값
 
 # import matplotlib.pyplot as plt
 
