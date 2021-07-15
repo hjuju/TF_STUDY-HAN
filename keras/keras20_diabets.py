@@ -57,7 +57,7 @@ model.add(Dense(1))
 
 model.compile(loss='mse', optimizer='adam', metrics=['mae'])
 start = time.time()
-model.fit(x_train, y_train, epochs=500, verbose=2, batch_size=32, validation_split=0.3, shuffle=True)
+model.fit(x_train, y_train, epochs=500, verbose=2, batch_size=8, validation_split=0.3, shuffle=True)
 end = time.time() - start
 
 #4. 평가, 예측
@@ -77,10 +77,18 @@ ic| r2: 0.5237891323534569
 mse, R2
 
 StandartScarler
-ic| loss: [5789.4814453125, 57.58549880981445]
-ic| r2: 0.054492812279822944
-ic| end: 8.076404809951782
-model.fit(x_train, y_train, epochs=200, verbose=2, batch_size=32, validation_split=0.3, shuffle=True)
+
+model.add(Dense(400, input_shape=(10,), activation='relu'))
+model.add(Dense(300, activation='relu'))
+model.add(Dense(200, activation='relu'))
+model.add(Dense(150, activation='relu'))
+model.add(Dense(100, activation='relu'))
+model.add(Dense(1))
+
+ic| loss: [5613.01806640625, 58.31141662597656]
+ic| r2: 0.08331197983861416
+ic| end: 19.18168306350708
+model.fit(x_train, y_train, epochs=500, verbose=2, batch_size=32, validation_split=0.3, shuffle=True)
 
 ic| loss: [2994.5498046875, 43.93509292602539]
 ic| r2: 0.5109460950812429
