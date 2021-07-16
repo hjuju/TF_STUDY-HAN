@@ -90,11 +90,6 @@ print(hist.history['val_loss']) # val_loss의 히스토리를 반환함
 import matplotlib.pyplot as plt
 from matplotlib import font_manager as fm
 
-
-
-
-
-
 plt.plot(hist.history['loss']) # x= epoch, y = hist.history['loss']
 plt.plot(hist.history['val_loss'])
 plt.title("로스, 발로스", fontproperties=fm.FontProperties(fname='C:/Windows/Fonts/gulim.ttc', size=13))

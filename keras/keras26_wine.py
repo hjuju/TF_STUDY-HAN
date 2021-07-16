@@ -22,34 +22,37 @@ print(np.shape(y))
 y = to_categorical(y)
 ic(np.shape(y))
 
-x_train, x_test, y_train, y_test = train_test_split(x,y, train_size=0.7, random_state=70)
+ic(x)
+ic(y)
 
-scaler = StandardScaler()
-scaler.fit(x_train)
-x_train = scaler.transform(x_train)
-x_test = scaler.transform(x_test)
+# x_train, x_test, y_train, y_test = train_test_split(x,y, train_size=0.7, random_state=70)
 
-model = Sequential()
-model.add(Dense(256, activation='relu', input_shape=(13,)))
-model.add(Dense(128, activation='relu'))
-model.add(Dense(64, activation='relu'))
-model.add(Dense(64, activation='relu'))
-model.add(Dense(32, activation='relu'))
-model.add(Dense(3, activation='softmax'))
+# scaler = StandardScaler()
+# scaler.fit(x_train)
+# x_train = scaler.transform(x_train)
+# x_test = scaler.transform(x_test)
 
-model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
-es = EarlyStopping(monitor='val_loss', patience=20, mode='auto', verbose=1)
-model.fit(x_train, y_train, epochs=1000, verbose=1, batch_size=8, validation_split=0.2, callbacks=[es])
+# model = Sequential()
+# model.add(Dense(256, activation='relu', input_shape=(13,)))
+# model.add(Dense(128, activation='relu'))
+# model.add(Dense(64, activation='relu'))
+# model.add(Dense(64, activation='relu'))
+# model.add(Dense(32, activation='relu'))
+# model.add(Dense(3, activation='softmax'))
 
-
-loss = model.evaluate(x_test, y_test)
-ic('loss:', loss[0])
-ic('accuracy', loss[1])
-# ic(loss)
+# model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+# es = EarlyStopping(monitor='val_loss', patience=20, mode='auto', verbose=1)
+# model.fit(x_train, y_train, epochs=1000, verbose=1, batch_size=8, validation_split=0.2, callbacks=[es])
 
 
-y_predict = model.predict(x_test)
+# loss = model.evaluate(x_test, y_test)
+# ic('loss:', loss[0])
+# ic('accuracy', loss[1])
+# # ic(loss)
 
 
-# ic| 'loss:', loss[0]: 0.25041162967681885
-# ic| 'accuracy', loss[1]: 0.9722222089767456
+# y_predict = model.predict(x_test)
+
+
+# # ic| 'loss:', loss[0]: 0.25041162967681885
+# # ic| 'accuracy', loss[1]: 0.9722222089767456
