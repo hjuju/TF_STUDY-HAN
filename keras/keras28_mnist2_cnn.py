@@ -20,7 +20,7 @@ import time
 
 
 x_train = x_train.reshape(60000, 28, 28, 1).astype('float32')/255 # 3차원 -> 4차원  // 데이터의 내용과 순서가 바뀌면 안됨
-x_test = x_test.reshape(10000, 28, 28, 1)/255
+x_test = x_test.reshape(10000, 28, 28, 1).astype('float32')/255
 
 ic(x_train.shape)
 ic(x_test.shape)
@@ -46,10 +46,9 @@ from tensorflow.keras.layers import Dense, Conv2D, MaxPooling2D, Flatten
 model = Sequential()
 model.add(Conv2D(filters=100, kernel_size=(2,2), padding='same', input_shape=(28, 28, 1)))
 model.add(Conv2D(20, (2,2), activation='relu'))               
-model.add(Conv2D(30, (2,2), activation='relu', padding='same'))                
+model.add(Conv2D(30, (2,2), activation='relu', padding='valid'))                
 model.add(MaxPooling2D())                                     
-model.add(Conv2D(20, (2,2)))
-model.add(Conv2D(10, (2,2)))                               
+model.add(Conv2D(20, (2,2), activation='relu'))                              
 model.add(Flatten())                                          
 model.add(Dense(128, activation='relu'))
 model.add(Dense(128, activation='relu'))
@@ -62,7 +61,7 @@ model.add(Dense(10, activation='sigmoid')) # 이진분류로 출력
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['acc'])
 start = time.time()
 es = EarlyStopping(monitor='acc', patience=5, mode='auto', verbose=1)
-model.fit(x_train, y_train, epochs=1000, verbose=1, batch_size=128, callbacks=[es])
+model.fit(x_train, y_train, epochs=1000, verbose=1, batch_size=32, callbacks=[es])
 걸린시간 = (time.time() - start) /60
 
 #4. 평가, 예측 predict 필요x acc로 판단
@@ -74,6 +73,6 @@ ic(걸린시간)
 # ic(loss)
 
 '''
-ic| 'loss:', loss[0]: 0.00993986614048481
-ic| 'accuracy', loss[1]: 0.9900000095367432
+ic| 'loss:', loss[0]: 0.01058739423751831
+ic| 'accuracy', loss[1]: 0.9908000230789185
 '''
