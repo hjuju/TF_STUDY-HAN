@@ -9,6 +9,7 @@ from tensorflow.keras.utils import to_categorical
 from sklearn.preprocessing import MinMaxScaler, StandardScaler, OneHotEncoder, RobustScaler, QuantileTransformer, PowerTransformer
 from tensorflow.keras.callbacks import EarlyStopping
 from icecream import ic
+import time
 
 
 
@@ -51,39 +52,39 @@ y = onehot_encoder.transform(y).toarray()
 
 
 
-x_train, x_test, y_train, y_test = train_test_split(x,y, train_size=0.7, random_state=70)
+x_train, x_test, y_train, y_test = train_test_split(x,y, train_size=0.99, random_state=70)
 
-scaler = PowerTransformer()
+scaler = RobustScaler()
 scaler.fit(x_train)
 x_train = scaler.transform(x_train)
 x_test = scaler.transform(x_test)
 
 model = Sequential()
-model.add(Dense(1024, activation='relu', input_dim=11))
-model.add(Dense(512, activation='relu'))
-model.add(Dense(512, activation='relu'))
-model.add(Dense(256, activation='relu'))
-model.add(Dense(256, activation='relu'))
-model.add(Dense(128, activation='relu'))
+model.add(Dense(128, activation='relu', input_dim=11))
 model.add(Dense(128, activation='relu'))
 model.add(Dense(64, activation='relu'))
-model.add(Dense(32, activation='relu'))
+model.add(Dense(64, activation='relu'))
+model.add(Dense(64, activation='relu'))
 model.add(Dense(7, activation='softmax'))
 
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
-es = EarlyStopping(monitor='accuracy', patience=30, mode='auto', verbose=1)
-model.fit(x_train, y_train, epochs=1000, verbose=1, batch_size=32, validation_split=0.2 , callbacks=[es])
+start = time.time()
+es = EarlyStopping(monitor='loss', patience=100, mode='auto', verbose=1)
+model.fit(x_train, y_train, epochs=1000, verbose=1, batch_size=8, validation_split=0.001 , callbacks=[es])
+걸린시간 = (time.time() - start) /60
 
 
 loss = model.evaluate(x_test, y_test)
 ic('loss:', loss[0])
 ic('accuracy', loss[1])
+ic(걸린시간)
 # ic(loss)
 
 
 y_predict = model.predict(x_test)
 
 '''
-ic| 'loss:', loss[0]: 4.849335193634033
-ic| 'accuracy', loss[1]: 0.6292517185211182
+RobustScaler
+ic| 'loss:', loss[0]: 2.623243570327759
+ic| 'accuracy', loss[1]: 0.7346938848495483
 '''
