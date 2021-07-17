@@ -12,5 +12,5 @@ ic(x_test.shape, y_test.shape)
 ic(x_train[0])
 ic(y_train[0])
 
-plt.imshow(x_train[0], 'gray')
+plt.imshow(x_train[1])
 plt.show()

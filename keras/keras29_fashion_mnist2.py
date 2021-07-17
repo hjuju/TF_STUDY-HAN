@@ -28,11 +28,11 @@ input = Input(shape=(28, 28, 1))
 1 = Conv2D(32, (3,3), padding='same', activation='relu')(input)
 2 = MaxPooling2D((2,2))(1)
 3 = Conv2D(64, (3,3), activation='relu')(2)
-4 = MaxPooling2D((2,2))(x)
-5 = Conv2D(64, (3,3), activation='relu')(3)
-6 = Flatten()(x)
-7 = Dense(64, activation='relu')(4)
-output = Dense(10, activation='softmax')(5)
+4 = MaxPooling2D((2,2))(3)
+5 = Conv2D(64, (3,3), activation='relu')(4)
+6 = Flatten()(5)
+7 = Dense(64, activation='relu')(6)
+output = Dense(10, activation='softmax')(7)
 
 model = Model(inputs=input, outputs=output)
 
@@ -40,7 +40,7 @@ model = Model(inputs=input, outputs=output)
 es = EarlyStopping(monitor='val_loss', patience=5, mode='min', verbose=1)
 model.compile(loss='categorical_crossentropy', optimizer='adam', 
                         metrics=['accuracy'])
-model.fit(x_train, y_train, epochs=21, batch_size=256, 
+model.fit(x_train, y_train, epochs=1000, batch_size=128, 
                                 validation_split=0.001, callbacks=[es])
 
 #4. evaluating, prediction
