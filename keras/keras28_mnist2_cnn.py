@@ -46,15 +46,15 @@ from tensorflow.keras.layers import Dense, Conv2D, MaxPooling2D, Flatten
 
 model = Sequential()
 model.add(Conv2D(filters=100, kernel_size=(2,2), padding='same', input_shape=(28, 28, 1)))
-model.add(Conv2D(40, (2,2), activation='relu'))               
+model.add(Conv2D(40, (2,2), activation='relu'))
+model.add(MaxPooling2D())               
 model.add(Conv2D(30, (2,2), activation='relu'))
 model.add(MaxPooling2D())
-model.add(Conv2D(20, (2,2), activation='relu'))                                                                               
+model.add(Conv2D(20, (2,2), activation='relu'))
+model.add(MaxPooling2D())                      
+model.add(Conv2D(10, (2,2), activation='relu'))                                                        
 model.add(Flatten())                                          
-model.add(Dense(256, activation='relu'))
 model.add(Dense(128, activation='relu'))
-model.add(Dense(64, activation='relu'))
-model.add(Dense(64, activation='relu'))
 model.add(Dense(64, activation='relu'))
 model.add(Dense(10, activation='softmax')) # 이진분류로 출력
 
