@@ -50,6 +50,7 @@ loss = model.evaluate(x_test, y_test)
 print('loss = ', loss[0])
 print('accuracy = ', loss[1])
 ic(f'{걸린시간}분')
+
 '''
 loss =  0.8164052963256836
 accuracy =  0.7332000136375427
