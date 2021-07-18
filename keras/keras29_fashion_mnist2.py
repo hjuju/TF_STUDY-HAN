@@ -17,11 +17,6 @@ x_train, x_test = x_train / 255, x_test / 255
 y_train = to_categorical(y_train)
 y_test = to_categorical(y_test)
 
-# onehot_encoder = OneHotEncoder()
-# y_train = y_train.reshape(-1,1)
-# y_test = y_test.reshape(-1,1)
-# y_train = onehot_encoder.fit_transform(y_train).toarray()
-# y_test = onehot_encoder.fit_transform(y_test).toarray()
 
 #2. modeling
 input = Input(shape=(28, 28, 1))

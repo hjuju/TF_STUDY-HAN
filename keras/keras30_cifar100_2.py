@@ -30,14 +30,14 @@ x = Conv2D(32, (3,3), activation='relu')(x)
 x = Flatten()(x)
 x = Dense(128, activation='relu')(x)
 x = Dense(64, activation='relu')(x)
-x = Dense(32, activation='relu')(x)
-output = Dense(100, activation='sigmoid')(x)
+x = Dense(64, activation='relu')(x)
+output = Dense(100, activation='softmax')(x)
 
 model = Model(inputs=input, outputs=output)
 
 #3. 컴파일, 훈련
 es = EarlyStopping(monitor='acc', patience=5, mode='auto', verbose=1)
-model.compile(loss='binary_crossentropy', optimizer='adam', 
+model.compile(loss='categorical_crossentropy', optimizer='adam', 
                         metrics=['acc'])
 start = time.time()
 model.fit(x_train, y_train, epochs=1000, batch_size=128, 
