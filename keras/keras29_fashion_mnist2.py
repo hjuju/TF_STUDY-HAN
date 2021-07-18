@@ -22,17 +22,18 @@ y_test = to_categorical(y_test)
 input = Input(shape=(28, 28, 1))
 x1 = Conv2D(128, (3,3), padding='same', activation='relu')(input)
 x2 = MaxPooling2D((2,2))(x1)
-x3 = Conv2D(64, (3,3), activation='relu')(x2)
+x3 = Conv2D(128, (3,3), padding='same', activation='relu')(x2)
 x4 = MaxPooling2D((2,2))(x3)
-x5 = Conv2D(64, (3,3), activation='relu')(x4)
+x5 = Conv2D(64, (3,3), padding='same', activation='relu')(x4)
 x6 = Flatten()(x5)
 x7 = Dense(64, activation='relu')(x6)
+x7 = Dense(32, activation='relu')(x6)
 output = Dense(10, activation='softmax')(x7)
 
 model = Model(inputs=input, outputs=output)
 
 #3. compiling, training
-es = EarlyStopping(monitor='val_loss', patience=5, mode='min', verbose=1)
+es = EarlyStopping(monitor='val_loss', patience=10, mode='min', verbose=1)
 model.compile(loss='categorical_crossentropy', optimizer='adam', 
                         metrics=['accuracy'])
 model.fit(x_train, y_train, epochs=1000, batch_size=128, 
@@ -43,3 +44,8 @@ loss = model.evaluate(x_test, y_test)
 
 print('loss = ', loss[0])
 print('accuracy = ', loss[1])
+
+'''
+loss =  0.3116116523742676
+accuracy =  0.9196000099182129
+'''

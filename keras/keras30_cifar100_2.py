@@ -35,7 +35,7 @@ output = Dense(100, activation='softmax')(x)
 model = Model(inputs=input, outputs=output)
 
 #3. 컴파일, 훈련
-es = EarlyStopping(monitor='val_acc', patience=10, mode='auto', verbose=1)
+es = EarlyStopping(monitor='val_loss', patience=10, mode='auto', verbose=1)
 model.compile(loss='categorical_crossentropy', optimizer='adam', 
                         metrics=['acc'])
 start = time.time()

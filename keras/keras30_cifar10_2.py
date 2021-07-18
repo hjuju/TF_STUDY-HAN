@@ -22,7 +22,7 @@ y_test = to_categorical(y_test)
 
 #2. modeling
 input = Input(shape=(32, 32, 3))
-x = Conv2D(64, (3,3), padding='same', activation='relu')(input)
+x = Conv2D(128, (3,3), padding='same', activation='relu')(input)
 x = MaxPooling2D((2,2))(x)
 x = Conv2D(64, (3,3), activation='relu')(x)
 x = MaxPooling2D((2,2))(x)
