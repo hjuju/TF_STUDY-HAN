@@ -22,21 +22,20 @@ y_test = to_categorical(y_test)
 
 #2. 모델링
 input = Input(shape=(32, 32, 3))
+x = Conv2D(128, (3,3), padding='same', activation='relu')(input)
+x = MaxPooling2D((2,2))(x)
 x = Conv2D(64, (3,3), padding='same', activation='relu')(input)
 x = MaxPooling2D((2,2))(x)
-x = Conv2D(64, (3,3), activation='relu')(x)
-x = MaxPooling2D((2,2))(x)
-x = Conv2D(32, (3,3), activation='relu')(x)
 x = Flatten()(x)
-x = Dense(128, activation='relu')(x)
 x = Dense(64, activation='relu')(x)
 x = Dense(64, activation='relu')(x)
+x = Dense(32, activation='relu')(x)
 output = Dense(100, activation='softmax')(x)
 
 model = Model(inputs=input, outputs=output)
 
 #3. 컴파일, 훈련
-es = EarlyStopping(monitor='acc', patience=5, mode='auto', verbose=1)
+es = EarlyStopping(monitor='val_acc', patience=10, mode='auto', verbose=1)
 model.compile(loss='categorical_crossentropy', optimizer='adam', 
                         metrics=['acc'])
 start = time.time()
@@ -50,3 +49,8 @@ loss = model.evaluate(x_test, y_test)
 print('loss = ', loss[0])
 print('accuracy = ', loss[1])
 ic(f'{걸린시간}분')
+
+'''
+loss =  2.9470434188842773
+accuracy =  0.3140999972820282
+'''

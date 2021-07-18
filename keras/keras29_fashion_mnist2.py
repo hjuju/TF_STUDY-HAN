@@ -20,14 +20,14 @@ y_test = to_categorical(y_test)
 
 #2. modeling
 input = Input(shape=(28, 28, 1))
-1 = Conv2D(128, (3,3), padding='same', activation='relu')(input)
-2 = MaxPooling2D((2,2))(1)
-3 = Conv2D(64, (3,3), activation='relu')(2)
-4 = MaxPooling2D((2,2))(3)
-5 = Conv2D(64, (3,3), activation='relu')(4)
-6 = Flatten()(5)
-7 = Dense(64, activation='relu')(6)
-output = Dense(10, activation='softmax')(7)
+x1 = Conv2D(128, (3,3), padding='same', activation='relu')(input)
+x2 = MaxPooling2D((2,2))(x1)
+x3 = Conv2D(64, (3,3), activation='relu')(x2)
+x4 = MaxPooling2D((2,2))(x3)
+x5 = Conv2D(64, (3,3), activation='relu')(x4)
+x6 = Flatten()(x5)
+x7 = Dense(64, activation='relu')(x6)
+output = Dense(10, activation='softmax')(x7)
 
 model = Model(inputs=input, outputs=output)
 
