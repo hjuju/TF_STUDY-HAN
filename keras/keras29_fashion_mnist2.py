@@ -20,15 +20,16 @@ y_test = to_categorical(y_test)
 
 #2. modeling
 input = Input(shape=(28, 28, 1))
-x1 = Conv2D(128, (3,3), padding='same', activation='relu')(input)
-x2 = MaxPooling2D((2,2))(x1)
-x3 = Conv2D(128, (3,3), padding='same', activation='relu')(x2)
-x4 = MaxPooling2D((2,2))(x3)
-x5 = Conv2D(64, (3,3), padding='same', activation='relu')(x4)
-x6 = Flatten()(x5)
-x7 = Dense(64, activation='relu')(x6)
-x7 = Dense(32, activation='relu')(x6)
-output = Dense(10, activation='softmax')(x7)
+a = Conv2D(128, (3,3), padding='same', activation='relu')(input)
+a = MaxPooling2D((2,2))(a)
+a = Conv2D(128, (3,3), padding='same', activation='relu')(a)
+a = MaxPooling2D((2,2))(a)
+a = Conv2D(64, (3,3), padding='same', activation='relu')(a)
+a = Flatten()(a)
+a = Dense(128, activation='relu')(a)
+a = Dense(64, activation='relu')(a)
+a = Dense(32, activation='relu')(a)
+output = Dense(10, activation='softmax')(a)
 
 model = Model(inputs=input, outputs=output)
 
@@ -46,6 +47,6 @@ print('loss = ', loss[0])
 print('accuracy = ', loss[1])
 
 '''
-loss =  0.3116116523742676
-accuracy =  0.9196000099182129
+loss =  0.3115113377571106
+accuracy =  0.9218999743461609
 '''
