@@ -40,13 +40,13 @@ model.add(Conv2D(64, (3, 3), padding='same', activation='relu'))
 model.add(MaxPooling2D())
 model.add(Conv2D(32, (3, 3), padding='same', activation='relu'))
 model.add(Flatten())                                              
-model.add(Dense(1024, activation='relu'))
+model.add(Dense(512, activation='relu'))
 model.add(Dense(512, activation='relu'))
 model.add(Dense(256, activation='relu'))
 model.add(Dense(100, activation='softmax'))
 
 #3. 컴파일, 훈련
-es = EarlyStopping(monitor='val_loss', patience=10, mode='auto', verbose=1)
+es = EarlyStopping(monitor='val_loss', patience=20, mode='auto', verbose=1)
 model.compile(loss='categorical_crossentropy', optimizer='adam', 
                         metrics=['acc'])
 start = time.time()
@@ -62,6 +62,6 @@ print('accuracy = ', loss[1])
 ic(f'{걸린시간}분')
 
 '''
-loss =  7.162003993988037
-accuracy =  0.32089999318122864
+loss =  3.0406737327575684
+accuracy =  0.3928000032901764
 '''
