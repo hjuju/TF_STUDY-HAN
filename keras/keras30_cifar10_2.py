@@ -13,27 +13,34 @@ from icecream import ic
 
 #1. data preprocessing
 (x_train, y_train), (x_test, y_test) = cifar10.load_data()
-x_train, x_test = x_train / 255, x_test / 255
+x_train = x_train.reshape((60000, 28, 28, 1))/255
+x_test = x_test.reshape((10000, 28, 28, 1))/255
 
-print(np.unique(y_train)) # [0 1 2 3 4 5 6 7 8 9]
+one = OneHotEncoder()
+y_train = y_train.reshape(-1,1)
+y_test = y_test.reshape(-1,1)
+one.fit(y_train)
+y_train = one.transform(y_train).toarray()
+y_test = one.transform(y_test).toarray() 
 
-y_train = to_categorical(y_train)
-y_test = to_categorical(y_test)
 
-#2. modeling
-input = Input(shape=(32, 32, 3))
-x = Conv2D(128, (3,3), padding='same', activation='relu')(input)
-x = MaxPooling2D((2,2))(x)
-x = Conv2D(64, (3,3), activation='relu')(x)
-x = MaxPooling2D((2,2))(x)
-x = Conv2D(32, (3,3), activation='relu')(x)
-x = Flatten()(x)
-x = Dense(128, activation='relu')(x)
-x = Dense(64, activation='relu')(x)
-x = Dense(32, activation='relu')(x)
-output = Dense(10, activation='softmax')(x)
 
-model = Model(inputs=input, outputs=output)
+#2. 모델링
+model = Sequential()
+model.add(Conv2D(256, kernel_size=(2, 2), padding='same', activation='relu', input_shape=(28, 28, 1))) 
+model.add(Conv2D(256, (2, 2), padding='same', activation='relu'))                   
+model.add(MaxPooling2D())                                         
+model.add(Conv2D(128, (3, 3), padding='same', activation='relu'))                   
+model.add(Conv2D(128, (3, 3), padding='same', activation='relu'))    
+model.add(MaxPooling2D())                                         
+model.add(Conv2D(64, (3, 3), padding='same', activation='relu'))                   
+model.add(Conv2D(64, (3, 3), padding='same', activation='relu'))
+model.add(Flatten())                                              
+model.add(Dense(1024, activation='relu'))
+model.add(Dense(512, activation='relu'))
+model.add(Dense(256, activation='relu'))
+model.add(Dense(128, activation='relu'))
+model.add(Dense(100, activation='softmax'))
 
 #3. compiling, training
 es = EarlyStopping(monitor='acc', patience=5, mode='auto', verbose=1)

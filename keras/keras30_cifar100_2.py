@@ -9,37 +9,48 @@ from tensorflow.keras.utils import to_categorical
 from icecream import ic
 import time
 
-#1. data preprocessing
+#1. 데이터 전처리
 (x_train, y_train), (x_test, y_test) = cifar100.load_data()
-x_train, x_test = x_train / 255, x_test / 255
 
-print(np.unique(y_train)) # [0 1 ... 98 99]
+x_train = x_train.reshape((50000, 32, 32, 3))/255
+x_test = x_test.reshape((10000, 32, 32, 3))/255
 
-y_train = to_categorical(y_train)
-y_test = to_categorical(y_test)
+# print(np.unique(y_train)) # [0 1 2 3 4 5 6 7 8 9]
+one = OneHotEncoder()
+y_train = y_train.reshape(-1,1)
+y_test = y_test.reshape(-1,1)
+one.fit(y_train)
+y_train = one.transform(y_train).toarray() # (50000, 100)
+y_test = one.transform(y_test).toarray() # (10000, 100)
 
 
 
 #2. 모델링
-input = Input(shape=(32, 32, 3))
-x = Conv2D(128, (3,3), padding='same', activation='relu')(input)
-x = MaxPooling2D((2,2))(x)
-x = Conv2D(64, (3,3), padding='same', activation='relu')(input)
-x = MaxPooling2D((2,2))(x)
-x = Flatten()(x)
-x = Dense(64, activation='relu')(x)
-x = Dense(64, activation='relu')(x)
-x = Dense(32, activation='relu')(x)
-output = Dense(100, activation='softmax')(x)
-
-model = Model(inputs=input, outputs=output)
+model = Sequential()
+model.add(Conv2D(256, kernel_size=(2, 2),                          
+                        padding='same', activation='relu', 
+                        input_shape=(32, 32, 3))) 
+model.add(Conv2D(256, (2, 2), padding='same', activation='relu'))                   
+model.add(MaxPooling2D())                                         
+model.add(Conv2D(128, (3, 3), padding='same', activation='relu'))                   
+model.add(MaxPooling2D())                                         
+model.add(Conv2D(128, (3, 3), padding='same', activation='relu'))    
+model.add(MaxPooling2D())                                         
+model.add(Conv2D(64, (3, 3), padding='same', activation='relu'))                   
+model.add(MaxPooling2D())
+model.add(Conv2D(32, (3, 3), padding='same', activation='relu'))
+model.add(Flatten())                                              
+model.add(Dense(1024, activation='relu'))
+model.add(Dense(512, activation='relu'))
+model.add(Dense(256, activation='relu'))
+model.add(Dense(100, activation='softmax'))
 
 #3. 컴파일, 훈련
 es = EarlyStopping(monitor='val_loss', patience=10, mode='auto', verbose=1)
 model.compile(loss='categorical_crossentropy', optimizer='adam', 
                         metrics=['acc'])
 start = time.time()
-model.fit(x_train, y_train, epochs=1000, batch_size=128, 
+model.fit(x_train, y_train, epochs=1000, batch_size=256, 
                                 validation_split=0.001, callbacks=[es])
 걸린시간 = round((time.time() - start) /60,1)
 
@@ -51,6 +62,6 @@ print('accuracy = ', loss[1])
 ic(f'{걸린시간}분')
 
 '''
-loss =  2.9470434188842773
-accuracy =  0.3140999972820282
+loss =  7.162003993988037
+accuracy =  0.32089999318122864
 '''
