@@ -48,116 +48,119 @@ x_test = scaler.transform(x_test)
 x_train = x_train.reshape(x_train.shape[0], x_train.shape[1], 1, 1)
 x_test = x_test.reshape(x_test.shape[0], x_test.shape[1], 1, 1)
 
-ic(x_train.shape[0], y.shape)
+ic(x_train, x_test)
+
+
+ic(y_train)
+
+ic(np.unique(y))
+
+
+# # 2. 모델 구성
+# model = Sequential()
+# model.add(Conv2D(32, kernel_size=2, padding='same', activation='relu', input_shape=(13,1,1)))  
+# model.add(Conv2D(64, 2, padding='same', activation='relu'))
+# model.add(Dropout(0.2))                                      
+# model.add(Conv2D(128, 2, padding='same', activation='relu')) 
+# model.add(Dropout(0.2))                        
+# model.add(Conv2D(64, 2, padding='same', activation='relu'))
+# model.add(Conv2D(32, 2, padding='same', activation='relu'))
+# model.add(GlobalAveragePooling2D())                                       
+# model.add(Dense(1))
+
+
+# #3. 컴파일, 훈련
+
+# model.compile(loss='mse', optimizer='adam', metrics=['mae'])
+# es = EarlyStopping(monitor='val_loss', patience=10, mode='auto', verbose=1)
+# start = time.time()
+# model.fit(x_train, y_train, epochs=1000, verbose=1, validation_split=0.2, batch_size=8, shuffle=True, callbacks=[es])
+# 걸린시간 = round((time.time() - start) /60,1)
+
+# #4. 평가, 예측
+# loss = model.evaluate(x_test, y_test)
+# ic(loss)
+
+# y_predict = model.predict(x_test)
+# # ic(y_predict)
+
+# r2 = r2_score(y_test, y_predict)
+# ic(r2)
+
+# ic(f'{걸린시간}분')
 
 
 
-
-# 2. 모델 구성
-model = Sequential()
-model.add(Conv2D(32, kernel_size=2, padding='same', activation='relu', input_shape=(13,1,1)))  
-model.add(Conv2D(64, 2, padding='same', activation='relu'))
-model.add(Dropout(0.2))                                      
-model.add(Conv2D(128, 2, padding='same', activation='relu')) 
-model.add(Dropout(0.2))                        
-model.add(Conv2D(64, 2, padding='same', activation='relu'))
-model.add(Conv2D(32, 2, padding='same', activation='relu'))
-model.add(GlobalAveragePooling2D())                                       
-model.add(Dense(1))
+# '''
+# CNN
+# ic| loss: [14.31032943725586, 2.9922759532928467]
+# ic| r2: 0.8017186882057898
+# ic| f'{걸린시간}분': '0.6분'
 
 
-#3. 컴파일, 훈련
+# ic| r2: 0.5237891323534569
+# mse, R2
 
-model.compile(loss='mse', optimizer='adam', metrics=['mae'])
-es = EarlyStopping(monitor='val_loss', patience=10, mode='auto', verbose=1)
-start = time.time()
-model.fit(x_train, y_train, epochs=1000, verbose=1, validation_split=0.2, batch_size=8, shuffle=True, callbacks=[es])
-걸린시간 = round((time.time() - start) /60,1)
+# model.add(Dense(512, input_shape=(13,), activation='relu'))
+# model.add(Dense(400, activation='relu'))
+# model.add(Dense(256, activation='relu'))
+# model.add(Dense(200, activation='relu'))
+# model.add(Dense(100, activation='relu'))
+# model.add(Dense(1))
 
-#4. 평가, 예측
-loss = model.evaluate(x_test, y_test)
-ic(loss)
+# # QuantileTransformer
+# ic| loss: [8.056320190429688, 2.04154109954834]
+# ic| r2: 0.8883731088039933
+# ic| end: 18.638136625289917
 
-y_predict = model.predict(x_test)
-# ic(y_predict)
-
-r2 = r2_score(y_test, y_predict)
-ic(r2)
-
-ic(f'{걸린시간}분')
+# model.fit(x_train, y_train, epochs=500, verbose=2, batch_size=32, shuffle=True)
 
 
+# # MaxAbsScaler
 
-'''
-CNN
-ic| loss: [14.31032943725586, 2.9922759532928467]
-ic| r2: 0.8017186882057898
-ic| f'{걸린시간}분': '0.6분'
+# model.add(Dense(512, input_shape=(13,), activation='relu'))
+# model.add(Dense(400, activation='relu'))
+# model.add(Dense(256, activation='relu'))
+# model.add(Dense(200, activation='relu'))
+# model.add(Dense(100, activation='relu'))
+# model.add(Dense(1))
 
+# ic| loss: [8.180001258850098, 2.150731325149536]
+# ic| r2: 0.8866594058457429
+# ic| end: 15.125555992126465
 
-ic| r2: 0.5237891323534569
-mse, R2
-
-model.add(Dense(512, input_shape=(13,), activation='relu'))
-model.add(Dense(400, activation='relu'))
-model.add(Dense(256, activation='relu'))
-model.add(Dense(200, activation='relu'))
-model.add(Dense(100, activation='relu'))
-model.add(Dense(1))
-
-# QuantileTransformer
-ic| loss: [8.056320190429688, 2.04154109954834]
-ic| r2: 0.8883731088039933
-ic| end: 18.638136625289917
-
-model.fit(x_train, y_train, epochs=500, verbose=2, batch_size=32, shuffle=True)
+# model.fit(x_train, y_train, epochs=400, verbose=2, batch_size=32, shuffle=True)
 
 
-# MaxAbsScaler
+# # PowerTransformer
 
-model.add(Dense(512, input_shape=(13,), activation='relu'))
-model.add(Dense(400, activation='relu'))
-model.add(Dense(256, activation='relu'))
-model.add(Dense(200, activation='relu'))
-model.add(Dense(100, activation='relu'))
-model.add(Dense(1))
+# model.add(Dense(512, input_shape=(13,), activation='relu'))
+# model.add(Dense(400, activation='relu'))
+# model.add(Dense(256, activation='relu'))
+# model.add(Dense(200, activation='relu'))
+# model.add(Dense(100, activation='relu'))
+# model.add(Dense(1))
 
-ic| loss: [8.180001258850098, 2.150731325149536]
-ic| r2: 0.8866594058457429
-ic| end: 15.125555992126465
+# ic| loss: [6.781839370727539, 1.9480767250061035]
+# ic| r2: 0.9060320691551077
+# ic| end: 18.702990531921387
 
-model.fit(x_train, y_train, epochs=400, verbose=2, batch_size=32, shuffle=True)
-
-
-# PowerTransformer
-
-model.add(Dense(512, input_shape=(13,), activation='relu'))
-model.add(Dense(400, activation='relu'))
-model.add(Dense(256, activation='relu'))
-model.add(Dense(200, activation='relu'))
-model.add(Dense(100, activation='relu'))
-model.add(Dense(1))
-
-ic| loss: [6.781839370727539, 1.9480767250061035]
-ic| r2: 0.9060320691551077
-ic| end: 18.702990531921387
-
-model.fit(x_train, y_train, epochs=500, verbose=2, batch_size=32, validation_split=0.3, shuffle=True)
+# model.fit(x_train, y_train, epochs=500, verbose=2, batch_size=32, validation_split=0.3, shuffle=True)
 
 
-# RobustScaler
+# # RobustScaler
 
-model.add(Dense(512, input_shape=(13,), activation='relu'))
-model.add(Dense(400, activation='relu'))
-model.add(Dense(256, activation='relu'))
-model.add(Dense(200, activation='relu'))
-model.add(Dense(100, activation='relu'))
-model.add(Dense(1))
+# model.add(Dense(512, input_shape=(13,), activation='relu'))
+# model.add(Dense(400, activation='relu'))
+# model.add(Dense(256, activation='relu'))
+# model.add(Dense(200, activation='relu'))
+# model.add(Dense(100, activation='relu'))
+# model.add(Dense(1))
 
-ic| loss: [8.540543556213379, 2.1857354640960693]
-ic| r2: 0.88166378905062
-ic| end: 14.968975305557251
+# ic| loss: [8.540543556213379, 2.1857354640960693]
+# ic| r2: 0.88166378905062
+# ic| end: 14.968975305557251
 
-model.fit(x_train, y_train, epochs=400, verbose=2, batch_size=32, validation_split=0.3, shuffle=True)
+# model.fit(x_train, y_train, epochs=400, verbose=2, batch_size=32, validation_split=0.3, shuffle=True)
 
-'''
+# '''
