@@ -46,11 +46,11 @@ model.add(Dense(256, activation='relu'))
 model.add(Dense(100, activation='softmax'))
 
 #3. 컴파일, 훈련
-es = EarlyStopping(monitor='val_loss', patience=20, mode='auto', verbose=1)
+es = EarlyStopping(monitor='val_loss', patience=30, mode='auto', verbose=1)
 model.compile(loss='categorical_crossentropy', optimizer='adam', 
                         metrics=['acc'])
 start = time.time()
-model.fit(x_train, y_train, epochs=1000, batch_size=256, 
+model.fit(x_train, y_train, epochs=1000, batch_size=128, 
                                 validation_split=0.001, callbacks=[es])
 걸린시간 = round((time.time() - start) /60,1)
 
