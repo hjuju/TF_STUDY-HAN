@@ -1,25 +1,9 @@
-'''
-
-overfit을 극복하자
-
-1. 전체 훈련 데이터를 많이 -> 많으면 많을 수록 과적합이 적음
-
-2. normalizaion(정규화) 실시 (전처리에서 , 레이어 별로)
-
-3. dropout
-
-global average pooling (GAP) 
-
-
-
-'''
-
 import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler, StandardScaler, RobustScaler, QuantileTransformer,MaxAbsScaler, PowerTransformer, OneHotEncoder
 from tensorflow.keras.datasets import cifar100
 from tensorflow.keras.models import Sequential, Model
-from tensorflow.keras.layers import Dense, Input, Conv2D, Flatten, MaxPool2D, Dropout
+from tensorflow.keras.layers import Dense, Input, Conv2D, Flatten, MaxPool2D, Dropout, GlobalAveragePooling2D
 from keras.utils import to_categorical
 from tensorflow.keras.callbacks import EarlyStopping
 from icecream import ic
@@ -62,30 +46,30 @@ x_test = x_test.reshape(10000, 32 ,32, 3) # 스케일링 후 4차원으로 원�
 #2. 모델링
 model = Sequential()
 model.add(Conv2D(filters=256, kernel_size=(2, 2), padding='valid', activation='relu', input_shape=(32, 32, 3))) 
-model.add(Dropout(0.2)) # 한 layer에서 20퍼센트의 노드를 드롭아웃함
+model.add(Dropout(0.3)) # 한 layer에서 20퍼센트의 노드를 드롭아웃함
 model.add(Conv2D(128, (2, 2), padding='same', activation='relu'))                   
 model.add(MaxPool2D())                       
 
 model.add(Conv2D(128, (2, 2), padding='valid', activation='relu'))                   
-model.add(Dropout(0.2))
+model.add(Dropout(0.3))
 model.add(Conv2D(128, (2, 2), padding='same', activation='relu'))    
 model.add(MaxPool2D())                                         
 
 model.add(Conv2D(64, (2, 2), activation='relu'))                   
-model.add(Dropout(0.2))
+model.add(Dropout(0.3))
 model.add(Conv2D(64, (2, 2), padding='same', activation='relu')) # 큰사이즈 아닌 이상 4,4 까지 올라가지 않음
 model.add(MaxPool2D())    # 556개 / 나가는 데이터를 확인해서 레이의 노드 개수 구성
-
-model.add(Flatten())                                              
-model.add(Dense(128, activation='relu'))
-model.add(Dropout(0.2))
-model.add(Dense(128, activation='relu'))
-model.add(Dropout(0.2))
-model.add(Dense(128, activation='relu'))
+model.add(GlobalAveragePooling2D()) # CNN에서 바로 
+# model.add(Flatten())                                              
+# model.add(Dense(128, activation='relu'))
+# model.add(Dropout(0.2))
+# model.add(Dense(128, activation='relu'))
+# model.add(Dropout(0.2))
+# model.add(Dense(128, activation='relu'))
 model.add(Dense(100, activation='softmax'))
 
 #3. 컴파일, 훈련
-es = EarlyStopping(monitor='val_loss', patience=10, mode='auto', verbose=1)
+es = EarlyStopping(monitor='val_loss', patience=20, mode='auto', verbose=1)
 model.compile(loss='categorical_crossentropy', optimizer='adam', 
                         metrics=['acc'])
 start = time.time()
@@ -124,7 +108,7 @@ plt.ylabel('acc')
 plt.xlabel('epoch')
 plt.legend(['acc', 'val_acc'])
 
-plt.show
+plt.show()
 
 
 '''
@@ -145,5 +129,9 @@ loss =  2.232557535171509
 accuracy =  0.41929998993873596
 ic| f'{걸린시간}분': '10.2분'
 
+GlobalAveragePooling2D
+loss =  2.0949783325195312
+accuracy =  0.4641000032424927
+ic| f'{걸린시간}분': '12.5분'
 
 '''
