@@ -10,7 +10,7 @@ from numpy.matrixlib.defmatrix import matrix
 from sklearn.datasets import load_iris
 from icecream import ic
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, Conv1D, GlobalAveragePooling1D, MaxPool1D, Flatten
+from tensorflow.keras.layers import Dense, Conv2D, GlobalAveragePooling2D, MaxPool2D, Flatten
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import r2_score
 import time
@@ -44,8 +44,6 @@ y = one.transform(y).toarray()
 x_train, x_test, y_train, y_test = train_test_split(x,y, train_size=0.8, random_state=60) # train 309, test 133
 
 
-
-
 # scaler = QuantileTransformer()
 # scaler = StandardScaler()
 #scaler = PowerTransformer()
@@ -53,8 +51,8 @@ scaler = MinMaxScaler()
 x_train = scaler.fit_transform(x_train)
 x_test = scaler.transform(x_test)
 
-x_train = x_train.reshape(x_train.shape[0], x_train.shape[1], 1)
-x_test = x_test.reshape(x_test.shape[0], x_test.shape[1], 1)
+x_train = x_train.reshape(x_train.shape[0], x_train.shape[1], 1, 1)
+x_test = x_test.reshape(x_test.shape[0], x_test.shape[1], 1, 1)
 
 
 ic(y.shape, x.shape)
@@ -65,18 +63,16 @@ ic(y.shape, x.shape)
 
 # 2. 모델 구성
 model = Sequential()
-model.add(Conv1D(256, kernel_size=2, padding='same', activation='relu', input_shape=(11,1)))  
-model.add(Conv1D(128, 2, padding='same', activation='relu'))
-model.add(MaxPool1D())
+model.add(Conv2D(256, kernel_size=(2,2), padding='same', activation='relu', input_shape=(11,1,1)))  
+model.add(Conv2D(128, (2,2), padding='same', activation='relu'))
 model.add(Dropout(0.3))                                      
-model.add(Conv1D(128, 2, padding='same', activation='relu')) 
-model.add(Conv1D(64, 2, padding='same', activation='relu'))
-model.add(MaxPool1D())
+model.add(Conv2D(128, (2,2), padding='same', activation='relu')) 
+model.add(Conv2D(64, (2,2), padding='same', activation='relu'))
 model.add(Dropout(0.3))                        
-model.add(Conv1D(64, 2, padding='same', activation='relu'))
-model.add(Conv1D(32, 2, padding='same', activation='relu'))
-model.add(GlobalAveragePooling1D())                                       
-model.add(Dense(3, activation='softmax'))
+model.add(Conv2D(64, (2,2), padding='same', activation='relu'))
+model.add(Conv2D(32, (2,2), padding='same', activation='relu'))
+model.add(GlobalAveragePooling2D())                                       
+model.add(Dense(7, activation='softmax'))
 
 
 #3. 컴파일, 훈련
