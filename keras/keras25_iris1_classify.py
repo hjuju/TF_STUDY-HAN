@@ -54,6 +54,8 @@ scaler.fit(x_train)
 x_train = scaler.transform(x_train) 
 x_test = scaler.transform(x_test)
 
+ic(np.unique(y))
+
 model = Sequential()
 
 model.add(Dense(256, activation='relu', input_shape =(4,)))
