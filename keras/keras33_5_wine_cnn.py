@@ -34,6 +34,7 @@ y = datasets_np[:,[-1]]
 
 # ic(x.shape, y.shape) # x.shape: (150, 4), y.shape: (150,)
 
+ic(y)
 
 one = OneHotEncoder()
 one.fit(y)
@@ -78,9 +79,9 @@ model.add(Dense(7, activation='softmax'))
 #3. 컴파일, 훈련
 
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['acc'])
-es = EarlyStopping(monitor='acc', patience=30, mode='auto', verbose=1)
+es = EarlyStopping(monitor='acc', patience=10, mode='auto', verbose=1)
 start = time.time()
-model.fit(x_train, y_train, epochs=1000, verbose=1, validation_split=0.2, batch_size=4, shuffle=True, callbacks=[es])
+model.fit(x_train, y_train, epochs=1000, verbose=1, validation_split=0.2, batch_size=16, shuffle=True, callbacks=[es])
 걸린시간 = round((time.time() - start) /60,1)
 
 #4. 평가, 예측
@@ -100,6 +101,9 @@ CNN + Conv1D + GAP
 loss =  0.22041136026382446
 accuracy =  0.9666666388511658
 ic| f'{걸린시간}분': '0.2분'
+
+CNN + Conv2D + GAP
+
 
 RobustScaler
 ic| 'loss:', loss[0]: 2.623243570327759
