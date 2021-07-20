@@ -54,7 +54,7 @@ model.summary()
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['acc'])
 es = EarlyStopping(monitor='acc', patience=10, mode='auto', verbose=1)
 start = time.time()
-model.fit(x_train, y_train, epochs=1000, verbose=1, validation_split=0.2, batch_size=1024, shuffle=True, callbacks=[es])
+model.fit(x_train, y_train, epochs=10, verbose=1, validation_split=0.2, batch_size=1024, shuffle=True, callbacks=[es])
 걸린시간 = round((time.time() - start) /60,1)
 
 #4. evaluating, prediction
@@ -68,6 +68,9 @@ ic(f'{걸린시간}분')
 
 LSTM
 
+loss =  4.388662815093994
+accuracy =  0.03530000150203705
+ic| f'{걸린시간}분': '12.6분'
 
 
 loss =  3.0406737327575684
