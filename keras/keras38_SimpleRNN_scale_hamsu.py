@@ -50,7 +50,7 @@ ic(result) # [[8.066318]]
 '''
 LSTM
 
-[79.716515]
+79.716515
 
 LSTM_hamsu
 
@@ -58,5 +58,13 @@ LSTM_hamsu
 
 GRU
 81.54892
+
+SimpleRNN
+
+80.52899
+
+SimpleRNN_hamsu
+
+79.925385
 
 '''
