@@ -3,7 +3,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler, StandardScaler, RobustScaler, QuantileTransformer, OneHotEncoder
 from tensorflow.keras.datasets import cifar10
 from tensorflow.keras.models import Sequential, Model
-from tensorflow.keras.layers import Dense, Input, Conv2D, Flatten, MaxPooling2D, Dropout
+from tensorflow.keras.layers import Dense, Input, Conv2D, Flatten, MaxPooling2D, Dropout, LSTM
 from tensorflow.keras.callbacks import EarlyStopping
 from tensorflow.keras.utils import to_categorical
 import time
@@ -23,6 +23,9 @@ scaler = MinMaxScaler()
 x_train = scaler.fit_transform(x_train)
 x_test = scaler.transform(x_test)
 
+x_train = x_train.reshape(50000, 32 * 32, 3)
+x_test = x_test.reshape(10000, 32 * 32,  3)
+
 one = OneHotEncoder()
 y_train = y_train.reshape(-1,1)
 y_test = y_test.reshape(-1,1)
@@ -35,24 +38,23 @@ y_test = one.transform(y_test).toarray()
 
 #2. 모델링
 model = Sequential()
-model.add(Dense(2048, activation='relu', input_shape=(32 * 32 * 3 ,))) 
-model.add(Dense(1024, activation='relu'))                                      
-model.add(Dropout(0.3)) 
-model.add(Dense(512, activation='relu'))                   
-model.add(Dropout(0.3))
-model.add(Dense(256, activation='relu'))                                          
-model.add(Dense(128, activation='relu'))                   
-model.add(Dropout(0.3))
-model.add(Dense(64, activation='relu'))                                     
-model.add(Dense(10, activation='softmax')) 
+model.add(LSTM(10, activation='relu', input_shape=(32 * 32 ,3 )))
+model.add(Dense(128, activation='relu'))
+model.add(Dropout(0.2))
+model.add(Dense(128, activation='relu'))
+model.add(Dense(64, activation='relu'))
+model.add(Dropout(0.2))
+model.add(Dense(32, activation='relu'))
+model.add(Dense(10, activation='softmax'))
 
-#3. compiling, training
-es = EarlyStopping(monitor='acc', patience=5, mode='auto', verbose=1)
-model.compile(loss='categorical_crossentropy', optimizer='adam', 
-                        metrics=['acc'])
+model.summary()
+
+#3. 컴파일, 훈련
+
+model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['acc'])
+es = EarlyStopping(monitor='acc', patience=10, mode='auto', verbose=1)
 start = time.time()
-model.fit(x_train, y_train, epochs=1000, batch_size=128, 
-                                validation_split=0.001, callbacks=[es])
+model.fit(x_train, y_train, epochs=1000, verbose=1, validation_split=0.2, batch_size=1024, shuffle=True, callbacks=[es])
 걸린시간 = round((time.time() - start) /60,1)
 
 #4. evaluating, prediction
@@ -63,6 +65,9 @@ print('accuracy = ', loss[1])
 ic(f'{걸린시간}분')
 
 '''
+LSTM
+
+
 CNN
 
 loss =  0.8164052963256836
