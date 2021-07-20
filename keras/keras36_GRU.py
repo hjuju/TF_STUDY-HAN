@@ -1,7 +1,7 @@
 import numpy as np
 from icecream import ic
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, SimpleRNN, LSTM
+from tensorflow.keras.layers import Dense, SimpleRNN, LSTM, GRU
 
 #1. 데이터
 x = np.array([[1,2,3],[2,3,4], [3,4,5], [4,5,6]])
@@ -16,12 +16,13 @@ x = x.reshape(4, 3, 1)
 #2. 모델 구성
 model = Sequential()
 # model.add(SimpleRNN(units=8, activation='relu', input_shape=(3,1))) # reshape 한 차원으로 입력, RNN 모델 구성 시 맨 처음에 simpleRNN으로 input shape만 맞춰주면 됨
-# 파라미터 수 ((Input + bias) * ouput) + (output^2)  ((1+1)*10) + 100 = 120
-model.add(LSTM(10, activation='relu', input_shape=(3,1))) # simple RNN의 4배
+# 파라미터 수: ((Input + bias) * ouput) + (output^2)  ((1+1)*10) + 100 = 120
+# model.add(LSTM(10, activation='relu', input_shape=(3,1))) # simple RNN의 4배
+model.add(GRU(10, activation='relu', input_shape=(3,1)))
+# 파라미터 수: 3 * (다음 노드 수^2 +  다음 노드 수 * Shape 의 feature + 다음 노드수 )  // 3 * (10^2 + 1*10 + 10) = 360 [model.add(GRU(10, activation='relu', input_shape=(3,1)))]
 model.add(Dense(8, activation='relu'))
 model.add(Dense(4, activation='relu'))
 model.add(Dense(2, activation='relu'))
-
 model.add(Dense(1))
 
 model.summary()
