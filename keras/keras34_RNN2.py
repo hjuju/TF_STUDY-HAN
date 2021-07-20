@@ -15,8 +15,9 @@ x = x.reshape(4, 3, 1)
 
 #2. 모델 구성
 model = Sequential()
-model.add(SimpleRNN(units=8, activation='relu', input_shape=(3,1))) # reshape 한 차원으로 입력, RNN 모델 구성 시 맨 처음에 simpleRNN으로 input shape만 맞춰주면 됨
-# 파라미터 수 ((Input + bias) * ouput) + (output^2)  ((1+1)*10) + 100 = 120
+# model.add(SimpleRNN(units=8, activation='relu', input_shape=(3,1)))
+model.add(SimpleRNN(10, activation='relu', input_length=3, input_dim=1))
+                                           # timesteps       feature
 model.add(Dense(8, activation='relu'))
 model.add(Dense(4, activation='relu'))
 model.add(Dense(2, activation='relu'))
