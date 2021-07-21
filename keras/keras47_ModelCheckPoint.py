@@ -60,7 +60,7 @@ model.add(Dense(1))
 
 model.summary()
 
-model.save('./_save/ModelCheckPoint/keras47_model_save.h5')
+
 
 #3. 컴파일, 훈련
 es = EarlyStopping(monitor='val_loss', patience=20, mode='auto')

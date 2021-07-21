@@ -61,8 +61,8 @@ x_test = scaler.transform(x_test)
 # model.save('./_save/ModelCheckPoint/keras47_model_save.h5')
 # model.save_weights('./_save/keras46_1_save_weights_2.h5')
 
-# model = load_model('./_save/ModelCheckPoint/keras47_model_save.h5') # save_model ic| r2: 0.49668190412943247
-model = load_model('./_save/ModelCheckPoint/keras47_MCP.hdf5') # 체크포인트 0.5185967360969818
+model = load_model('./_save/ModelCheckPoint/keras47_model_save.h5') # save_model ic| r2:  0.5196134587073479
+#model = load_model('./_save/ModelCheckPoint/keras47_MCP.hdf5') # 체크포인트 0.5186985906800602
 
 model.summary()
 
