@@ -43,32 +43,32 @@ y_test = one.transform(y_test).toarray()
 
 
 
-model = Sequential()
-model.add(LSTM(10, activation='relu', input_shape=(28 * 28, 1 )))
-model.add(Conv1D(128, 2))
-model.add(Dense(128, activation='relu'))
-model.add(Dropout(0.2))
-model.add(Dense(64, activation='relu'))
-model.add(Dense(32, activation='relu'))
-model.add(Dropout(0.2))
-model.add(Dense(16, activation='relu'))
-model.add(Flatten())
-model.add(Dense(10, activation='softmax'))
+# model = Sequential()
+# model.add(LSTM(10, activation='relu', input_shape=(28 * 28, 1 ), return_sequences=True))
+# model.add(Conv1D(128, 2))
+# model.add(Dense(128, activation='relu'))
+# model.add(Dropout(0.2))
+# model.add(Dense(64, activation='relu'))
+# model.add(Dense(32, activation='relu'))
+# model.add(Dropout(0.2))
+# model.add(Dense(16, activation='relu'))
+# model.add(Flatten())
+# model.add(Dense(10, activation='softmax'))
 
-model.summary()
+# model.summary()
 
-#3. 컴파일, 훈련
-es = EarlyStopping(monitor='acc', patience=3, mode='auto', verbose=1)
-cp = ModelCheckpoint(monitor='val_loss', patience=3, mode='auto', save_best_only=True, filepath='./_save/ModelCheckPoint/keras48_7_MCP_fashion_mnist.hdf5')
-model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['acc'])
-start = time.time()
-model.fit(x_train, y_train, epochs=100, verbose=1, validation_split=0.2, batch_size=1024, shuffle=True, callbacks=[es])
-걸린시간 = round((time.time() - start) /60,1)
+# #3. 컴파일, 훈련
+# es = EarlyStopping(monitor='acc', patience=3, mode='auto', verbose=1)
+# cp = ModelCheckpoint(monitor='val_loss', patience=3, mode='auto', save_best_only=True, filepath='./_save/ModelCheckPoint/keras48_7_MCP_fashion_mnist.hdf5')
+# model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['acc'])
+# start = time.time()
+# model.fit(x_train, y_train, epochs=10, verbose=1, validation_split=0.2, batch_size=1024, shuffle=True, callbacks=[es, cp])
+# 걸린시간 = round((time.time() - start) /60,1)
 
-model.save('./_save/ModelCheckPoint/keras48_7_model_save_fashion_mnist.h5')
+# model.save('./_save/ModelCheckPoint/keras48_7_model_save_fashion_mnist.h5')
 
-# model = load_model('./_save/ModelCheckPoint/keras48_6_model_save_fashion_mnist.h5')
-# model = load_model('./_save/ModelCheckPoint/keras48_6_MCP_fashion_mnist.hdf5')
+# model = load_model('./_save/ModelCheckPoint/keras48_7_model_save_fashion_mnist.h5')
+model = load_model('./_save/ModelCheckPoint/keras48_7_MCP_fashion_mnist.hdf5')
 
 #4. 평가, 예측
 
@@ -76,17 +76,22 @@ y_predict = model.predict(x_test)
 loss = model.evaluate(x_test, y_test)
 ic(loss[0])
 ic(loss[1])
-ic(f'{걸린시간}분')
+# ic(f'{걸린시간}분')
 
 '''
 
 모델, 체크포인트 저장
-
+ic| loss[0]: 0.3799644410610199
+ic| loss[1]: 0.8644999861717224
+ic| f'{걸린시간}분': '12.2분'
 
 모델 로드
 
+ic| loss[0]: 0.3799644410610199
+ic| loss[1]: 0.8644999861717224
 
 체크포인트 로드
+
 
 
 
