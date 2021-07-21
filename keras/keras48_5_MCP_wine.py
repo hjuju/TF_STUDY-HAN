@@ -48,29 +48,32 @@ x_test = x_test.reshape(x_test.shape[0], x_test.shape[1], 1)
 ic(x_train.shape, x_test.shape)
 
 
-model = Sequential()
-model.add(LSTM(40, activation='relu', input_shape=(11,1), return_sequences=True))
-model.add(Conv1D(128, 2))
-model.add(Dense(128, activation='relu'))
-model.add(Dropout(0.2))
-model.add(Dense(64, activation='relu'))
-model.add(Dense(32, activation='relu'))
-model.add(Dropout(0.2))
-model.add(Dense(16, activation='relu'))
-model.add(Flatten())
-model.add(Dense(7, activation='softmax'))
+# model = Sequential()
+# model.add(LSTM(40, activation='relu', input_shape=(11,1), return_sequences=True))
+# model.add(Conv1D(128, 2))
+# model.add(Dense(128, activation='relu'))
+# model.add(Dropout(0.2))
+# model.add(Dense(64, activation='relu'))
+# model.add(Dense(32, activation='relu'))
+# model.add(Dropout(0.2))
+# model.add(Dense(16, activation='relu'))
+# model.add(Flatten())
+# model.add(Dense(7, activation='softmax'))
 
-model.summary()
+# model.summary()
 
-#3. 컴파일, 훈련
-es = EarlyStopping(monitor='acc', patience=20, mode='auto', verbose=1)
-cp = ModelCheckpoint(monitor='val_loss', patience=10, mode='auto', save_best_only=True, filepath='./_save/ModelCheckPoint/keras48_5_MCP_wine.hdf5')
-model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['acc'])
-start = time.time()
-model.fit(x_train, y_train, epochs=1000, verbose=1, validation_split=0.2, batch_size=32, shuffle=True, callbacks=[es, cp])
-걸린시간 = round((time.time() - start) /60,1)
+# #3. 컴파일, 훈련
+# es = EarlyStopping(monitor='acc', patience=20, mode='auto', verbose=1)
+# cp = ModelCheckpoint(monitor='val_loss', patience=10, mode='auto', save_best_only=True, filepath='./_save/ModelCheckPoint/keras48_5_MCP_wine.hdf5')
+# model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['acc'])
+# start = time.time()
+# model.fit(x_train, y_train, epochs=1000, verbose=1, validation_split=0.2, batch_size=32, shuffle=True, callbacks=[es, cp])
+# 걸린시간 = round((time.time() - start) /60,1)
 
-model.save('./_save/ModelCheckPoint/keras48_5_model_save_wine.h5')
+# model.save('./_save/ModelCheckPoint/keras48_5_model_save_wine.h5')
+
+# model = load_model('./_save/ModelCheckPoint/keras48_5_model_save_wine.h5')
+model = load_model('./_save/ModelCheckPoint/keras48_5_MCP_wine.hdf5')
 
 #4. 평가, 예측
 
@@ -78,17 +81,26 @@ y_predict = model.predict(x_test)
 loss = model.evaluate(x_test, y_test)
 ic(loss[0])
 ic(loss[1])
-ic(f'{걸린시간}분')
+# ic(f'{걸린시간}분')
 
 '''
 
 모델, 체크포인트 저장
 
+ic| loss[0]: 1.8885363340377808
+ic| loss[1]: 0.5693877339363098
+ic| f'{걸린시간}분': '16.9분'
 
 모델 로드
 
+ic| loss[0]: 1.8885363340377808
+ic| loss[1]: 0.5693877339363098
+
 
 체크포인트 로드
+
+ic| loss[0]: 1.0871055126190186
+ic| loss[1]: 0.557823121547699
 
 
 

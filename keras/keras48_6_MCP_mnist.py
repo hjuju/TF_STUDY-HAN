@@ -54,14 +54,17 @@ model.add(Dense(10, activation='softmax'))
 model.summary()
 
 #3. 컴파일, 훈련
-es = EarlyStopping(monitor='acc', patience=10, mode='auto', verbose=1)
-cp = ModelCheckpoint(monitor='val_loss', patience=10, mode='auto', save_best_only=True, filepath='./_save/ModelCheckPoint/keras48_6_MCP_mnist.hdf5')
+es = EarlyStopping(monitor='acc', patience=3, mode='auto', verbose=1)
+cp = ModelCheckpoint(monitor='val_loss', patience=3, mode='auto', save_best_only=True, filepath='./_save/ModelCheckPoint/keras48_6_MCP_mnist.hdf5')
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['acc'])
 start = time.time()
-model.fit(x_train, y_train, epochs=10, verbose=1, validation_split=0.2, batch_size=1024, shuffle=True, callbacks=[es, cp])
+model.fit(x_train, y_train, epochs=100, verbose=1, validation_split=0.2, batch_size=1024, shuffle=True, callbacks=[es, cp])
 걸린시간 = round((time.time() - start) /60,1)
 
 model.save('./_save/ModelCheckPoint/keras48_6_model_save_mnist.h5')
+
+# model = load_model('./_save/ModelCheckPoint/keras48_6_model_save_mnist.h5')
+# model = load_model('./_save/ModelCheckPoint/keras48_6_MCP_mnist.hdf5')
 
 #4. 평가, 예측
 
@@ -75,6 +78,7 @@ ic(f'{걸린시간}분')
 '''
 
 모델, 체크포인트 저장
+
 
 
 모델 로드
