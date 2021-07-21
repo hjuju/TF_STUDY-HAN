@@ -36,50 +36,62 @@ y_test = one.transform(y_test).toarray()
 
 
 #2. 모델링
-model = Sequential()
-model.add(LSTM(10, activation='relu', input_shape=(32 * 32 ,3 )))
-model.add(Conv1D(128, 2))
-model.add(Dense(128, activation='relu'))
-model.add(Dropout(0.2))
-model.add(Dense(64, activation='relu'))
-model.add(Dense(32, activation='relu'))
-model.add(Dropout(0.2))
-model.add(Dense(16, activation='relu'))
-model.add(Flatten())
-model.add(Dense(100, activation='softmax'))
+# model = Sequential()
+# model.add(LSTM(10, activation='relu', input_shape=(32 * 32 ,3 ), return_sequences=True))
+# model.add(Conv1D(128, 2))
+# model.add(Dense(128, activation='relu'))
+# model.add(Dropout(0.2))
+# model.add(Dense(64, activation='relu'))
+# model.add(Dense(32, activation='relu'))
+# model.add(Dropout(0.2))
+# model.add(Dense(16, activation='relu'))
+# model.add(Flatten())
+# model.add(Dense(100, activation='softmax'))
 
-model.summary()
+# model.summary()
 
-#3. 컴파일, 훈련
-es = EarlyStopping(monitor='acc', patience=3, mode='auto', verbose=1)
-cp = ModelCheckpoint(monitor='val_loss', patience=3, mode='auto', save_best_only=True, filepath='./_save/ModelCheckPoint/keras48_9_MCP_cifar100.hdf5')
-model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['acc'])
-start = time.time()
-model.fit(x_train, y_train, epochs=100, verbose=1, validation_split=0.2, batch_size=1024, shuffle=True, callbacks=[es])
-걸린시간 = round((time.time() - start) /60,1)
-
-model.save('./_save/ModelCheckPoint/keras48_9_model_save_cifar100.h5')
+# #3. 컴파일, 훈련
+# es = EarlyStopping(monitor='acc', patience=3, mode='auto', verbose=1)
+# cp = ModelCheckpoint(monitor='val_loss', patience=3, mode='auto', save_best_only=True, filepath='./_save/ModelCheckPoint/keras48_9_MCP_cifar100.hdf5')
+# model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['acc'])
+# start = time.time()
+# model.fit(x_train, y_train, epochs=5, verbose=1, validation_split=0.2, batch_size=1024, shuffle=True, callbacks=[es, cp])
+# 걸린시간 = round((time.time() - start) /60,1)
 
 # model.save('./_save/ModelCheckPoint/keras48_9_model_save_cifar100.h5')
-# model.save('./_save/ModelCheckPoint/keras48_9_MCP_cifar100.hdf5')
+
+# model = load_model('./_save/ModelCheckPoint/keras48_9_model_save_cifar100.h5')
+model = load_model('./_save/ModelCheckPoint/keras48_9_MCP_cifar100.hdf5')
 
 #4. evaluating, prediction
 loss = model.evaluate(x_test, y_test)
 
 print('loss = ', loss[0])
 print('accuracy = ', loss[1])
-ic(f'{걸린시간}분')
+# ic(f'{걸린시간}분')
 
 
 '''
 
 모델, 체크포인트 저장
 
+loss =  3.2971222400665283
+accuracy =  0.2329999953508377
+ic| f'{걸린시간}분': '7.1분'
+
 
 모델 로드
 
+loss =  3.2971222400665283
+accuracy =  0.2329999953508377
+
 
 체크포인트 로드
+
+loss =  3.2971222400665283
+accuracy =  0.2329999953508377
+
+
 
 
 
