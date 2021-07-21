@@ -9,6 +9,8 @@ from tensorflow.keras.utils import to_categorical
 from sklearn.model_selection import train_test_split
 import time
 from sklearn.metrics import r2_score
+from tensorflow.python.keras.layers.convolutional import Conv1D
+from tensorflow.python.keras.layers.core import Flatten
 
 
 
@@ -36,15 +38,17 @@ x_test = x_test.reshape(x_test.shape[0], x_test.shape[1], 1)
 # ic(x_train.shape, x_test.shape)
 
 
-ic(np.unique(y))
+# ic(np.unique(y))
 
 
 model = Sequential()
-model.add(LSTM(20, activation='relu', input_shape=(13,1)))
+model.add(LSTM(20, activation='relu', input_shape=(13,1), return_sequences=True))
+model.add(Conv1D(128, 2))
 model.add(Dense(128, activation='relu'))
 model.add(Dense(64, activation='relu'))
 model.add(Dense(32, activation='relu'))
 model.add(Dense(16, activation='relu'))
+model.add(Flatten())
 model.add(Dense(1))
 
 model.summary()
@@ -78,5 +82,10 @@ CNN
 ic| loss: [14.31032943725586, 2.9922759532928467]
 ic| r2: 0.8017186882057898
 ic| f'{걸린시간}분': '0.6분'
+
+LSTM + Conv1D
+ic| loss[0]: 22.978023529052734
+ic| r2: 0.7260213135951661
+ic| f'{걸린시간}분': '0.9분'
 
 '''

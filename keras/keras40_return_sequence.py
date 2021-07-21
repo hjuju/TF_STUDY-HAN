@@ -26,7 +26,7 @@ model.add(Dense(5, activation='relu'))
 model.add(Dense(1))
 
 model.summary()
-
+ 
 '''
 ______________________________________________________________
 Layer (type)                 Output Shape              Param #

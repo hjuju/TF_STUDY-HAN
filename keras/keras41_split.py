@@ -5,7 +5,7 @@ size = 5
 
 def split_x(dataset, size):
     aaa = []
-    for i in range(len(dataset) - size + 1):
+    for i in range(len(dataset) - size + 1):  # 10 - 5 + 1 = 6행 // 행의 개수가 정해짐
         subset = dataset[i : (i + size)]
         aaa.append(subset)
     return np.array(aaa)
