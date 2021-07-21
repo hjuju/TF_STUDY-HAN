@@ -48,16 +48,23 @@ x_test = scaler.transform(x_test)
 
 
 
-model = load_model('./_save/keras46_1_save_model.h5')
+#model = load_model('./_save/keras46_1_save_model_1.h5') # Total params: 48,193 모델만 저장 됐기때문에 컴파일과 핏을 해야함(모델만 저장하고싶은 경우 모델 밑에다 세이브 모델)
+# ic| loss: [3013.8955078125, 44.97294616699219]
+# ic| r2: 0.5077867392716188
+model = load_model('./_save/keras46_1_save_model_2.h5') #모델, 핏, 컴파일 저장했기 때문에 결과가 바로 나옴(가중치까지 저장하고싶은경우 컴파일과 핏 다음) Total params: 48,193
+# ic| loss: [3017.820556640625, 42.99439239501953]
+# ic| r2: 0.5071456568125352
+# ic| loss: [2968.9794921875, 43.072540283203125]
+# ic| r2: 0.515122088557109
 
-model.summary()
+#model.summary()
 
 
-#3. 컴파일, 훈련
-es = EarlyStopping(monitor='val_loss', patience=20, mode='auto')
-model.compile(loss='mse', optimizer='adam', metrics=['mae'])
+##3. 컴파일, 훈련
+# es = EarlyStopping(monitor='val_loss', patience=20, mode='auto')
+# model.compile(loss='mse', optimizer='adam', metrics=['mae'])
 start = time.time()
-model.fit(x_train, y_train, epochs=500, verbose=2, batch_size=8, validation_split=0.2, shuffle=True, callbacks=[es])
+# model.fit(x_train, y_train, epochs=500, verbose=2, batch_size=8, validation_split=0.2, shuffle=True, callbacks=[es])
 걸린시간 = round((time.time() - start) /60,1)
 
 #4. 평가, 예측
