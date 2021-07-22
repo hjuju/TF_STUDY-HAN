@@ -56,7 +56,7 @@ ic(np.unique(y))
 
 # #3. 컴파일, 훈련
 # es = EarlyStopping(monitor='acc', patience=20, mode='auto', verbose=1)
-# cp = cp = ModelCheckpointcp = ModelCheckpoint(monitor='val_loss', patience=10, mode='auto', save_best_only=True, filepath='./_save/ModelCheckPoint/keras48_4_MCP_iris.hdf5')
+# cp = ModelCheckpoint(monitor='val_loss', patience=10, mode='auto', save_best_only=True, filepath='./_save/ModelCheckPoint/keras48_4_MCP_iris.hdf5')
 # model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['acc'])
 # start = time.time()
 # model.fit(x_train, y_train, epochs=1000, verbose=1, validation_split=0.2, batch_size=32, shuffle=True, callbacks=[es, cp])
