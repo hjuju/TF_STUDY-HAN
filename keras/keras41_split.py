@@ -13,10 +13,10 @@ def split_x(dataset, size):
 
 dataset = split_x(a, size)
 
-print(dataset)
+ic(dataset)
 
-x = dataset[:, :4]
-y = dataset[:, 4]
+x = dataset[:, :5]
+y = dataset[:, 3]
 
 ic(x)
 ic(y)

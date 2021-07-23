@@ -31,7 +31,7 @@ y = datasets_np[:,[-1]]
 
 # ic(np.shape(x))
 
-# ic(np.shape(y))
+ic(np.shape(y))
 
 # ic(x)
 # ic(y)
@@ -46,42 +46,42 @@ y = datasets_np[:,[-1]]
 # 3. y의 라벨을 확인 np.unique(y)
 
 
-onehot_encoder = OneHotEncoder() # 0 1 2 자동채움X
-onehot_encoder.fit(y)
-y = onehot_encoder.transform(y).toarray()
+# onehot_encoder = OneHotEncoder() # 0 1 2 자동채움X
+# onehot_encoder.fit(y)
+# y = onehot_encoder.transform(y).toarray()
 
 
 
-x_train, x_test, y_train, y_test = train_test_split(x,y, train_size=0.99, random_state=70)
+# x_train, x_test, y_train, y_test = train_test_split(x,y, train_size=0.99, random_state=70)
 
-scaler = RobustScaler()
-scaler.fit(x_train)
-x_train = scaler.transform(x_train)
-x_test = scaler.transform(x_test)
+# scaler = RobustScaler()
+# scaler.fit(x_train)
+# x_train = scaler.transform(x_train)
+# x_test = scaler.transform(x_test)
 
-model = Sequential()
-model.add(Dense(128, activation='relu', input_dim=11))
-model.add(Dense(128, activation='relu'))
-model.add(Dense(64, activation='relu'))
-model.add(Dense(64, activation='relu'))
-model.add(Dense(64, activation='relu'))
-model.add(Dense(7, activation='softmax'))
+# model = Sequential()
+# model.add(Dense(128, activation='relu', input_dim=11))
+# model.add(Dense(128, activation='relu'))
+# model.add(Dense(64, activation='relu'))
+# model.add(Dense(64, activation='relu'))
+# model.add(Dense(64, activation='relu'))
+# model.add(Dense(7, activation='softmax'))
 
-model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
-start = time.time()
-es = EarlyStopping(monitor='loss', patience=100, mode='auto', verbose=1)
-model.fit(x_train, y_train, epochs=1000, verbose=1, batch_size=8, validation_split=0.001 , callbacks=[es])
-걸린시간 = (time.time() - start) /60
-
-
-loss = model.evaluate(x_test, y_test)
-ic('loss:', loss[0])
-ic('accuracy', loss[1])
-ic(걸린시간)
-# ic(loss)
+# model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+# start = time.time()
+# es = EarlyStopping(monitor='loss', patience=100, mode='auto', verbose=1)
+# model.fit(x_train, y_train, epochs=1000, verbose=1, batch_size=8, validation_split=0.001 , callbacks=[es])
+# 걸린시간 = (time.time() - start) /60
 
 
-y_predict = model.predict(x_test)
+# loss = model.evaluate(x_test, y_test)
+# ic('loss:', loss[0])
+# ic('accuracy', loss[1])
+# ic(걸린시간)
+# # ic(loss)
+
+
+# y_predict = model.predict(x_test)
 
 '''
 RobustScaler
