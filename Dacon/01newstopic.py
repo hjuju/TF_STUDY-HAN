@@ -68,8 +68,8 @@ x_train, x_test, y_train, y_test = train_test_split(x,y,train_size=0.8)
 
 model = Sequential()
 model.add(Embedding(input_dim=101082, output_dim=128, input_length=10 ))
+model.add(Dropout(0.5))
 model.add(LSTM(128, activation='relu', return_sequences=True))
-model.add(Dropout(0.3))
 model.add(Conv1D(64, 2))
 model.add(GlobalAveragePooling1D())
 model.add(Dropout(0.3))
@@ -82,7 +82,7 @@ model.summary()
 date = datetime.datetime.now() 
 date_time = date.strftime("%m%d_%H%M") 
 
-filepath = './_save/' 
+filepath = './Dacon/_save/ModelCheckPoint/' 
 filename = '.{epoch:04d}-{val_loss:4f}.hdf5' 
 modelpath = "".join([filepath, "_newstopic_", date_time, "_", filename])
 
@@ -95,8 +95,8 @@ model.fit(x_train, y_train, epochs=100, batch_size=512, validation_split=0.2, ca
 걸린시간 = round((time.time() - start) /60,1)
 
 
-model.save('./_save/newstopic_save_model_2.h5')
-model.save_weights('./_save/newstopic_save_weights_2.h5')
+model.save('./Dacon/_save/ModelCheckPoint/newstopic_save_model_2.h5')
+model.save_weights('./Dacon/_save/ModelCheckPoint/newstopic_save_weights_2.h5')
 
 #4. 평가, 예측
 
@@ -119,4 +119,4 @@ ic(submission.shape)
 
 
 date_time = datetime.datetime.now().strftime("%y%m%d_%H%M")
-submission.to_csv(path + 'predict' + date_time + '.csv', index=False)
+submission.to_csv('./Dacon/_save/predict' + date_time + '.csv', index=False)
