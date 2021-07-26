@@ -29,7 +29,7 @@ word_size = len(token.word_index)
 ic(word_size) # 27(단어의 종류가 27개)
 ic(len(np.unique(pad_x)))
 
-# 원 핫 인코딩 -> 라벨의 개수만큼 생김 (13, 5) -> (13, 5, 27)
+# 원 핫 인코딩 -> 라벨의 개수만큼 생김 (13, 5) -> 원핫 인코딩 후(13, 5, 27) -> 쓸모 없는 데이터만 너무 많아질 수 있음
 
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense,LSTM, Embedding #  -> onehot, vector화 까지 Embedding이 모두 처리해줌

@@ -72,3 +72,8 @@ model.fit(pad_x, labels, epochs=100, batch_size=1)
 
 acc = model.evaluate(pad_x, labels)[1]
 ic(acc)
+
+'''
+DNN
+ic| acc: 0.9230769276618958
+'''

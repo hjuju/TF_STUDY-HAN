@@ -1,6 +1,7 @@
 from tensorflow.keras.preprocessing.text import Tokenizer
 import numpy as np
 from icecream import ic
+from tensorflow.python.keras.backend import flatten
 
 docs = ['너무 재밋어요', '참 최고에요', '참 잘 만든 영화예요', '추천하고 싶은 영화입니다',
         '한 번 더 보고 싶네요', '글세요', '별로에요', ' 생각보다 지루해요', '연기가 어색해요',
@@ -29,10 +30,13 @@ word_size = len(token.word_index)
 ic(word_size) # 27(단어의 종류가 27개)
 ic(len(np.unique(pad_x)))
 
+pad_x = pad_x.reshape(13,5,1)
+ic(pad_x.shape)
+
 # 원 핫 인코딩 -> 라벨의 개수만큼 생김 (13, 5) -> (13, 5, 27)
 
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense,LSTM, Embedding #  -> onehot, vector화 까지 Embedding이 모두 처리해줌
+from tensorflow.keras.layers import Dense,LSTM, Embedding, Conv1D, Flatten #  -> onehot, vector화 까지 Embedding이 모두 처리해줌
 
 model = Sequential()
 '''
@@ -42,8 +46,9 @@ model.add(Embedding(input_dim=28, output_dim=77, input_length=5)) # inputdim * o
 # model.add(Embedding(28, 77, input_length=5))
 # input_dim 과 input_length의 값은 크게 줘도 상관없지만 파라미터 수 증가, 각각 권장된 대로 넣어주는게 좋음
 '''
-model.add(Dense(32, input_shape=(5,))) # 자연어 처리를 할 때 꼭 embedding을 사용하지 않아도 됨, 하지만 통상적으로 사용
+model.add(LSTM(32, input_shape=(5,1))) # 자연어 처리를 할 때 꼭 embedding을 사용하지 않아도 됨, 하지만 통상적으로 사용
 model.add(Dense(16))
+model.add(Flatten())
 model.add(Dense(1, activation='sigmoid'))
 
 model.summary()
@@ -72,3 +77,14 @@ model.fit(pad_x, labels, epochs=100, batch_size=1)
 
 acc = model.evaluate(pad_x, labels)[1]
 ic(acc)
+
+'''
+DNN
+ic| acc: 0.9230769276618958
+
+LSTM
+ic| acc: 0.9230769276618958
+
+Conv1D
+ic| acc: 0.8461538553237915
+'''
