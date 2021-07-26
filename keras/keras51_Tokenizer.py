@@ -12,7 +12,7 @@ ic(token.word_index)
 # {'나는': 3, '마구': 2, '맛있는': 5, '매우': 4, '먹었다': 7, '밥을': 6, '진짜': 1}
 
 x = token.texts_to_sequences([text]) 
-ic(x) # [[3, 1, 4, 5, 6, 1, 2, 2, 7]] 수치화 된 형태로 출력
+ic(type(x)) # [[3, 1, 4, 5, 6, 1, 2, 2, 7]] 수치화 된 형태로 출력
 
 # 원 핫 인코딩 
 from tensorflow.keras.utils import to_categorical
