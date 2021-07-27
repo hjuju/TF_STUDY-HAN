@@ -45,11 +45,18 @@ model.add(Dense(64, activation='relu'))
 model.add(Dense(10, activation='softmax')) # 이진분류로 출력
 
 #3. 컴파일, 훈련 metrics=['acc']
-model.compile(loss='sparse_catergorical_crossentropy', optimizer='adam', metrics=['acc'])
+model.compile(loss='sparse_categorical_crossentropy', optimizer='adam', metrics=['acc'])
 start = time.time()
-es = EarlyStopping(monitor='loss', patience=5, mode='auto', verbose=1)
-hist = model.fit(x_train, y_train, epochs=1000, verbose=1, validation_split= 0.001, batch_size=128, callbacks=[es])
+es = EarlyStopping(monitor='loss', patience=7, mode='auto', verbose=1)
+tb = TensorBoard(log_dir='./_save/_graph', histogram_freq=0,
+                    write_graph=True, write_images=True) # 로그값의 디렉터리 경로 설정
+model.fit(x_train, y_train, epochs=20, verbose=1, validation_split= 0.1, batch_size=128, callbacks=[es, tb])
 걸린시간 = round((time.time() - start) /60,1)
+
+'''
+temsorboard -> 
+
+'''
 
 #4. 평가, 예측 predict 필요x acc로 판단
 

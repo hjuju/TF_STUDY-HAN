@@ -13,6 +13,7 @@ np.save("./_save/_npy/k55_x_data_iris.npy", arr=x_data_iris) # 넘파이로 정�
 np.save("./_save/_npy/k55_y_data_iris.npy", arr=y_data_iris)
 
 
+
 ############################################ boston ############################################
 
 

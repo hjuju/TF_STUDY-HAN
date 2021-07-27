@@ -37,8 +37,7 @@ y = to_categorical(y)
 
 
 # 데이터 npy저장
-x_data = x
-y_data = y
+
 
 np.save("./Dacon/_save/_npy/newstopic_x_data.npy", arr=x) 
 np.save("./Dacon/_save/_npy/newstopic_y_data.npy", arr=y)
@@ -77,11 +76,12 @@ x_train, x_test, y_train, y_test = train_test_split(x,y,train_size=0.8)
 
 model = Sequential()
 model.add(Embedding(input_dim=101082, output_dim=128, input_length=10 ))
-model.add(Dropout(0.5))
+model.add(Dropout(0.2))
 model.add(GRU(128, activation='relu', return_sequences=True))
 model.add(Conv1D(64, 2))
 model.add(GlobalAveragePooling1D())
 model.add(Dense(32, activation='relu'))
+model.add(Dense(16, activation='relu'))
 model.add(Dense(7, activation='softmax'))
 
 model.summary()
@@ -120,7 +120,7 @@ ic(f'{걸린시간}분')
 ic(len(y_predict))
 topic = []
 for i in range(len(y_predict)):
-    topic.append(np.argmax(y_predict[i]))   # np.argmax -> 최대값의 색인 위치
+    topic.append(np.argmax(y_predict[i]))  
 
 submission['topic_idx'] = topic
 ic(submission.shape)

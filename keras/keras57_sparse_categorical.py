@@ -45,7 +45,7 @@ model.add(Dense(64, activation='relu'))
 model.add(Dense(10, activation='softmax')) # 이진분류로 출력
 
 #3. 컴파일, 훈련 metrics=['acc']
-model.compile(loss='sparse_catergorical_crossentropy', optimizer='adam', metrics=['acc'])
+model.compile(loss='sparse_categorical_crossentropy', optimizer='adam', metrics=['acc'])
 start = time.time()
 es = EarlyStopping(monitor='loss', patience=5, mode='auto', verbose=1)
 model.fit(x_train, y_train, epochs=1000, verbose=1, validation_split= 0.001, batch_size=128, callbacks=[es])

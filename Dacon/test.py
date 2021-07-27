@@ -7,4 +7,4 @@ import numpy as np
 x = np.load("./Dacon/_save/_npy/newstopic_x_data.npy",allow_pickle=True) 
 y = np.load("./Dacon/_save/_npy/newstopic_y_data.npy")
 
-print(y)
+print(x)
