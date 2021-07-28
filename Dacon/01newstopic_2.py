@@ -54,43 +54,47 @@ y_train = np.array([x for x in train['topic_idx']])
 # Modeling
 
 
-model = Sequential()
-model.add(Dense(512, input_dim=150000, activation='relu'))
-model.add(Dense(256, activation='relu'))
-model.add(Dense(128, activation='relu'))
-model.add(Dense(64, activation='relu'))
-model.add(Dense(7, activation='softmax'))
+# model = Sequential()
+# model.add(Embedding(input_dim=150000, output_dim=200, input_length=14))
+# model.add(Bidirectional(LSTM(64, return_sequences=True, activation='relu')))
+# model.add(Dropout(0.5))
+# model.add(Bidirectional(LSTM(128, return_sequences=True, activation='relu')))
+# model.add(Bidirectional(LSTM(256, return_sequences=True, activation='relu')))
+# model.add(Dropout(0.2))
+# model.add(Conv1D(512, 2, activation='relu'))
+# model.add(GlobalAveragePooling1D())
+# model.add(Dense(7, activation='softmax'))
 
-model.summary()
+# model.summary()
 
-date = datetime.datetime.now() 
-date_time = date.strftime("%m%d_%H%M") 
+# date = datetime.datetime.now() 
+# date_time = date.strftime("%m%d_%H%M") 
 
-filepath = './Dacon/_save/ModelCheckPoint/' 
-filename = '.{epoch:04d}-{val_loss:4f}.hdf5' 
-modelpath = "".join([filepath, "_newstopic_", date_time, "_", filename])
+# filepath = './Dacon/_save/ModelCheckPoint/' 
+# filename = '.{epoch:04d}-{val_loss:4f}.hdf5' 
+# modelpath = "".join([filepath, "_newstopic_", date_time, "_", filename])
 
-cp = ModelCheckpoint(monitor='val_loss', patience=10, verbose=1, mode='auto', save_best_only=True,
-                    filepath= modelpath)
-es = EarlyStopping(monitor='val_loss', patience=10, mode='auto', verbose=1)
-model.compile(loss='sparse_categorical_crossentropy', optimizer='adam', metrics=['acc'])
-start = time.time()
-model.fit(train_tf_text[:40000], train_label[:40000], epochs=50, batch_size=128, validation_data=(train_tf_text[40000:], train_label[40000:]))
-걸린시간 = round((time.time() - start) /60,1)
+# cp = ModelCheckpoint(monitor='val_loss', patience=10, verbose=1, mode='auto', save_best_only=True,
+#                     filepath= modelpath)
+# es = EarlyStopping(monitor='val_loss', patience=10, mode='auto', verbose=1)
+# model.compile(loss='sparse_categorical_crossentropy', optimizer='adam', metrics=['acc'])
+# start = time.time()
+# model.fit(train_tf_text[:40000], train_label[:40000], epochs=50, batch_size=128, validation_data=(train_tf_text[40000:], train_label[40000:]))
+# 걸린시간 = round((time.time() - start) /60,1)
 
-# Predict
-y_predict = model.predict(test_tf_text)
-y_predict = np.argmax(y_predict, axis=1)
+# # Predict
+# y_predict = model.predict(test_tf_text)
+# y_predict = np.argmax(y_predict, axis=1)
 
-# Results make to_csv submissions
-# ic(len(test_tf_text))
-# topic = []
-# for i in range(len(test_tf_text)):
-#     topic.append(np.argmax(test_tf_text[i]))   # np.argmax -> 최대값의 색인 위치
+# # Results make to_csv submissions
+# # ic(len(test_tf_text))
+# # topic = []
+# # for i in range(len(test_tf_text)):
+# #     topic.append(np.argmax(test_tf_text[i]))   # np.argmax -> 최대값의 색인 위치
 
-submission['topic_idx'] = y_predict
-ic(submission.shape)
+# submission['topic_idx'] = y_predict
+# ic(submission.shape)
 
 
-date_time = datetime.datetime.now().strftime("%y%m%d_%H%M")
-submission.to_csv('./Dacon/_save/predict' + date_time + '.csv', index=False)
+# date_time = datetime.datetime.now().strftime("%y%m%d_%H%M")
+# submission.to_csv('./Dacon/_save/predict' + date_time + '.csv', index=False)
