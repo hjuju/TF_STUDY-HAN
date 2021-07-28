@@ -81,7 +81,7 @@ y_test = np.load('./_save/_npy/k59_5_gender_test_y.npy')
 
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Conv2D, Flatten, MaxPool2D
-from tensorflow.keras.callbacks import EarlyStopping
+from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 import time
 
 model = Sequential()
@@ -95,12 +95,12 @@ model.add(Dense(256, activation='relu'))
 model.add(Dense(512, activation='relu'))
 model.add(Dense(1, activation='sigmoid'))
 
-es = EarlyStopping(monitor='val_loss', patience=20, verbose=1, mode='auto')
-
+es = EarlyStopping(monitor='val_loss', patience=20, verbose=1, mode='auto', restore_best_weights=True)
+cp = ModelCheckpoint(monitor='val_loss', patience=3, mode='auto', save_best_only=True, filepath='./_save/ModelCheckPoint/keras50_men_women.hdf5')
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['acc'])
 start = time.time()
 hist = model.fit(x_train, y_train, epochs=1000, steps_per_epoch=32,
-                validation_steps=4, validation_split=0.1, callbacks=[es])
+                validation_steps=4, validation_split=0.1, callbacks=[es, cp])
 걸린시간 = round((time.time() - start) /60,1)
 
 # img = image.load_img('../_data/men_women/prd/001.jpg', target_size=(150,150))
@@ -108,14 +108,14 @@ hist = model.fit(x_train, y_train, epochs=1000, steps_per_epoch=32,
 # prd_img = np.expand_dims(prd_img, axis=0)
 
 loss = model.evaluate(x_test, y_test)
-result = model.predict([x_prd])
+result = model.predict(x_prd)
 
 acc = hist.history['acc']
 val_acc = hist.history['val_acc']
 # loss = hist.history['loss']
 val_loss = hist.history['val_loss']
 
-result = (1- result) * 100
+# result = (1- result) * 100
 
 ic(걸린시간)
 
@@ -125,10 +125,11 @@ ic(val_acc[-1])
 ic(result)
 
 '''
-# ic| 걸린시간: 0.6
-# ic| acc[-1]: 0.989928662776947
-# ic| loss[0]: 4.575331687927246
-# ic| val_acc[-1]: 0.6188679337501526
+ic| 걸린시간: 0.6
+ic| acc[-1]: 0.987410843372345
+ic| loss[0]: 4.301959037780762
+ic| val_acc[-1]: 0.5924528241157532
+ic| result: array([[91.861374]]
 '''
 
 
