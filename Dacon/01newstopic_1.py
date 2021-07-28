@@ -6,7 +6,7 @@ from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from sklearn.model_selection import train_test_split
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, LSTM, Conv1D, Embedding, Flatten, GlobalAveragePooling1D, Dropout, GRU
+from tensorflow.keras.layers import Dense, LSTM, Conv1D, Embedding, Flatten, GlobalAveragePooling1D, Dropout, GRU, Bidirectional
 from tensorflow.keras.utils import to_categorical
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 import time
@@ -74,16 +74,15 @@ x_train, x_test, y_train, y_test = train_test_split(x,y,train_size=0.8)
 
 # ic(y_train.shape, y_test.shape)
 
-model = Sequential()
-model.add(Embedding(input_dim=101082, output_dim=128, input_length=10 ))
-model.add(Dropout(0.2))
-model.add(GRU(128, activation='relu', return_sequences=True))
-model.add(Conv1D(64, 2))
-model.add(GlobalAveragePooling1D())
-model.add(Dense(32, activation='relu'))
-model.add(Dense(16, activation='relu'))
-model.add(Dense(7, activation='softmax'))
 
+model = Sequential()
+model.add(Embedding(input_dim=101082, output_dim=128, input_length=10))
+model.add(Bidirectional(LSTM(64, return_sequences=True, activation='relu')))
+model.add(Dropout(0.7))
+model.add(Bidirectional(LSTM(32, return_sequences=True, activation='relu')))
+model.add(Bidirectional(LSTM(16, activation='relu')))
+model.add(Dropout(0.7))
+model.add(Dense(7, activation='softmax'))
 model.summary()
 
 #3. 컴파일, 훈련

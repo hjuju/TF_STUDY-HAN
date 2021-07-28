@@ -7,6 +7,9 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from icecream import ic
 import time
 import datetime
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense, LSTM, Embedding, Bidirectional, Dropout, GlobalAveragePooling1D, Conv1D, GRU
+from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 
 # Data
 path = './Dacon/_data/newstopic/'
@@ -43,24 +46,19 @@ tfidf.fit(train_text)
 train_tf_text = tfidf.transform(train_text).astype('float32')
 test_tf_text  = tfidf.transform(test_text).astype('float32')
 y_train = np.array([x for x in train['topic_idx']])
-ic(train_tf_text.shape, test_tf_text.shape)
+# ic(train_tf_text.shape, test_tf_text.shape)
 # ic(train_tf_text[:1])
-ic(train_label.shape)
+
 
 
 # Modeling
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, LSTM, Embedding, Bidirectional, Dropout, GlobalAveragePooling1D, Conv1D, GRU
-from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
+
 
 model = Sequential()
-model.add(Embedding(input_dim=150000, output_dim=128))
-model.add(Bidirectional(LSTM(64, return_sequences=True, activation='relu')))
-model.add(Dropout(0.5))
-model.add(Bidirectional(LSTM(32, return_sequences=True, activation='relu')))
-model.add(Bidirectional(LSTM(16, activation='relu')))
-model.add(Dropout(0.5))
-model.add(Dense(16, activation='relu'))
+model.add(Dense(512, input_dim=150000, activation='relu'))
+model.add(Dense(256, activation='relu'))
+model.add(Dense(128, activation='relu'))
+model.add(Dense(64, activation='relu'))
 model.add(Dense(7, activation='softmax'))
 
 model.summary()
