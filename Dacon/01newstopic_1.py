@@ -59,8 +59,8 @@ x_pred = token.texts_to_sequences(x_pred)
 # print("뉴스기사의 평균길이:", sum(map(len, x)) / len(x)) # 6.62
 
 
-x = pad_sequences(x, maxlen=10, padding='pre')
-x_pred = pad_sequences(x_pred, maxlen=10, padding='pre')
+x = pad_sequences(x, maxlen=14, padding='pre')
+x_pred = pad_sequences(x_pred, maxlen=14, padding='pre')
 # ic(x_train.shape, x_test.shape) # (36523, 10), x_test.shape: (9131, 10)
 
 word_size = len(token.word_index)
@@ -76,12 +76,14 @@ x_train, x_test, y_train, y_test = train_test_split(x,y,train_size=0.8)
 
 
 model = Sequential()
-model.add(Embedding(input_dim=101082, output_dim=128, input_length=10))
+model.add(Embedding(input_dim=101082, output_dim=200, input_length=14))
 model.add(Bidirectional(LSTM(64, return_sequences=True, activation='relu')))
-model.add(Dropout(0.7))
-model.add(Bidirectional(LSTM(32, return_sequences=True, activation='relu')))
-model.add(Bidirectional(LSTM(16, activation='relu')))
-model.add(Dropout(0.7))
+model.add(Bidirectional(LSTM(128, return_sequences=True, activation='relu')))
+model.add(Bidirectional(LSTM(256, return_sequences=True, activation='relu')))
+model.add(Dropout(0.3))
+model.add(GRU(512, activation='relu'))
+model.add(Flatten())
+model.add(Dense(256, activation='relu'))
 model.add(Dense(7, activation='softmax'))
 model.summary()
 
@@ -91,14 +93,14 @@ date_time = date.strftime("%m%d_%H%M")
 
 filepath = './Dacon/_save/ModelCheckPoint/' 
 filename = '.{epoch:04d}-{val_loss:4f}.hdf5' 
-modelpath = "".join([filepath, "_newstopic_", date_time, "_", filename])
+modelpath = "".join([filepath, "_newstopic_1_", date_time, "_", filename])
 
 cp = ModelCheckpoint(monitor='val_loss', patience=10, verbose=1, mode='auto', save_best_only=True,
                     filepath= modelpath)
-es = EarlyStopping(monitor='val_loss', patience=20, mode='auto', verbose=1)
+es = EarlyStopping(monitor='val_loss', patience=20, mode='auto', verbose=1, restore_best_weights=True)
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['acc'])
 start = time.time()
-model.fit(x_train, y_train, epochs=100, batch_size=512, validation_split=0.2, callbacks=[es, cp] )
+model.fit(x_train, y_train, epochs=100, batch_size=128, validation_split=0.2, callbacks=[es, cp] )
 걸린시간 = round((time.time() - start) /60,1)
 
 
