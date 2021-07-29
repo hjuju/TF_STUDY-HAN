@@ -56,7 +56,7 @@ model.add(Conv2D(16, (2,2), activation='relu'))
 model.add(Flatten())                                          
 model.add(Dense(128, activation='relu'))
 model.add(Dense(64, activation='relu'))
-model.add(Dense(10, activation='softmax')) # 이진분류로 출력
+model.add(Dense(10, activation='softmax')) 
 
 #3. 컴파일, 훈련 metrics=['acc']
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['acc'])
@@ -72,6 +72,7 @@ ic('loss:', loss[0])
 ic('accuracy', loss[1])
 ic(f'{걸린시간}분')
 # ic(loss)
+
 
 '''
 
