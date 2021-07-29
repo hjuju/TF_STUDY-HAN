@@ -30,7 +30,7 @@ def clean_text(sent):
 train["cleaned_title"] = train["title"].apply(lambda x : clean_text(x))
 test["cleaned_title"]  = test["title"].apply(lambda x : clean_text(x))
 
-# ic(train, test)
+ic(train, test)
 
 train_text = train["cleaned_title"].tolist()
 test_text = test["cleaned_title"].tolist()
@@ -46,41 +46,28 @@ tfidf.fit(train_text)
 train_tf_text = tfidf.transform(train_text).astype('float32')
 test_tf_text  = tfidf.transform(test_text).astype('float32')
 y_train = np.array([x for x in train['topic_idx']])
-# ic(train_tf_text.shape, test_tf_text.shape)
+ic(train_tf_text.shape, test_tf_text.shape)
 # ic(train_tf_text[:1])
-
+ic(train_label.shape)
 
 
 # Modeling
-
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense, LSTM, Embedding, Bidirectional, Dropout
+from tensorflow.keras.callbacks import EarlyStopping
 
 model = Sequential()
-model.add(Embedding(input_dim=150000, output_dim=200, input_length=14))
-model.add(Bidirectional(LSTM(64, return_sequences=True, activation='relu')))
-model.add(Dropout(0.5))
-model.add(Bidirectional(LSTM(128, return_sequences=True, activation='relu')))
-model.add(Bidirectional(LSTM(256, return_sequences=True, activation='relu')))
-model.add(Dropout(0.2))
-model.add(Conv1D(512, 2, activation='relu'))
-model.add(GlobalAveragePooling1D())
+model.add(Dense(128, input_dim=150000, activation='relu'))
+model.add(Dense(64, activation='relu'))
 model.add(Dense(7, activation='softmax'))
 
-model.summary()
-
-date = datetime.datetime.now() 
-date_time = date.strftime("%m%d_%H%M") 
-
-filepath = './Dacon/_save/ModelCheckPoint/' 
-filename = '.{epoch:04d}-{val_loss:4f}.hdf5' 
-modelpath = "".join([filepath, "_newstopic_", date_time, "_", filename])
-
-cp = ModelCheckpoint(monitor='val_loss', patience=10, verbose=1, mode='auto', save_best_only=True,
-                    filepath= modelpath)
-es = EarlyStopping(monitor='val_loss', patience=10, mode='auto', verbose=1)
 model.compile(loss='sparse_categorical_crossentropy', optimizer='adam', metrics=['acc'])
-start = time.time()
-model.fit(train_tf_text[:40000], train_label[:40000], epochs=50, batch_size=128, validation_data=(train_tf_text[40000:], train_label[40000:]))
-걸린시간 = round((time.time() - start) /60,1)
+
+import time
+start_time = time.time()
+model.fit(train_tf_text[:40000], train_label[:40000], epochs=30, batch_size=128, validation_data=(train_tf_text[40000:], train_label[40000:]))
+# model.fit(train_tf_text, train_label, epochs=5, batch_size=128, validation_split=0.2)
+duration_time = time.time() - start_time
 
 # Predict
 y_predict = model.predict(test_tf_text)
