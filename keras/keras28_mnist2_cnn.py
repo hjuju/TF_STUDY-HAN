@@ -62,12 +62,14 @@ model.add(Dense(10, activation='softmax'))
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['acc'])
 start = time.time()
 es = EarlyStopping(monitor='loss', patience=5, mode='auto', verbose=1)
-model.fit(x_train, y_train, epochs=1000, verbose=1, validation_split= 0.001, batch_size=128, callbacks=[es])
+model.fit(x_train, y_train, epochs=10, verbose=1, validation_split= 0.001, batch_size=128, callbacks=[es])
 걸린시간 = round((time.time() - start) /60,1)
 
 #4. 평가, 예측 predict 필요x acc로 판단
 
 loss = model.evaluate(x_test, y_test)
+y_predict = model.predict(x_test)
+ic(y_predict)
 ic('loss:', loss[0])
 ic('accuracy', loss[1])
 ic(f'{걸린시간}분')

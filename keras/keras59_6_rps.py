@@ -85,6 +85,7 @@ hist = model.fit(x_train, y_train, epochs=1000, steps_per_epoch=32,
 
 loss = model.evaluate(x_test, y_test)
 
+
 acc = hist.history['acc']
 val_acc = hist.history['val_acc']
 # loss = hist.history['loss']

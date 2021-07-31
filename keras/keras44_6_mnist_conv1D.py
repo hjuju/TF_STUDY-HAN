@@ -72,6 +72,7 @@ y_predict = model.predict(x_test)
 loss = model.evaluate(x_test, y_test)
 ic(loss[0])
 ic(loss[1])
+ic(y_predict)
 ic(f'{걸린시간}분')
 
 

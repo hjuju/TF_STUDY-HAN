@@ -57,7 +57,8 @@ from tensorflow.keras.layers import Dense, LSTM, Embedding, Bidirectional, Dropo
 from tensorflow.keras.callbacks import EarlyStopping
 
 model = Sequential()
-model.add(Dense(128, input_dim=150000, activation='relu'))
+model.add(Dense(256, input_dim=150000, activation='relu'))
+model.add(Dropout(0.8))
 model.add(Dense(64, activation='relu'))
 model.add(Dense(7, activation='softmax'))
 
@@ -65,7 +66,7 @@ model.compile(loss='sparse_categorical_crossentropy', optimizer='adam', metrics=
 
 import time
 start_time = time.time()
-model.fit(train_tf_text[:40000], train_label[:40000], epochs=30, batch_size=128, validation_data=(train_tf_text[40000:], train_label[40000:]))
+model.fit(train_tf_text[:40000], train_label[:40000], epochs=7, batch_size=16, validation_data=(train_tf_text[40000:], train_label[40000:]))
 # model.fit(train_tf_text, train_label, epochs=5, batch_size=128, validation_split=0.2)
 duration_time = time.time() - start_time
 
