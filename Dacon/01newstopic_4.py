@@ -85,6 +85,7 @@ merge2 = Dense(32, activation='relu')
 last_output = Dense(7, activation='softmax')(merge2)
 
 model = Model(inputs= input1, outputs=last_output)
+
 date = datetime.datetime.now() 
 date_time = date.strftime("%m%d_%H%M") 
 

@@ -7,8 +7,8 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from icecream import ic
 import time
 import datetime
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, LSTM, Embedding, Bidirectional, Dropout, GlobalAveragePooling1D, Conv1D, GRU
+from tensorflow.keras.models import Sequential, Model
+from tensorflow.keras.layers import Dense, LSTM, Embedding, Bidirectional, Dropout, GlobalAveragePooling1D, Conv1D, GRU, Input, Flatten, Concatenate
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 
 # Data
@@ -56,11 +56,32 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, LSTM, Embedding, Bidirectional, Dropout
 from tensorflow.keras.callbacks import EarlyStopping
 
-model = Sequential()
-model.add(Dense(256, input_dim=150000, activation='relu'))
-model.add(Dropout(0.8))
-model.add(Dense(64, activation='relu'))
-model.add(Dense(7, activation='softmax'))
+input1 = Input(shape=(150000,))
+bid1 = LSTM(64, return_sequences=True, activation='relu')(input1)
+bid2 = LSTM(128, return_sequences=True, activation='relu')(bid1)
+drp = Dropout(0.3)(bid2)
+bid3 = Bidirectional(LSTM(256, return_sequences=True, activation='relu'))(drp)
+gru1 = GRU(512, activation='relu', return_sequences=True)(bid3)
+drp2 =Dropout(0.3)(gru1)
+gru2 = GRU(256, activation='relu', return_sequences=True)(drp2)
+flt1 = Flatten()(gru1)
+ds1 = Dense(128,activation='relu')(flt1)
+
+output11 = Dense(256, activation='relu')(ds1)
+drp = Dense(0.4)(output11)
+output12 = Dense(128, activation='relu')(drp)
+output13 = Dense(64, activation='relu')(output12)
+
+output21 = Dense(256, activation='relu')(ds1)
+output22 = Dense(128, activation='relu')(output21)
+drp = Dropout(0.3)(output22)
+output23 = Dense(64, activation='relu')(drp)
+
+merge1 = concatenate([output13, output23])
+merge2 = Dense(32, activation='relu')
+last_output = Dense(7, activation='softmax')(merge2)
+
+model = Model(inputs= input1, outputs=last_output)
 
 model.compile(loss='sparse_categorical_crossentropy', optimizer='adam', metrics=['acc'])
 
