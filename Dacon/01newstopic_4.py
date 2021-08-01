@@ -3,12 +3,15 @@ import numpy as np
 from icecream import ic
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.utils import to_categorical
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, LSTM, Embedding, Bidirectional, Dropout, Conv1D, GlobalAveragePooling1D, GRU, Flatten, Input
+from tensorflow.keras.models import Sequential, Model
+from tensorflow.keras.layers import Dense, LSTM, Embedding, Bidirectional, Dropout, Conv1D, GlobalAveragePooling1D, GRU, Flatten, Input, concatenate
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 from tensorflow.keras.preprocessing.text import Tokenizer
 import time
 import datetime
+
+from tensorflow.python.keras.backend import concatenate
+
 
 
 
@@ -46,33 +49,42 @@ sequences_test = token.texts_to_sequences(x_test)
 x_train = pad_sequences(sequences_train, padding='post', maxlen=14)
 x_test = pad_sequences(sequences_test, padding='post', maxlen=14)
 
-#ic(x_train.shape, x_test.shape) # (45654, 14) (9131, 14)
+ic(x_train.shape, x_test.shape) # (45654, 14) (9131, 14)
 
 y_train = to_categorical(y_train)
 # ic(y_train)
 # ic(y_train.shape)   # (45654, 7)
 
 
-# # Modeling
+# Modeling
 
 input1 = Input(shape=(2000,))
-emb = Embedding(output_dim=200, input_length=14)(input1)
-bid = Bidirectional(LSTM(64, return_sequences=True, activation='relu'))(emb)
-bid2 = Bidirectional(LSTM(128, return_sequences=True, activation='relu'))(bid)
-drp = (Dropout(0.3))(bid2)
-(Bidirectional(LSTM(256, return_sequences=True, activation='relu')))
-model.add(GRU(512, activation='relu', return_sequences=True))
-model.add(Dropout(0.3))
-model.add(GRU(256, activation='relu', return_sequences=True))
-model.add(GRU(128, activation='relu', return_sequences=True))
-model.add(Dropout(0.3))
-model.add(GRU(64, activation='relu', return_sequences=True))
-model.add(GRU(32, activation='relu', return_sequences=True))
-model.add(Flatten()) 
-model.add(Dense(16, activation='softmax'))
-model.add(Dense(7, activation='softmax'))
+emb = Embedding(output_dim=256, input_dim=2000,)(input1)
+bid1 = Bidirectional(LSTM(64, return_sequences=True, activation='relu'))(emb)
+bid2 = Bidirectional(LSTM(128, return_sequences=True, activation='relu'))(bid1)
+drp = Dropout(0.3)(bid2)
+bid3 = Bidirectional(LSTM(256, return_sequences=True, activation='relu'))(drp)
+gru1 = GRU(512, activation='relu', return_sequences=True)(bid3)
+drp2 =Dropout(0.3)(gru1)
+gru2 = GRU(256, activation='relu', return_sequences=True)(drp2)
+flt1 = Flatten()(gru1)
+ds1 = Dense(128,activation='relu')(flt1)
 
-model = 
+output11 = Dense(256, activation='relu')(ds1)
+drp = Dense(0.4)(output11)
+output12 = Dense(128, activation='relu')(drp)
+output13 = Dense(64, activation='relu')(output12)
+
+output21 = Dense(256, activation='relu')(ds1)
+output22 = Dense(128, activation='relu')(output21)
+drp = Dropout(0.3)(output22)
+output23 = Dense(64, activation='relu')(drp)
+
+merge1 = concatenate([output13, output23])
+merge2 = Dense(32, activation='relu')
+last_output = Dense(7, activation='softmax')(merge2)
+
+model = Model(inputs= input1, outputs=last_output)
 date = datetime.datetime.now() 
 date_time = date.strftime("%m%d_%H%M") 
 

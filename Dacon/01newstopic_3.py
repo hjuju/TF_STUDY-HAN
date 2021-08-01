@@ -86,7 +86,7 @@ cp = ModelCheckpoint(monitor='val_loss', patience=10, verbose=1, mode='auto', sa
 es = EarlyStopping(monitor='val_loss', patience=10, mode='auto', verbose=1, restore_best_weights=True)
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['acc'])
 start = time.time()
-model.fit(x_train, y_train, epochs=10, batch_size=64, validation_split=0.2, callbacks=[es, cp] )
+model.fit(x_train, y_train, epochs=10, batch_size=32, validation_split=0.2, callbacks=[es, cp] )
 걸린시간 = round((time.time() - start) /60,1)
 
 y_predict = model.predict(x_test)
