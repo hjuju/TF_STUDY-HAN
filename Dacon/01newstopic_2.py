@@ -8,7 +8,7 @@ from icecream import ic
 import time
 import datetime
 from tensorflow.keras.models import Sequential, Model
-from tensorflow.keras.layers import Dense, LSTM, Embedding, Bidirectional, Dropout, GlobalAveragePooling1D, Conv1D, GRU, Input, Flatten, Concatenate
+from tensorflow.keras.layers import Dense, LSTM, Embedding, Bidirectional, Dropout, GlobalAveragePooling1D, Conv1D, GRU, Input, Flatten, concatenate
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 
 # Data
@@ -57,8 +57,9 @@ from tensorflow.keras.layers import Dense, LSTM, Embedding, Bidirectional, Dropo
 from tensorflow.keras.callbacks import EarlyStopping
 
 input1 = Input(shape=(150000,))
-bid1 = LSTM(64, return_sequences=True, activation='relu')(input1)
-bid2 = LSTM(128, return_sequences=True, activation='relu')(bid1)
+emb = Embedding(input_dim=150000, output_dim=200, input_length=14)(input1)
+bid1 = LSTM(512, return_sequences=True, activation='relu')(input1)
+bid2 = Bidirectional(LSTM(128, return_sequences=True, activation='relu'))(bid1)
 drp = Dropout(0.3)(bid2)
 bid3 = Bidirectional(LSTM(256, return_sequences=True, activation='relu'))(drp)
 gru1 = GRU(512, activation='relu', return_sequences=True)(bid3)
