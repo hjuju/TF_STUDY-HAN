@@ -39,7 +39,7 @@ test_text = test["cleaned_title"].tolist()
 
 train_label = np.asarray(train.topic_idx)
 
-tfidf = TfidfVectorizer(analyzer='word', sublinear_tf=True, ngram_range=(1, 2), max_features=45000, binary=False)
+tfidf = TfidfVectorizer(analyzer='char_wb', sublinear_tf=True, ngram_range=(1, 2), max_features=45000, binary=False)
 
 tfidf.fit(train_text)
 
@@ -58,7 +58,7 @@ from tensorflow.keras.callbacks import EarlyStopping
 
 model = Sequential()
 model.add(Dense(128, input_dim=45000, activation='relu'))
-model.add(Dropout(0.6))
+model.add(Dropout(0.8))
 # model.add(Dense(128, activation='relu'))
 # model.add(Dense(32, activation='relu'))
 model.add(Dense(7, activation='softmax'))
@@ -66,7 +66,7 @@ model.add(Dense(7, activation='softmax'))
 import time
 model.compile(loss='sparse_categorical_crossentropy', optimizer='adam', metrics=['acc'])
 start_time = time.time()
-model.fit(train_tf_text[:40000], train_label[:40000], epochs=10, batch_size=16, validation_data=(train_tf_text[40000:], train_label[40000:]))
+model.fit(train_tf_text[:40000], train_label[:40000], epochs=5, batch_size=64, validation_data=(train_tf_text[40000:], train_label[40000:]))
 # model.fit(train_tf_text, train_label, epochs=5, batch_size=128, validation_split=0.2)
 duration_time = time.time() - start_time
 
