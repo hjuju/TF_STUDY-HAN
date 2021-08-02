@@ -57,8 +57,10 @@ from tensorflow.keras.layers import Dense, LSTM, Embedding, Bidirectional, Dropo
 from tensorflow.keras.callbacks import EarlyStopping
 
 model = Sequential()
-model.add(Dense(512, input_dim=45000, activation='relu'))
+model.add(Dense(128, input_dim=45000, activation='relu'))
 model.add(Dropout(0.6))
+# model.add(Dense(128, activation='relu'))
+# model.add(Dense(32, activation='relu'))
 model.add(Dense(7, activation='softmax'))
 
 import time
