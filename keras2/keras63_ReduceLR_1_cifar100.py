@@ -4,7 +4,7 @@ from sklearn.preprocessing import MinMaxScaler, StandardScaler, RobustScaler, Qu
 from tensorflow.keras.datasets import cifar100
 from tensorflow.keras.models import Sequential, Model
 from tensorflow.keras.layers import Dense, Input, Conv2D, Flatten, MaxPool2D, Dropout, GlobalAveragePooling2D
-from keras.utils import to_categorical
+from tensorflow.keras.utils import to_categorical
 from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
 from icecream import ic
 import time
@@ -71,11 +71,12 @@ model.add(Dense(100, activation='softmax'))
 #3. 컴파일, 훈련
 
 from tensorflow.keras.optimizers import Adam
-optimizer = Adam(lr=0.1) # 실질적으로는 fit에서 적용 됨
+from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
+optimizer = Adam(lr=0.001) 
 
 es = EarlyStopping(monitor='val_loss', patience=15, mode='auto', verbose=1)
 reduce_lr = ReduceLROnPlateau(monitor='val_loss', patience=5, mode='auto', verbose=1, factor=0.5) 
-# factor: 5번 갱신이 없으면 lr이 50프로씩 감소 후 다시 5번 갱신이 없으면 es
+
 model.compile(loss='categorical_crossentropy', optimizer=optimizer, metrics=['acc'])
 start = time.time()
 hist = model.fit(x_train, y_train, epochs=300, batch_size=512, validation_split=0.25, callbacks=[es, reduce_lr])
@@ -139,5 +140,6 @@ accuracy =  0.4641000032424927
 ic| f'{걸린시간}분': '12.5분'
 
 ReduceLR
-
+loss =  1.8663263320922852
+accuracy =  0.5027999877929688
 '''
