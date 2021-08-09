@@ -10,10 +10,13 @@ from tensorflow.keras.utils import to_categorical
 import time
 from icecream import ic
 
+
 #1. data preprocessing
 (x_train, y_train), (x_test, y_test) = cifar10.load_data()
-x_train = x_train.reshape((60000, 28, 28, 1))/255
-x_test = x_test.reshape((10000, 28, 28, 1))/255
+ic(x_train.shape, x_test.shape)
+
+x_train = x_train.reshape((50000, 32, 32, 3))/255
+x_test = x_test.reshape((10000, 32, 32, 3))/255
 
 one = OneHotEncoder()
 y_train = y_train.reshape(-1,1)
@@ -24,9 +27,10 @@ y_test = one.transform(y_test).toarray()
 
 
 
+
 #2. 모델링
 model = Sequential()
-model.add(Conv2D(256, kernel_size=(2, 2), padding='same', activation='relu', input_shape=(28, 28, 1))) 
+model.add(Conv2D(256, kernel_size=(2, 2), padding='same', activation='relu', input_shape=(32, 32, 3))) 
 model.add(Conv2D(256, (2, 2), padding='same', activation='relu'))                   
 model.add(MaxPooling2D())                                         
 model.add(Conv2D(128, (3, 3), padding='same', activation='relu'))                   
@@ -39,7 +43,7 @@ model.add(Dense(1024, activation='relu'))
 model.add(Dense(512, activation='relu'))
 model.add(Dense(256, activation='relu'))
 model.add(Dense(128, activation='relu'))
-model.add(Dense(100, activation='softmax'))
+model.add(Dense(10, activation='softmax'))
 
 #3. compiling, training
 
@@ -48,8 +52,8 @@ from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
 
 optimizer = Adam(lr=0.001) 
 
-es = EarlyStopping(monitor='val_loss', patience=15, mode='auto', verbose=1)
-reduce_lr = ReduceLROnPlateau(monitor='val_loss', patience=5, mode='auto', verbose=1, factor=0.5) 
+es = EarlyStopping(monitor='val_loss', patience=10, mode='auto', verbose=1)
+reduce_lr = ReduceLROnPlateau(monitor='val_loss', patience=5, mode='auto', verbose=1, factor=0.05) 
 model.compile(loss='categorical_crossentropy', optimizer=optimizer, metrics=['acc'])
 start = time.time()
 model.fit(x_train, y_train, epochs=1000, batch_size=128, validation_split=0.001, callbacks=[es, reduce_lr])
@@ -63,6 +67,10 @@ print('accuracy = ', loss[1])
 ic(f'{걸린시간}분')
 
 '''
+ReduceLR
+loss =  1.5461745262145996
+accuracy =  0.7699999809265137
+
 loss =  0.8164052963256836
 accuracy =  0.7332000136375427
 '''

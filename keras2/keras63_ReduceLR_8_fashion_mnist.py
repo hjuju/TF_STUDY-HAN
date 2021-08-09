@@ -41,8 +41,8 @@ from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
 
 optimizer = Adam(lr=0.001) 
 
-es = EarlyStopping(monitor='val_loss', patience=15, mode='auto', verbose=1)
-reduce_lr = ReduceLROnPlateau(monitor='val_loss', patience=5, mode='auto', verbose=1, factor=0.5) 
+es = EarlyStopping(monitor='val_loss', patience=20, mode='auto', verbose=1)
+reduce_lr = ReduceLROnPlateau(monitor='val_loss', patience=5, mode='auto', verbose=1, factor=0.01) 
 
 model.compile(loss='categorical_crossentropy', optimizer=optimizer, metrics=['accuracy'])
 model.fit(x_train, y_train, epochs=1000, batch_size=128, validation_split=0.001, callbacks=[es, reduce_lr])
@@ -54,6 +54,10 @@ print('loss = ', loss[0])
 print('accuracy = ', loss[1])
 
 '''
+reduceLR
+loss =  0.28742092847824097
+accuracy =  0.9293000102043152
+
 loss =  0.3115113377571106
 accuracy =  0.9218999743461609
 '''

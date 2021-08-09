@@ -64,8 +64,8 @@ from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
 
 optimizer = Adam(lr=0.001) 
 
-es = EarlyStopping(monitor='val_loss', patience=20, mode='auto', verbose=1)
-reduce_lr = ReduceLROnPlateau(monitor='val_loss', patience=5, mode='auto', verbose=1, factor=0.01) 
+es = EarlyStopping(monitor='val_loss', patience=50, mode='auto', verbose=1)
+reduce_lr = ReduceLROnPlateau(monitor='val_loss', patience=5, mode='auto', verbose=1, factor=0.05) 
 
 
 model.compile(loss='categorical_crossentropy', optimizer=optimizer, metrics=['acc'])
