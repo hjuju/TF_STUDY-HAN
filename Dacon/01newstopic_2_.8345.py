@@ -59,6 +59,8 @@ from tensorflow.keras.callbacks import EarlyStopping
 model = Sequential()
 model.add(Dense(128, input_dim=45000, activation='relu'))
 model.add(Dropout(0.8))
+model.add(Dense(64, activation='relu'))
+model.add(Dropout(0.6))
 # model.add(Dense(128, activation='relu'))
 # model.add(Dense(32, activation='relu'))
 model.add(Dense(7, activation='softmax'))

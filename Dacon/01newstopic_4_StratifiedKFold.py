@@ -148,11 +148,7 @@ topic = []
 for i in range(len(test_y)):
     topic.append(np.argmax(test_y[i]))
 end_time = time.time() - start_time
-# loss = model.evaluate(x_test, y_test)
-# ic('loss = ', loss[0])
-# ic('acc = ', loss[1])
-# ic('val_acc = ', loss[-1])
-# ic('time taken(s) = ', end_time)
+
 
 submission['topic_idx'] = topic
 ic(submission.shape)
