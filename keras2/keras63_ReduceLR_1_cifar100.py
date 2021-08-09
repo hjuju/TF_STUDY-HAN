@@ -73,10 +73,12 @@ model.add(Dense(100, activation='softmax'))
 from tensorflow.keras.optimizers import Adam
 optimizer = Adam(lr=0.1) # 실질적으로는 fit에서 적용 됨
 
-es = EarlyStopping(monitor='val_loss', patience=20, mode='auto', verbose=1)
+es = EarlyStopping(monitor='val_loss', patience=15, mode='auto', verbose=1)
+reduce_lr = ReduceLROnPlateau(monitor='val_loss', patience=5, mode='auto', verbose=1, factor=0.5) 
+# factor: 5번 갱신이 없으면 lr이 50프로씩 감소 후 다시 5번 갱신이 없으면 es
 model.compile(loss='categorical_crossentropy', optimizer=optimizer, metrics=['acc'])
 start = time.time()
-hist = model.fit(x_train, y_train, epochs=300, batch_size=512, validation_split=0.25, callbacks=[es])
+hist = model.fit(x_train, y_train, epochs=300, batch_size=512, validation_split=0.25, callbacks=[es, reduce_lr])
 걸린시간 = round((time.time() - start) /60,1)
 
 #4. evaluating, prediction
@@ -135,5 +137,7 @@ GlobalAveragePooling2D
 loss =  2.0949783325195312
 accuracy =  0.4641000032424927
 ic| f'{걸린시간}분': '12.5분'
+
+ReduceLR
 
 '''

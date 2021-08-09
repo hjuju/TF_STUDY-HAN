@@ -9,7 +9,7 @@ import time
 import datetime
 from tensorflow.keras.models import Sequential, Model
 from tensorflow.keras.layers import Dense, LSTM, Embedding, Bidirectional, Dropout, GlobalAveragePooling1D, Conv1D, GRU, Input, Flatten, concatenate
-from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
+from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint, ReduceLROnPlateau
 
 # Data
 path = './Dacon/_data/newstopic/'
@@ -64,9 +64,15 @@ model.add(Dropout(0.8))
 model.add(Dense(7, activation='softmax'))
 
 import time
-model.compile(loss='sparse_categorical_crossentropy', optimizer='adam', metrics=['acc'])
+from tensorflow.keras.optimizers import Adam
+optimizer = Adam(learning_rate=0.001)
+
+es = EarlyStopping(monitor='val_loss', patience=50, verbose=1, mode='auto')
+reduce_lr = ReduceLROnPlateau(monitor='val_loss', verbose=1, patience=10, mode='auto', factor=0.1 )
+
+model.compile(loss='sparse_categorical_crossentropy', optimizer=optimizer, metrics=['acc'])
 start_time = time.time()
-model.fit(train_tf_text[:40000], train_label[:40000], epochs=5, batch_size=64, validation_data=(train_tf_text[40000:], train_label[40000:]))
+model.fit(train_tf_text[:40000], train_label[:40000], epochs=500, batch_size=16, validation_data=(train_tf_text[40000:], train_label[40000:]), callbacks=[es,reduce_lr])
 # model.fit(train_tf_text, train_label, epochs=5, batch_size=128, validation_split=0.2)
 duration_time = time.time() - start_time
 
