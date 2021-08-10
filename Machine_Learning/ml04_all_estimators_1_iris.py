@@ -20,17 +20,6 @@ y = datasets.target
 ic(x.shape, y.shape)  # (150, 4), (150,)->(150, 3)
 ic(y)   # (0,0,0, ... ,1,1,1, ... ,2,2,2, ...)
 
-# *** 머신러닝에서는 1차원으로 받아들여야 해서 원핫인코딩, 투카테고리칼 하지 않음
-# y = to_categorical(y)
-# ic(y[:5])
-# [0,0,0,0,0]
-# [[1. 0. 0.]
-#  [1. 0. 0.]
-#  [1. 0. 0.]
-#  [1. 0. 0.]
-#  [1. 0. 0.]]
-ic(y.shape)   # (150, )
-
 from sklearn.model_selection import train_test_split
 x_train, x_test, y_train, y_test = train_test_split(x, y, train_size=0.8, shuffle=True, random_state=66)
 
@@ -64,44 +53,47 @@ for (name , algorithm) in allAlgorithms:
 # predict는 100퍼센트 다 있음 가끔 score가 없는 경우도 있음
 # try, except로 에러뜬거 무시하고 계속해서 정상적으로 출력
 
-
 '''
-
-# model = SVC()
-# ic| acc: 0.9555555555555556
-
-# model = KNeighborsClassifier()
-# ic| acc: 0.8888888888888888
-
-# model = LogisticRegression()
-# ic| acc: 0.9777777777777777
-
-# model = DecisionTreeClassifier()
-# ic| acc: 0.9111111111111111
-
-model = RandomForestClassifier()
-# ic| acc: 0.8888888888888888
-
-# model = LinearSVC()
-# ic| acc: 0.9111111111111111
-
-
-# 3. 훈련(컴파일 포함되어 있어서 컴파일 할 필요 없음)
-model.fit(x_train, y_train)
-
-
-# 4. 평가(evaluate 대신 score 사용함!!), 예측
-results = model.score(x_test, y_test)       # accuracy
-print('model.score:', results)
-
-from sklearn.metrics import r2_score, accuracy_score
-y_predict = model.predict(x_test)
-acc = accuracy_score(y_test, y_predict)
-ic(acc)
-
-ic(y_test[:5])
-y_predict = model.predict(x_test[:5])
-ic(y_predict)   # 소프트맥스 통과한 값
-
-
+모델의 개수: 41
+AdaBoostClassifier 의 정답률:  0.6333333333333333
+BaggingClassifier 의 정답률:  0.9666666666666667
+BernoulliNB 의 정답률:  0.3
+CalibratedClassifierCV 의 정답률:  0.9
+CategoricalNB 의 정답률:  0.9
+ClassifierChain 은 없는놈!!
+ComplementNB 의 정답률:  0.6666666666666666
+DecisionTreeClassifier 의 정답률:  0.9333333333333333
+DummyClassifier 의 정답률:  0.3
+ExtraTreeClassifier 의 정답률:  0.9666666666666667
+ExtraTreesClassifier 의 정답률:  0.9333333333333333
+GaussianNB 의 정답률:  0.9666666666666667
+GaussianProcessClassifier 의 정답률:  0.9666666666666667
+GradientBoostingClassifier 의 정답률:  0.9666666666666667
+HistGradientBoostingClassifier 의 정답률:  0.8666666666666667
+KNeighborsClassifier 의 정답률:  0.9666666666666667
+LabelPropagation 의 정답률:  0.9333333333333333
+LabelSpreading 의 정답률:  0.9333333333333333
+LinearDiscriminantAnalysis 의 정답률:  1.0
+LinearSVC 의 정답률:  0.9666666666666667
+LogisticRegression 의 정답률:  1.0
+LogisticRegressionCV 의 정답률:  1.0
+MLPClassifier 의 정답률:  0.9666666666666667
+MultiOutputClassifier 은 없는놈!!
+MultinomialNB 의 정답률:  0.9666666666666667
+NearestCentroid 의 정답률:  0.9333333333333333
+NuSVC 의 정답률:  0.9666666666666667
+OneVsOneClassifier 은 없는놈!!
+OneVsRestClassifier 은 없는놈!!
+OutputCodeClassifier 은 없는놈!!
+PassiveAggressiveClassifier 의 정답률:  0.7
+Perceptron 의 정답률:  0.9333333333333333
+QuadraticDiscriminantAnalysis 의 정답률:  1.0
+RadiusNeighborsClassifier 의 정답률:  0.9666666666666667
+RandomForestClassifier 의 정답률:  0.9666666666666667
+RidgeClassifier 의 정답률:  0.8666666666666667
+RidgeClassifierCV 의 정답률:  0.8666666666666667
+SGDClassifier 의 정답률:  0.6666666666666666
+SVC 의 정답률:  0.9666666666666667
+StackingClassifier 은 없는놈!!
+VotingClassifier 은 없는놈!!
 '''

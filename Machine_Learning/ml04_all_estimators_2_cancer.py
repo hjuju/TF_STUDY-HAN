@@ -16,17 +16,6 @@ datasets = load_breast_cancer()
 x = datasets.data
 y = datasets.target
 ic(x.shape, y.shape)  # (150, 4), (150,)->(150, 3)
-
-
-# *** 머신러닝에서는 1차원으로 받아들여야 해서 원핫인코딩, 투카테고리칼 하지 않음
-# y = to_categorical(y)
-# ic(y[:5])
-# [0,0,0,0,0]
-# [[1. 0. 0.]
-#  [1. 0. 0.]
-#  [1. 0. 0.]
-#  [1. 0. 0.]
-#  [1. 0. 0.]]
 ic(y.shape)   # (150, )
 
 from sklearn.model_selection import train_test_split
@@ -62,3 +51,47 @@ for (name , algorithm) in allAlgorithms:
 # predict는 100퍼센트 다 있음 가끔 score가 없는 경우도 있음
 # try, except로 에러뜬거 무시하고 계속해서 정상적으로 출력
 
+'''
+모델의 개수: 41
+AdaBoostClassifier 의 정답률:  0.9473684210526315
+BaggingClassifier 의 정답률:  0.956140350877193
+BernoulliNB 의 정답률:  0.6403508771929824
+CalibratedClassifierCV 의 정답률:  0.8859649122807017
+CategoricalNB 은 없는놈!!
+ClassifierChain 은 없는놈!!
+ComplementNB 의 정답률:  0.868421052631579
+DecisionTreeClassifier 의 정답률:  0.9385964912280702
+DummyClassifier 의 정답률:  0.6403508771929824
+ExtraTreeClassifier 의 정답률:  0.9035087719298246
+ExtraTreesClassifier 의 정답률:  0.956140350877193
+GaussianNB 의 정답률:  0.9385964912280702
+GaussianProcessClassifier 의 정답률:  0.8771929824561403
+GradientBoostingClassifier 의 정답률:  0.9473684210526315
+HistGradientBoostingClassifier 의 정답률:  0.9736842105263158
+KNeighborsClassifier 의 정답률:  0.9210526315789473
+LabelPropagation 의 정답률:  0.3684210526315789
+LabelSpreading 의 정답률:  0.3684210526315789
+LinearDiscriminantAnalysis 의 정답률:  0.9473684210526315
+LinearSVC 의 정답률:  0.4649122807017544
+LogisticRegression 의 정답률:  0.9298245614035088
+LogisticRegressionCV 의 정답률:  0.9649122807017544
+MLPClassifier 의 정답률:  0.9035087719298246
+MultiOutputClassifier 은 없는놈!!
+MultinomialNB 의 정답률:  0.8596491228070176
+NearestCentroid 의 정답률:  0.868421052631579
+NuSVC 의 정답률:  0.8596491228070176
+OneVsOneClassifier 은 없는놈!!
+OneVsRestClassifier 은 없는놈!!
+OutputCodeClassifier 은 없는놈!!
+PassiveAggressiveClassifier 의 정답률:  0.868421052631579
+Perceptron 의 정답률:  0.8947368421052632
+QuadraticDiscriminantAnalysis 의 정답률:  0.9385964912280702
+RadiusNeighborsClassifier 은 없는놈!!
+RandomForestClassifier 의 정답률:  0.956140350877193
+RidgeClassifier 의 정답률:  0.956140350877193
+RidgeClassifierCV 의 정답률:  0.9473684210526315
+SGDClassifier 의 정답률:  0.7631578947368421
+SVC 의 정답률:  0.8947368421052632
+StackingClassifier 은 없는놈!!
+VotingClassifier 은 없는놈!!
+'''
