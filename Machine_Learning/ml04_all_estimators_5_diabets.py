@@ -22,12 +22,12 @@ from sklearn.model_selection import train_test_split
 x_train, x_test, y_train, y_test = train_test_split(x, y, train_size=0.8, shuffle=True, random_state=66)
 
 # 1-2. 데이터 전처리
-from sklearn.preprocessing import StandardScaler, MinMaxScaler, RobustScaler
+# from sklearn.preprocessing import StandardScaler, MinMaxScaler, RobustScaler, PowerTransformer, QuantileTransformer
 
-scaler = StandardScaler()
-scaler.fit(x_train)
-x_train = scaler.transform(x_train)
-x_test = scaler.transform(x_test)
+# scaler = QuantileTransformer()
+# scaler.fit(x_train)
+# x_train = scaler.transform(x_train)
+# x_test = scaler.transform(x_test)
 
 
 # 2. 모델(머신러닝에서는 정의만 해주면 됨)
@@ -36,19 +36,22 @@ allAlgorithms = all_estimators(type_filter='regressor')
 # ic(allAlgorithms)
 print('모델의 개수:',len(allAlgorithms))
 
+pre = ['StandardScaler', 'MinMaxScaler', 'RobustScaler', 'PowerTransformer', 'QuantileTransformer']
+
 for (name , algorithm) in allAlgorithms:
-    try:
-        model = algorithm()
+        try:
+            
+            model = algorithm()
 
-        model.fit(x_train, y_train) 
+            model.fit(x_train, y_train)             
 
-        y_predict = model.predict(x_test) 
-        # acc = accuracy_score(y_test,y_predict)
-        r2 = r2_score(y_test, y_predict)
-        print(name,'의 R2_score: ', r2)
-    except:
-        # continue
-        print(name,'은 없는놈!!')
+            y_predict = model.predict(x_test) 
+            # acc = accuracy_score(y_test,y_predict)
+            r2 = r2_score(y_test, y_predict)
+            print(name,'의 R2_score: ', r2)
+        except:
+            # continue
+            print(name,'은 없는놈!!')
 # predict는 100퍼센트 다 있음 가끔 score가 없는 경우도 있음
 # try, except로 에러뜬거 무시하고 계속해서 정상적으로 출력
 
