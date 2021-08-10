@@ -74,11 +74,11 @@ ic| r2: 0.7702191987906274
 model = RandomForestRegressor()
 ic| result: 0.8562970017636684
 ic| r2: 0.8562970017636684
-
-model = RandomForestClassifier()
-ic| result: 0.9649122807017544
-ic| r2: 0.8468127991937516
 '''
+model = RandomForestClassifier()
+# ic| result: 0.9649122807017544
+# ic| r2: 0.8468127991937516
+
 
 
 
