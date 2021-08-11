@@ -6,7 +6,7 @@
 # m07_1 최적의 파라미터 값을 가지고 model 구성 결과 도출
 
 import numpy as np
-from sklearn.datasets import load_iris
+from sklearn.datasets import load_boston
 from icecream import ic
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
@@ -23,7 +23,7 @@ from sklearn.preprocessing import StandardScaler, MinMaxScaler, RobustScaler, Po
 
 ### 머신러닝(evaluate -> score)
 
-datasets = load_iris()
+datasets = load_boston()
 
 
 # 1. 데이터
@@ -71,37 +71,52 @@ kfold = KFold(n_splits=n_splits, shuffle=True, random_state=66)
 #               {'n_jobs':[-1], 'n_estimators':[50, 80],'max_depth':[10, 12], 'min_samples_leaf':[12,18], 'min_samples_split':[16,20], 'criterion':['entropy', 'gini']}
 # ]
 
-md = 'randomforestregressor__'
-parameter = [ {f'{md}n_jobs':[-1], f'{md}n_estimators':[1, 10, 100], f'{md}max_depth':[6,8,10,12], 
-                f'{md}min_samples_leaf':[8,12,18], f'{md}min_samples_split':[8,16,20]},
+
+md = 'RR__'
+parameter = [ {f'{md}n_jobs':[-1], f'{md}n_estimators':[1, 10, 100], f'{md}max_depth':[6,8,10,12], f'{md}min_samples_leaf':[8,12,18], f'{md}min_samples_split':[8,16,20]},
+              {f'{md}n_jobs':[-1], f'{md}n_estimators':[2, 30, 200],f'{md}max_depth':[10,16], f'{md}min_samples_leaf':[10,14], f'{md}min_samples_split':[4,10,30]},
+              {f'{md}n_jobs':[-1], f'{md}n_estimators':[50, 80],f'{md}max_depth':[10, 12], f'{md}min_samples_leaf':[12,18], f'{md}min_samples_split':[16,20], f'{md}criterion':['entropy', 'gini']}
+]
               
-] 
 # n_estimators = epoch, n_jobs = cpu사용
 
-pipe = make_pipeline(MinMaxScaler(), RandomForestRegressor())
+# pipe = make_pipeline(MinMaxScaler(), RandomForestClassifier())
 
-model = GridSearchCV(pipe, parameter, cv=kfold, verbose=1) 
+pipe = Pipeline([("scaler", MinMaxScaler()), ("RR", RandomForestRegressor())])
+
+model = RandomizedSearchCV(pipe, parameter, cv=kfold, verbose=1) 
 
 model.fit(x_train,y_train)
 
-# print('최적의 매개변수: ', model.best_estimator_) # cv를 통해 나온 값 / GridSearchCV를 통해서만 출력 가능
-# print("best_score: ", model.best_score_)
+print('최적의 매개변수: ', model.best_estimator_) # cv를 통해 나온 값 / GridSearchCV를 통해서만 출력 가능
+print("best_score: ", model.best_params_)
+print("best_score: ", model.best_score_)
 
 
 y_predict = model.predict(x_test)
-acc= accuracy_score(y_test, y_predict)
-ic(acc)
+R2= r2_score(y_test, y_predict)
+ic(R2)
 
 '''
-Grid
-Fitting 5 folds for each of 108 candidates, totalling 540 fits
-ic| acc: 1.0
+
+최적의 매개변수:  Pipeline(steps=[('scaler', MinMaxScaler()),
+                ('RR',
+                 RandomForestRegressor(max_depth=6, min_samples_leaf=12,
+                                       min_samples_split=8, n_jobs=-1))])
+best_score:  {'RR__n_jobs': -1, 'RR__n_estimators': 100, 'RR__min_samples_split': 8, 'RR__min_samples_leaf': 12, 'RR__max_depth': 6}
+best_score:  0.7644377869706367
+ic| R2: 0.8779667273729213
 
 
-Randomize
-Fitting 5 folds for each of 10 candidates, totalling 50 fits
-ic| acc: 0.9333333333333333
 
+Fitting 5 folds for each of 176 candidates, totalling 880 fits
+최적의 매개변수:  Pipeline(steps=[('scaler', MinMaxScaler()),
+                ('RR',
+                 RandomForestRegressor(max_depth=8, min_samples_leaf=8,
+                                       min_samples_split=8, n_jobs=-1))])
+best_score:  {'RR__max_depth': 8, 'RR__min_samples_leaf': 8, 'RR__min_samples_split': 8, 'RR__n_estimators': 100, 'RR__n_jobs': -1}
+best_score:  0.7848090859592439
+ic| R2: 0.8891271316566726
 '''
 
 

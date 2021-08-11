@@ -6,7 +6,7 @@
 # m07_1 최적의 파라미터 값을 가지고 model 구성 결과 도출
 
 import numpy as np
-from sklearn.datasets import load_iris
+from sklearn.datasets import load_breast_cancer
 from icecream import ic
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
@@ -23,7 +23,7 @@ from sklearn.preprocessing import StandardScaler, MinMaxScaler, RobustScaler, Po
 
 ### 머신러닝(evaluate -> score)
 
-datasets = load_iris()
+datasets = load_breast_cancer()
 
 
 # 1. 데이터
@@ -71,36 +71,54 @@ kfold = KFold(n_splits=n_splits, shuffle=True, random_state=66)
 #               {'n_jobs':[-1], 'n_estimators':[50, 80],'max_depth':[10, 12], 'min_samples_leaf':[12,18], 'min_samples_split':[16,20], 'criterion':['entropy', 'gini']}
 # ]
 
-md = 'randomforestclassifier__'
+# md = 'randomforestclassifier__'
+# parameter = [ {f'{md}n_jobs':[-1], f'{md}n_estimators':[1, 10, 100], f'{md}max_depth':[6,8,10,12], 
+#                 f'{md}min_samples_leaf':[8,12,18], f'{md}min_samples_split':[8,16,20]},
+              
+# ] 
+
+md = 'RF__'
 parameter = [ {f'{md}n_jobs':[-1], f'{md}n_estimators':[1, 10, 100], f'{md}max_depth':[6,8,10,12], 
                 f'{md}min_samples_leaf':[8,12,18], f'{md}min_samples_split':[8,16,20]},
               
 ] 
 # n_estimators = epoch, n_jobs = cpu사용
 
-pipe = make_pipeline(MinMaxScaler(), RandomForestClassifier())
+# pipe = make_pipeline(MinMaxScaler(), RandomForestClassifier())
 
-model = RandomizedSearchCV(pipe, parameter, cv=kfold, verbose=1) 
+pipe = Pipeline([("scaler", MinMaxScaler()), ("RF", RandomForestClassifier())])
+
+model = GridSearchCV(pipe, parameter, cv=kfold, verbose=1) 
 
 model.fit(x_train,y_train)
 
-# print('최적의 매개변수: ', model.best_estimator_) # cv를 통해 나온 값 / GridSearchCV를 통해서만 출력 가능
-# print("best_score: ", model.best_score_)
+print('최적의 매개변수: ', model.best_estimator_) # cv를 통해 나온 값 / GridSearchCV를 통해서만 출력 가능
+print("best_score: ", model.best_params_)
+print("best_score: ", model.best_score_)
 
 
 y_predict = model.predict(x_test)
 acc= accuracy_score(y_test, y_predict)
 ic(acc)
 
+
 '''
 Grid
 Fitting 5 folds for each of 108 candidates, totalling 540 fits
-ic| acc: 0.9333333333333333
+ic| acc: 0.9649122807017544
 
 
 Randomize
 Fitting 5 folds for each of 10 candidates, totalling 50 fits
-ic| acc: 1.0
+ic| acc: 0.9736842105263158
+
+Grid
+최적의 매개변수:  Pipeline(steps=[('scaler', MinMaxScaler()),
+                ('RF', RandomForestClassifier(max_depth=8, min_samples_leaf=8,
+                                        min_samples_split=16, n_jobs=-1))])
+best_score:  {'RF__max_depth': 8, 'RF__min_samples_leaf': 8, 'RF__min_samples_split': 16, 'RF__n_estimators': 100, 'RF__n_jobs': -1}
+best_score:  0.9538461538461538
+ic| acc: 0.956140350877193
 
 '''
 

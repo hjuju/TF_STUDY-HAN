@@ -71,21 +71,26 @@ kfold = KFold(n_splits=n_splits, shuffle=True, random_state=66)
 #               {'n_jobs':[-1], 'n_estimators':[50, 80],'max_depth':[10, 12], 'min_samples_leaf':[12,18], 'min_samples_split':[16,20], 'criterion':['entropy', 'gini']}
 # ]
 
-md = 'randomforestclassifier__'
-parameter = [ {f'{md}n_jobs':[-1], f'{md}n_estimators':[1, 10, 100], f'{md}max_depth':[6,8,10,12], 
-                f'{md}min_samples_leaf':[8,12,18], f'{md}min_samples_split':[8,16,20]},
+
+md = 'RF__'
+parameter = [ {f'{md}n_jobs':[-1], f'{md}n_estimators':[1, 10, 100], f'{md}max_depth':[6,8,10,12], f'{md}min_samples_leaf':[8,12,18], f'{md}min_samples_split':[8,16,20]},
+              {f'{md}n_jobs':[-1], f'{md}n_estimators':[2, 30, 200],f'{md}max_depth':[10,16], f'{md}min_samples_leaf':[10,14], f'{md}min_samples_split':[4,10,30]},
+              {f'{md}n_jobs':[-1], f'{md}n_estimators':[50, 80],f'{md}max_depth':[10, 12], f'{md}min_samples_leaf':[12,18], f'{md}min_samples_split':[16,20], f'{md}criterion':['entropy', 'gini']}
+]
               
-] 
 # n_estimators = epoch, n_jobs = cpu사용
 
-pipe = make_pipeline(MinMaxScaler(), RandomForestClassifier())
+# pipe = make_pipeline(MinMaxScaler(), RandomForestClassifier())
+
+pipe = Pipeline([("scaler", MinMaxScaler()), ("RF", RandomForestClassifier())])
 
 model = RandomizedSearchCV(pipe, parameter, cv=kfold, verbose=1) 
 
 model.fit(x_train,y_train)
 
-# print('최적의 매개변수: ', model.best_estimator_) # cv를 통해 나온 값 / GridSearchCV를 통해서만 출력 가능
-# print("best_score: ", model.best_score_)
+print('최적의 매개변수: ', model.best_estimator_) # cv를 통해 나온 값 / GridSearchCV를 통해서만 출력 가능
+print("best_score: ", model.best_params_)
+print("best_score: ", model.best_score_)
 
 
 y_predict = model.predict(x_test)
@@ -93,15 +98,26 @@ acc= accuracy_score(y_test, y_predict)
 ic(acc)
 
 '''
-Grid
-Fitting 5 folds for each of 108 candidates, totalling 540 fits
-ic| acc: 0.9722222222222222
 
-
-Randomize
 Fitting 5 folds for each of 10 candidates, totalling 50 fits
-ic| acc: 0.9333333333333333
+최적의 매개변수:  Pipeline(steps=[('scaler', MinMaxScaler()),
+                ('RF',
+                 RandomForestClassifier(max_depth=8, min_samples_leaf=18,
+                                        min_samples_split=8, n_estimators=10,
+                                        n_jobs=-1))])
+best_score:  {'RF__n_jobs': -1, 'RF__n_estimators': 10, 'RF__min_samples_split': 8, 'RF__min_samples_leaf': 18, 'RF__max_depth': 8}
+best_score:  0.9507389162561577
+ic| acc: 0.9444444444444444
 
+Fitting 5 folds for each of 108 candidates, totalling 540 fits
+최적의 매개변수:  Pipeline(steps=[('scaler', MinMaxScaler()),
+                ('RF',
+                 RandomForestClassifier(max_depth=6, min_samples_leaf=18,
+                                        min_samples_split=16, n_estimators=10,
+                                        n_jobs=-1))])
+best_score:  {'RF__max_depth': 6, 'RF__min_samples_leaf': 18, 'RF__min_samples_split': 16, 'RF__n_estimators': 10, 'RF__n_jobs': -1}
+best_score:  0.9716748768472907
+ic| acc: 1.0
 '''
 
 
