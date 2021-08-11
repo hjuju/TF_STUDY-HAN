@@ -44,17 +44,24 @@ kfold = KFold(n_splits=n_splits, shuffle=True, random_state=66)
 # model = DecisionTreeRegressor()
 # Acc:  [0.82199317 0.77777757 0.78544355 0.71190956 0.8281235 ] 평균 Acc: 0.785
 
-model = RandomForestRegressor()
+# model = RandomForestRegressor()
 # Acc:  [0.9212039  0.85287361 0.82312955 0.87961106 0.89596901] 평균 Acc: 0.8746
 
 # model = LinearSVC()
 # 
 
+allAlgorithms = [RandomForestRegressor(), DecisionTreeRegressor(), LogisticRegression(), KNeighborsRegressor(), SVC()]
+
+for algorithm in allAlgorithms:
+        model = algorithm
+        scores = cross_val_score(model, x, y, cv=kfold)
+        
+        print(algorithm, 'Acc: ', scores, '평균 Acc:', round(np.mean(scores),4))
 
 # 4. 평가(evaluate 대신 score 사용함!!), 예측
 
-scores = cross_val_score(model, x,y,cv=kfold) # 어떤 모델로 훈련시킬 것인지, 데이터, 여기까지 하면 fit과 스코어까지 모두 완료-> 한번에 다섯번 훈련 시켜서 스코어 출력
-print('Acc: ', scores, '평균 Acc:', round(np.mean(scores),4))
+# scores = cross_val_score(model, x,y,cv=kfold) # 어떤 모델로 훈련시킬 것인지, 데이터, 여기까지 하면 fit과 스코어까지 모두 완료-> 한번에 다섯번 훈련 시켜서 스코어 출력
+# print('Acc: ', scores, '평균 Acc:', round(np.mean(scores),4))
 
 
 
