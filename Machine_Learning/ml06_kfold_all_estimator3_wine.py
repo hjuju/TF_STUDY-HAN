@@ -9,8 +9,6 @@ import warnings
 warnings.filterwarnings('ignore') # 경고무시
 from sklearn.model_selection import KFold, cross_val_score
 
-### 머신러닝(evaluate -> score)
-
 datasets = load_wine()
 print(datasets.DESCR)
 print(datasets.feature_names)
@@ -18,7 +16,7 @@ print(datasets.feature_names)
 # 1. 데이터
 x = datasets.data
 y = datasets.target
-ic(x.shape, y.shape)  # (150, 4), (150,)->(150, 3)
+ic(x.shape, y.shape) 
 
 # 2. 모델(머신러닝에서는 정의만 해주면 됨)
 
@@ -37,8 +35,7 @@ for (name , algorithm) in allAlgorithms:
     except:
         # continue
         print(name,'은 없는놈!!')
-# predict는 100퍼센트 다 있음 가끔 score가 없는 경우도 있음
-# try, except로 에러뜬거 무시하고 계속해서 정상적으로 출력
+
 
 '''
 모델의 개수: 41

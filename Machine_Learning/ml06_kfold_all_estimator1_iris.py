@@ -34,7 +34,7 @@ for (name , algorithm) in allAlgorithms:
         model = algorithm()
         scores = cross_val_score(model, x, y, cv=kfold)
         
-        print('name: ', name, 'Acc: ', scores, '평균 Acc:', round(np.mean(scores),4))
+        print(name, 'Acc: ', scores, '평균 Acc:', round(np.mean(scores),4))
     except:
         # continue
         print(name,'은 없는놈!!')
@@ -86,45 +86,46 @@ StackingClassifier 은 없는놈!!
 VotingClassifier 은 없는놈!!
 
 K_FOLD
-name:  AdaBoostClassifier Acc:  [0.63333333 0.93333333 1.         0.9        0.96666667] 평균 Acc: 0.8867
-name:  BaggingClassifier Acc:  [0.96666667 0.96666667 1.         0.9        0.96666667] 평균 Acc: 0.96
-name:  BernoulliNB Acc:  [0.3        0.33333333 0.3        0.23333333 0.3       ] 평균 Acc: 0.2933
-name:  CalibratedClassifierCV Acc:  [0.9        0.83333333 1.         0.86666667 0.96666667] 평균 Acc: 0.9133
-name:  CategoricalNB Acc:  [0.9        0.93333333 0.93333333 0.9        1.        ] 평균 Acc: 0.9333
+모델의 개수: 41
+AdaBoostClassifier Acc:  [0.63333333 0.93333333 1.         0.9        0.96666667] 평균 Acc: 0.8867
+BaggingClassifier Acc:  [0.93333333 0.93333333 1.         0.9        0.96666667] 평균 Acc: 0.9467
+BernoulliNB Acc:  [0.3        0.33333333 0.3        0.23333333 0.3       ] 평균 Acc: 0.2933
+CalibratedClassifierCV Acc:  [0.9        0.83333333 1.         0.86666667 0.96666667] 평균 Acc: 0.9133
+CategoricalNB Acc:  [0.9        0.93333333 0.93333333 0.9        1.        ] 평균 Acc: 0.9333
 ClassifierChain 은 없는놈!!
-name:  ComplementNB Acc:  [0.66666667 0.66666667 0.7        0.6        0.7       ] 평균 Acc: 0.6667
-name:  DecisionTreeClassifier Acc:  [0.93333333 0.96666667 1.         0.9        0.93333333] 평균 Acc: 0.9467
-name:  DummyClassifier Acc:  [0.3        0.33333333 0.3        0.23333333 0.3       ] 평균 Acc: 0.2933
-name:  ExtraTreeClassifier Acc:  [0.83333333 0.9        0.93333333 0.76666667 0.96666667] 평균 Acc: 0.88
-name:  ExtraTreesClassifier Acc:  [0.93333333 0.96666667 1.         0.86666667 0.96666667] 평균 Acc: 0.9467
-name:  GaussianNB Acc:  [0.96666667 0.9        1.         0.9        0.96666667] 평균 Acc: 0.9467
-name:  GaussianProcessClassifier Acc:  [0.96666667 0.96666667 1.         0.9        0.96666667] 평균 Acc: 0.96
-name:  GradientBoostingClassifier Acc:  [0.96666667 0.96666667 1.         0.93333333 0.96666667] 평균 Acc: 0.9667
-name:  HistGradientBoostingClassifier Acc:  [0.86666667 0.96666667 1.         0.9        0.96666667] 평균 Acc: 0.94
-name:  KNeighborsClassifier Acc:  [0.96666667 0.96666667 1.         0.9        0.96666667] 평균 Acc: 0.96
-name:  LabelPropagation Acc:  [0.93333333 1.         1.         0.9        0.96666667] 평균 Acc: 0.96
-name:  LabelSpreading Acc:  [0.93333333 1.         1.         0.9        0.96666667] 평균 Acc: 0.96
-name:  LinearDiscriminantAnalysis Acc:  [1.  1.  1.  0.9 1. ] 평균 Acc: 0.98
-name:  LinearSVC Acc:  [0.96666667 0.96666667 1.         0.9        1.        ] 평균 Acc: 0.9667
-name:  LogisticRegression Acc:  [1.         0.96666667 1.         0.9        0.96666667] 평균 Acc: 0.9667
-name:  LogisticRegressionCV Acc:  [1.         0.96666667 1.         0.9        1.        ] 평균 Acc: 0.9733
-name:  MLPClassifier Acc:  [0.96666667 0.96666667 1.         0.93333333 1.        ] 평균 Acc: 0.9733
+ComplementNB Acc:  [0.66666667 0.66666667 0.7        0.6        0.7       ] 평균 Acc: 0.6667
+DecisionTreeClassifier Acc:  [0.96666667 0.96666667 1.         0.9        0.93333333] 평균 Acc: 0.9533
+DummyClassifier Acc:  [0.3        0.33333333 0.3        0.23333333 0.3       ] 평균 Acc: 0.2933
+ExtraTreeClassifier Acc:  [0.83333333 0.86666667 0.96666667 0.83333333 0.96666667] 평균 Acc: 0.8933
+ExtraTreesClassifier Acc:  [0.93333333 0.96666667 1.         0.86666667 0.96666667] 평균 Acc: 0.9467
+GaussianNB Acc:  [0.96666667 0.9        1.         0.9        0.96666667] 평균 Acc: 0.9467
+GaussianProcessClassifier Acc:  [0.96666667 0.96666667 1.         0.9        0.96666667] 평균 Acc: 0.96
+GradientBoostingClassifier Acc:  [0.93333333 0.96666667 1.         0.93333333 0.96666667] 평균 Acc: 0.96
+HistGradientBoostingClassifier Acc:  [0.86666667 0.96666667 1.         0.9        0.96666667] 평균 Acc: 0.94
+KNeighborsClassifier Acc:  [0.96666667 0.96666667 1.         0.9        0.96666667] 평균 Acc: 0.96
+LabelPropagation Acc:  [0.93333333 1.         1.         0.9        0.96666667] 평균 Acc: 0.96
+LabelSpreading Acc:  [0.93333333 1.         1.         0.9        0.96666667] 평균 Acc: 0.96
+LinearDiscriminantAnalysis Acc:  [1.  1.  1.  0.9 1. ] 평균 Acc: 0.98
+LinearSVC Acc:  [0.96666667 0.96666667 1.         0.9        1.        ] 평균 Acc: 0.9667
+LogisticRegression Acc:  [1.         0.96666667 1.         0.9        0.96666667] 평균 Acc: 0.9667
+LogisticRegressionCV Acc:  [1.         0.96666667 1.         0.9        1.        ] 평균 Acc: 0.9733
+MLPClassifier Acc:  [0.96666667 0.96666667 1.         0.93333333 1.        ] 평균 Acc: 0.9733
 MultiOutputClassifier 은 없는놈!!
-name:  MultinomialNB Acc:  [0.96666667 0.93333333 1.         0.93333333 1.        ] 평균 Acc: 0.9667
-name:  NearestCentroid Acc:  [0.93333333 0.9        0.96666667 0.9        0.96666667] 평균 Acc: 0.9333
-name:  NuSVC Acc:  [0.96666667 0.96666667 1.         0.93333333 1.        ] 평균 Acc: 0.9733
+MultinomialNB Acc:  [0.96666667 0.93333333 1.         0.93333333 1.        ] 평균 Acc: 0.9667
+NearestCentroid Acc:  [0.93333333 0.9        0.96666667 0.9        0.96666667] 평균 Acc: 0.9333
+NuSVC Acc:  [0.96666667 0.96666667 1.         0.93333333 1.        ] 평균 Acc: 0.9733
 OneVsOneClassifier 은 없는놈!!
 OneVsRestClassifier 은 없는놈!!
 OutputCodeClassifier 은 없는놈!!
-name:  PassiveAggressiveClassifier Acc:  [0.93333333 0.8        0.73333333 0.9        0.93333333] 평균 Acc: 0.86
-name:  Perceptron Acc:  [0.66666667 0.66666667 0.93333333 0.73333333 0.9       ] 평균 Acc: 0.78
-name:  QuadraticDiscriminantAnalysis Acc:  [1.         0.96666667 1.         0.93333333 1.        ] 평균 Acc: 0.98
-name:  RadiusNeighborsClassifier Acc:  [0.96666667 0.9        0.96666667 0.93333333 1.        ] 평균 Acc: 0.9533
-name:  RandomForestClassifier Acc:  [0.96666667 0.96666667 1.         0.9        0.96666667] 평균 Acc: 0.96
-name:  RidgeClassifier Acc:  [0.86666667 0.8        0.93333333 0.7        0.9       ] 평균 Acc: 0.84
-name:  RidgeClassifierCV Acc:  [0.86666667 0.8        0.93333333 0.7        0.9       ] 평균 Acc: 0.84
-name:  SGDClassifier Acc:  [0.66666667 0.66666667 0.83333333 0.66666667 1.        ] 평균 Acc: 0.7667
-name:  SVC Acc:  [0.96666667 0.96666667 1.         0.93333333 0.96666667] 평균 Acc: 0.9667
+PassiveAggressiveClassifier Acc:  [0.76666667 0.76666667 1.         0.7        0.86666667] 평균 Acc: 0.82
+Perceptron Acc:  [0.66666667 0.66666667 0.93333333 0.73333333 0.9       ] 평균 Acc: 0.78
+QuadraticDiscriminantAnalysis Acc:  [1.         0.96666667 1.         0.93333333 1.        ] 평균 Acc: 0.98
+RadiusNeighborsClassifier Acc:  [0.96666667 0.9        0.96666667 0.93333333 1.        ] 평균 Acc: 0.9533
+RandomForestClassifier Acc:  [0.9        0.96666667 1.         0.9        0.96666667] 평균 Acc: 0.9467
+RidgeClassifier Acc:  [0.86666667 0.8        0.93333333 0.7        0.9       ] 평균 Acc: 0.84
+RidgeClassifierCV Acc:  [0.86666667 0.8        0.93333333 0.7        0.9       ] 평균 Acc: 0.84
+SGDClassifier Acc:  [0.86666667 0.96666667 0.76666667 0.83333333 0.63333333] 평균 Acc: 0.8133
+SVC Acc:  [0.96666667 0.96666667 1.         0.93333333 0.96666667] 평균 Acc: 0.9667
 StackingClassifier 은 없는놈!!
 VotingClassifier 은 없는놈!!
 '''
