@@ -71,21 +71,28 @@ kfold = KFold(n_splits=n_splits, shuffle=True, random_state=66)
 #               {'n_jobs':[-1], 'n_estimators':[50, 80],'max_depth':[10, 12], 'min_samples_leaf':[12,18], 'min_samples_split':[16,20], 'criterion':['entropy', 'gini']}
 # ]
 
-md = 'randomforestclassifier__'
+# md = 'randomforestclassifier__'
+# parameter = [ {f'{md}n_jobs':[-1], f'{md}n_estimators':[1, 10, 100], f'{md}max_depth':[6,8,10,12], 
+#                 f'{md}min_samples_leaf':[8,12,18], f'{md}min_samples_split':[8,16,20]},
+              
+# ] 
+
+md = 'RF__'
 parameter = [ {f'{md}n_jobs':[-1], f'{md}n_estimators':[1, 10, 100], f'{md}max_depth':[6,8,10,12], 
                 f'{md}min_samples_leaf':[8,12,18], f'{md}min_samples_split':[8,16,20]},
               
 ] 
 # n_estimators = epoch, n_jobs = cpu사용
 
-pipe = make_pipeline(MinMaxScaler(), RandomForestClassifier())
+pipe = Pipeline([("scaler", MinMaxScaler()), ("RF", RandomForestClassifier())]) # make_pipeline과 다르게 리스트로 넣어줘야함, as를 주어 이름을 바꿔줄 수 있음
 
 model = GridSearchCV(pipe, parameter, cv=kfold, verbose=1) 
 
 model.fit(x_train,y_train)
 
-# print('최적의 매개변수: ', model.best_estimator_) # cv를 통해 나온 값 / GridSearchCV를 통해서만 출력 가능
-# print("best_score: ", model.best_score_)
+print('최적의 매개변수: ', model.best_estimator_) # cv를 통해 나온 값 / GridSearchCV를 통해서만 출력 가능
+print("best_score: ", model.best_params_)
+print("best_score: ", model.best_score_)
 
 
 y_predict = model.predict(x_test)
@@ -101,6 +108,17 @@ ic| acc: 0.9333333333333333
 Randomize
 Fitting 5 folds for each of 10 candidates, totalling 50 fits
 ic| acc: 0.8
+
+Pipeline
+최적의 매개변수:  Pipeline(steps=[('scaler', MinMaxScaler()),
+                ('RF',
+                 RandomForestClassifier(max_depth=6, min_samples_leaf=8,
+                                        min_samples_split=20, n_estimators=10,
+                                        n_jobs=-1))])
+best_score:  {'RF__max_depth': 6, 'RF__min_samples_leaf': 8, 'RF__min_samples_split': 20, 'RF__n_estimators': 10, 'RF__n_jobs': -1}
+best_score:  0.9666666666666668
+ic| acc: 0.9666666666666667
+
 
 '''
 
