@@ -68,8 +68,8 @@ n_splits=5
 kfold = KFold(n_splits=n_splits, shuffle=True, random_state=66)
 
 parameter = [ {'n_jobs':[-1], 'n_estimators':[1, 10, 100],'max_depth':[6,8,10,12], 'min_samples_leaf':[8,12,18], 'min_samples_split':[8,16,20]},
-              {'n_jobs':[-1], 'n_estimators':[2, 30],'max_depth':[10,16], 'min_samples_leaf':[10,14], 'min_samples_split':[4,10,30]},
-              {'n_jobs':[-1], 'n_estimators':[50, 80],'max_depth':[10, 12], 'min_samples_leaf':[12,18], 'min_samples_split':[16,20], 'criterion':['mse', 'mae']}
+              {'n_jobs':[-1], 'n_estimators':[50, 80],'max_depth':[10, 12], 'min_samples_leaf':[12,18], 'min_samples_split':[16,20], 'criterion':['mse', 'mae']},
+              {'n_jobs':[-1], 'n_estimators':[100, 200, 300],'max_depth':[8,10,12,20], 'min_samples_leaf':[12,18,26], 'min_samples_split':[2, 8,16,20]}
 ] 
 # n_estimators = epoch, n_jobs = cpu사용
 
@@ -91,10 +91,15 @@ print("정답률: ", accuracy_score(y_test, y_predict))
 print("model.score: ", model.score(x_test, y_test))
 
 
-최적의 매개변수:  RandomForestRegressor(max_depth=8, min_samples_leaf=8, min_samples_split=16,
+최적의 매개변수:  RandomForestRegressor(max_depth=16, min_samples_leaf=10, min_samples_split=10,
+                      n_estimators=30, n_jobs=-1)
+best_score:  0.49395060656297823
+ic| r2: 0.4101611305950771
+
+최적의 매개변수:  RandomForestRegressor(max_depth=6, min_samples_leaf=8, min_samples_split=20,
                       n_estimators=10, n_jobs=-1)
-best_score:  0.790140285759074
-ic| r2: 0.8875417185735591
+best_score:  0.49378790729620164
+ic| r2: 0.41246578067357176
 
 '''
 
