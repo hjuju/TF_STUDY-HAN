@@ -25,7 +25,7 @@ print(datasets.feature_names)
 x = datasets.data
 y = datasets.target
 ic(x.shape, y.shape)  # (150, 4), (150,)->(150, 3)
-ic(y)   # (0,0,0, ... ,1,1,1, ... ,2,2,2, ...)
+
 
 
 from sklearn.model_selection import train_test_split, KFold, cross_val_score, GridSearchCV

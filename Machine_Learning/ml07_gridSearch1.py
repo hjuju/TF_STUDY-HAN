@@ -22,8 +22,6 @@ print(datasets.feature_names)
 x = datasets.data
 y = datasets.target
 ic(x.shape, y.shape)  # (150, 4), (150,)->(150, 3)
-ic(y)   # (0,0,0, ... ,1,1,1, ... ,2,2,2, ...)
-
 
 from sklearn.model_selection import train_test_split, KFold, cross_val_score, GridSearchCV
 
@@ -60,8 +58,8 @@ kfold = KFold(n_splits=n_splits, shuffle=True, random_state=66)
 
 parameter = [{"C":[1, 10, 100, 1000], "kernel":['linear']}, # 4 * 5(kfold숫자만큼) -> 20번 돌아감
              {"C":[1, 10, 100], "kernel":["rbf"], "gamma":[0.001, 0.0001]}, # 3 * 1 * 3 * 5 -> 30번
-             {"C":[1, 10, 100, 1000], "kernel":["sigmoid"], "gamma":[0.001, 0.0001]} # 4 * 1 * 2 * 5 = 40번 => 총 90번 모델이 돌아감
-] 
+             {"C":[1, 10, 100, 1000], "kernel":["sigmoid"], "gamma":[0.001, 0.0001]}] # 4 * 1 * 2 * 5 = 40번 => 총 90번 모델이 돌아감
+
 
 model = GridSearchCV(SVC(), parameter, cv=kfold) # 사용할 모델, parameter(정의), cv 명시 /  텐서플로로 하면 모델에 텐서플로 모델이 들어가면 됨
 
