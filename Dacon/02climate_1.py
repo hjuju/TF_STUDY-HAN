@@ -70,9 +70,6 @@ print('요약문_기대효과 길이 평균값: {}'.format(np.mean(length)))
 print('요약문_기대효과 길이 중간값: {}'.format(np.median(length)))
 
 
-# 데이터 전처리
-#해당 baseline 에서는 과제명 columns만 활용했습니다.
-#다채로운 변수 활용법으로 성능을 높여주세요!
 train=train[['과제명','label']]
 test=test[['과제명']]
 
