@@ -24,6 +24,20 @@ print('acc:', acc)
 
 print(model.feature_importances_)
 
+import matplotlib.pyplot as plt
+import numpy as np
+
+def plot_feature_importance_dataset(model): 
+    n_feature = datasets.data.shape[1]
+    plt.barh(np.arange(n_feature), model.feature_importances_, align='center')
+    plt.yticks(np.arange(n_feature), datasets.feature_names)
+    plt.xlabel("feature Importances")
+    plt.ylabel("features")
+    plt.ylim(-1, n_feature)
+
+plot_feature_importance_dataset(model)
+plt.show()
+
 '''
 RandomForestRegressor
 acc: 0.9202646740153897
@@ -36,5 +50,5 @@ acc: 0.8774175457631728
 [0.03878833 0.         0.         0.         0.00765832 0.29639913
  0.         0.05991689 0.         0.01862509 0.         0.
  0.57861225]
- 
+
 '''
