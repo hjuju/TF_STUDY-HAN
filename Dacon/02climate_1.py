@@ -97,6 +97,12 @@ for text in tqdm.tqdm(train['과제명']):
         clean_train_text.append(preprocessing(text, okt, remove_stopwords=True, stop_words=stop_words))
     except:
         clean_train_text.append([])
+
+for text in tqdm.tqdm(test['과제명']):
+    if type(text) == str:
+        clean_test_text.append(preprocessing(text, okt, remove_stopwords=True, stop_words=stop_words))
+    else:
+        clean_test_text.append([])        
     
 ic(len(clean_train_text))
 

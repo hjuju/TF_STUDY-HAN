@@ -16,7 +16,6 @@ x_train, x_test, y_train, y_test = train_test_split(x,y, train_size=0.7,shuffle=
 # x와 y가 쌍으로 움직이며 70퍼센트를 트레인으로 주고, 테스트는 나머지(명시x), 셔플True가 디폴트,
 #  랜덤값 난수(섞일때마다 성능 바뀔 수 있음)
 
-
 ic(x_train)
 ic(y_train)
 ic(x_test)
