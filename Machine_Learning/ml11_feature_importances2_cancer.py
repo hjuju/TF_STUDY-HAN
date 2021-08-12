@@ -1,5 +1,6 @@
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
+from xgboost import XGBClassifier
 from sklearn.datasets import load_breast_cancer
 from sklearn.model_selection import train_test_split
 datasets = load_breast_cancer()
@@ -12,8 +13,11 @@ y = datasets.target
 x_train, x_test, y_train, y_test = train_test_split(x, y, train_size=0.7, shuffle=True, random_state=66)
 
 #2. 모델
-model = DecisionTreeClassifier(max_depth=3)
+# model = DecisionTreeClassifier(max_depth=3)
 # model = RandomForestClassifier()
+# model = GradientBoostingClassifier()
+model = XGBClassifier()
+# 수치보고 어떤것이 더 괜찮은지 확인
 
 #3. 훈련
 model.fit(x_train, y_train)
