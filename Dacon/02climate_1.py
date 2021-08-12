@@ -7,18 +7,24 @@ import os
 import tqdm
 
 from konlpy.tag import Okt
-
+from icecream import ic
+import datetime
 import sklearn
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import log_loss, accuracy_score,f1_score
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.ensemble import RandomForestClassifier
-import datetime
+
 
 train=pd.read_csv('./Dacon/_data/climate/train.csv')
 test=pd.read_csv('./Dacon/_data/climate/test.csv')
 sample_submission=pd.read_csv('./Dacon/_data/climate/sample_submission.csv')
+
+#데이터 구조 파악
+print(train.shape)
+print(test.shape)
+print(sample_submission.shape)
 
 #심각한 불균형 데이터임을 알 수 있습니다.
 train.label.value_counts(sort=False)/len(train)
@@ -63,8 +69,8 @@ print('요약문_기대효과 길이 최솟값: {}'.format(np.min(length)))
 print('요약문_기대효과 길이 평균값: {}'.format(np.mean(length)))
 print('요약문_기대효과 길이 중간값: {}'.format(np.median(length)))
 
-# 데이터 전처리
 
+# 데이터 전처리
 #해당 baseline 에서는 과제명 columns만 활용했습니다.
 #다채로운 변수 활용법으로 성능을 높여주세요!
 train=train[['과제명','label']]
@@ -92,9 +98,9 @@ for text in tqdm.tqdm(train['과제명']):
     except:
         clean_train_text.append([])
     
-len(clean_train_text)
+ic(len(clean_train_text))
 
-len(clean_test_text)
+ic(len(clean_test_text))
 
 from sklearn.feature_extraction.text import CountVectorizer
 
@@ -104,11 +110,11 @@ train_features=vectorizer.fit_transform(clean_train_text)
 test_features=vectorizer.transform(clean_test_text)
 #test데이터에 fit_transform을 할 경우 data leakage에 해당합니다
 
-#훈련 데이터 셋과 검증 데이터 셋으로 분리
-TEST_SIZE=0.2
-RANDOM_SEED=42
+# 모델링
 
-train_x, eval_x, train_y, eval_y=train_test_split(train_features, train['label'], test_size=TEST_SIZE, random_state=RANDOM_SEED)
+#훈련 데이터 셋과 검증 데이터 셋으로 분리
+
+train_x, test_x, train_y, test_y=train_test_split(train_features, train['label'], test_size=0.2, random_state=66)
 
 #랜덤포레스트로 모델링
 from sklearn.ensemble import RandomForestClassifier
@@ -118,7 +124,7 @@ forest=RandomForestClassifier(n_estimators=100)
 forest.fit(train_x, train_y)
 
 #모델 검증
-forest.score(eval_x, eval_y)
+forest.score(test_x, test_y)
 
 forest.predict(test_features)
 
