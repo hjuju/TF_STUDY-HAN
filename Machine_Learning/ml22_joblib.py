@@ -57,12 +57,12 @@ n_estimators=200, learning_rate=0.1, n_jobs=1
 
 
 '''
-
+import joblib
 import pickle # 저장용도로 사용
 # pickle.dump(model, open('./_save/xgb_save/m21_pickle.dat','wb')) # 설정된 경로에 저장 
 
 # 불러오기(데이터만 빼고 모두 없어도 됨)
-model = pickle.load(open('./_save/xgb_save/m21_pickle.dat','rb'))
+model = joblib.load(open('./_save/xgb_save/m22_joblib.dat','rb'))
 ic("load model")
 
 
@@ -77,5 +77,6 @@ print("=================================================================")
 results = model.evals_result()
 ic(results) # XGB에서 제공 -> tensorflow의 history와 비슷
 
-import joblib
-joblib.dump(model, './_save/xgb_save/m22_joblib.dat')
+
+# joblib.dump(model, './_save/xgb_save/m22_joblib.dat')
+
