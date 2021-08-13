@@ -52,12 +52,17 @@ x_axis = range(0, epochs)
 fig, ax = pyplot.subplots()
 ax.plot(x_axis, results['validation_0']['rmse'], label='rmse_Train')
 ax.plot(x_axis, results['validation_1']['rmse'], label='rmes_Test')
-ax.plot(x_axis, results['validation_0']['mae'], label='mae_Train')
-ax.plot(x_axis, results['validation_1']['mae'], label='mae_Test')
-
 ax.legend()
 pyplot.ylabel('rmse')
 pyplot.title('XGBoost rmse')
+pyplot.show()
+
+fig, ax = pyplot.subplots()
+ax.plot(x_axis, results['validation_0']['mae'], label='mae_Train')
+ax.plot(x_axis, results['validation_1']['mae'], label='mae_Test')
+ax.legend()
+pyplot.ylabel('mae')
+pyplot.title('XGBoost mae')
 pyplot.show()
 
 '''
