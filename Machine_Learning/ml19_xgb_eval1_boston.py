@@ -25,10 +25,10 @@ x_train = scaler.transform(x_train)
 x_test = scaler.transform(x_test)
 
 #2. 모델
-model = XGBRegressor(n_estimators=100, learning_rate=0.05, n_jobs=1)
+model = XGBRegressor(n_estimators=20, learning_rate=0.05, n_jobs=1)
 
 #3. 훈련
-model.fit(x_train, y_train, verbose=1, eval_metric=['rmse', 'logloss','mae'],
+model.fit(x_train, y_train, verbose=1, eval_metric=['rmse', 'logloss'],
             eval_set=[(x_train, y_train),(x_test, y_test)]) # verbose를 출력하기 위해서는 평가하는 것이 무엇인지 명시해줘야함 / validation을 eval_set에 넣어줌
 
 #4. 평가
@@ -38,6 +38,25 @@ r2 = r2_score(y_test, y_pred)
 
 ic(result)
 ic(r2)
+
+print("=================================================================")
+results = model.evals_result()
+ic(results) # XGB에서 제공 -> tensorflow의 history와 비슷
+
+from matplotlib import pyplot
+
+results = model.evals_result()
+epochs = len(results['validation_0']['rmse'])
+x_axis = range(0, epochs)
+
+fig, ax = pyplot.subplots()
+ax.plot(x_axis, results['validation_0']['rmse'], label='Train')
+ax.plot(x_axis, results['validation_1']['rmse'], label='Test')
+
+ax.legend()
+pyplot.ylabel('AUC')
+pyplot.title('XGBoost AUC')
+pyplot.show()
 
 '''
 
