@@ -38,6 +38,7 @@ x = pca.fit_transform(x)
 
 # ic(np.argmax(cumsum >= 0.95)+1) # ic| np.argmax(cumsum >= 0.999)+1: 486
 
+
 from sklearn.model_selection import train_test_split, KFold, cross_val_score, GridSearchCV
 
 x_train, x_test, y_train, y_test = train_test_split(x, y, train_size=0.8, shuffle=True, random_state=66)

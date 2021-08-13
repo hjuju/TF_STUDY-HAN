@@ -11,10 +11,12 @@ from icecream import ic
 import datetime
 import sklearn
 from sklearn.preprocessing import LabelEncoder
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, KFold, cross_val_score, GridSearchCV, RandomizedSearchCV
 from sklearn.metrics import log_loss, accuracy_score,f1_score
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.ensemble import RandomForestClassifier
+from xgboost import XGBClassifier
+import time
 
 
 train=pd.read_csv('./Dacon/_data/climate/train.csv')
@@ -88,6 +90,7 @@ okt=Okt()
 clean_train_text=[]
 clean_test_text=[]
 
+start1 = time.time()
 #시간이 많이 걸립니다.
 for text in tqdm.tqdm(train['과제명']):
     try:
@@ -100,6 +103,9 @@ for text in tqdm.tqdm(test['과제명']):
         clean_test_text.append(preprocessing(text, okt, remove_stopwords=True, stop_words=stop_words))
     else:
         clean_test_text.append([])        
+end1 = time.time() - start1
+
+print('걸린시간: ', end1)
     
 ic(len(clean_train_text))
 
@@ -120,14 +126,29 @@ test_features=vectorizer.transform(clean_test_text)
 train_x, test_x, train_y, test_y=train_test_split(train_features, train['label'], test_size=0.2, random_state=66)
 
 #랜덤포레스트로 모델링
-from sklearn.ensemble import RandomForestClassifier
-from xgboost import XGBClassifier
 
 
-model=XGBClassifier(n_estimators=100)
+
+
+forest=XGBClassifier(n_estimators=100)
+
+parameter = [{"n_estimators":[90, 110], "learning_rate":[0.1,0.001,0.5], "max_depth":[4,5,6], "colsample_bytree":[0.6,0.9,1],"colsample_bylevel":[0.6,0.7,0.9]}]
+
+
+# 2. 모델(머신러닝에서는 정의만 해주면 됨)
+
+n_splits=5
+
+kfold = KFold(n_splits=n_splits, shuffle=True, random_state=66)
+
+start2 = time.time()
+model = GridSearchCV(XGBClassifier(), parameter, cv=kfold, verbose=1)
+
 
 model.fit(train_x, train_y)
+end2 = time.time() = start2
 
+print('걸린시간:', end2)
 #모델 검증
 model.score(test_x, test_y)
 
