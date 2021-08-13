@@ -24,7 +24,7 @@ ic(x.shape)# ic| x.shape: (70000, 28, 28)
 y = np.append(y_train, y_test, axis=0)
 
 
-compoents = 28*28
+compoents = 22*22
 
 x = x.reshape(x.shape[0], 28*28)
 # x.shape[1]
@@ -39,7 +39,7 @@ x = pca.fit_transform(x)
 # ic(np.argmax(cumsum >= 0.999)+1) # ic| np.argmax(cumsum >= 0.999)+1: 486
 
 
-x = x.reshape(x.shape[0], 28,28,1)
+x = x.reshape(x.shape[0], 22,22,1)
 
 
 ic(x.shape) # ic| x.shape: (70000, 486)
@@ -60,7 +60,7 @@ ic| x_train.shape: (56000, 486, 1, 1)
 # DNN으로 구성하고, 기존 DNN과 비교(PCA한것과 안한 것)
 
 model = Sequential()
-model.add(Conv2D(64, kernel_size=(2,2), padding='same', activation='relu', input_shape=(28, 28, 1)))
+model.add(Conv2D(64, kernel_size=(2,2), padding='same', activation='relu', input_shape=(22, 22, 1)))
 model.add(Conv2D(32, (2,2), padding='same',activation='relu')) 
 # model.add(MaxPooling2D(2,padding='same'))            
 model.add(Conv2D(32, (2,2),padding='same', activation='relu'))
@@ -93,12 +93,13 @@ ic(f'{걸린시간}분')
 # ic(loss)
 
 '''
-# PCA(486)
-# ic| 'loss:', loss[0]: 0.2959951162338257
-# ic| 'accuracy', loss[1]: 0.9559285640716553
-# ic| f'{걸린시간}분': '0.2분'
 
-PCA(X)
+# PCA(22*22)
+ic| 'loss:', loss[0]: 0.3032021224498749
+ic| 'accuracy', loss[1]: 0.9584285616874695
+ic| f'{걸린시간}분': '3.6분'
+
+# PCA(X)
 ic| 'loss:', loss[0]: 0.35307228565216064
 ic| 'accuracy', loss[1]: 0.9562143087387085
 ic| f'{걸린시간}분': '4.5분'
