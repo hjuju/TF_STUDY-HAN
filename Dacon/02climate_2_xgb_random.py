@@ -130,7 +130,7 @@ train_x, test_x, train_y, test_y=train_test_split(train_features, train['label']
 
 
 
-forest=XGBClassifier(n_estimators=100)
+
 
 parameter = [{"n_estimators":[90, 110], "learning_rate":[0.1,0.001,0.5], "max_depth":[4,5,6], "colsample_bytree":[0.6,0.9,1],"colsample_bylevel":[0.6,0.7,0.9]}]
 
@@ -142,11 +142,12 @@ n_splits=5
 kfold = KFold(n_splits=n_splits, shuffle=True, random_state=66)
 
 start2 = time.time()
-model = GridSearchCV(XGBClassifier(), parameter, cv=kfold, verbose=1)
+model = XGBClassifier(n_estimators=110,learning_rate=0.05,max_depth=6,colsample_bytree=1,colsample_bylevel=0.9)
 
 
 model.fit(train_x, train_y)
-end2 = time.time() = start2
+
+end2 = time.time() - start2
 
 print('걸린시간:', end2)
 #모델 검증
@@ -154,9 +155,14 @@ model.score(test_x, test_y)
 
 model.predict(test_features)
 
+
+
 sample_submission['label']=model.predict(test_features)
 
 date_time = datetime.datetime.now().strftime("%y%m%d_%H%M")
 sample_submission.to_csv('./Dacon/_save/csv/climate/predict' + date_time + '.csv', index=False)
+
+print('최적의 매개변수: ', model.best_estimator_) # cv를 통해 나온 값 / GridSearchCV를 통해서만 출력 가능
+print("best_score: ", model.best_score_)
 
 ic('csv 저장 완료')
