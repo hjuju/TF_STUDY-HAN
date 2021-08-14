@@ -6,7 +6,7 @@ import tensorflow as tf
 from tensorflow.keras.layers import *
 from tensorflow.keras.models import *
 from tensorflow.keras.optimizers import Adam
-from datetime import datetime
+import datetime
 import os
 
 os.environ["CUDA_VISIBLE_DEVICES"]="1"
@@ -116,12 +116,13 @@ for train_idx, valid_idx in skf.split(train_inputs[0], labels):
     prediction = model.predict([test_inputs[0], test_inputs[1], test_inputs[2]])
     np.save(f'./Dacon/_save/MCP/climate/climate{now}_prediction.npy', prediction)
 
-    predictions = []
+
+predictions = []
 for ar in glob('./Dacon/_save/MCP/climate/*.npy'):
     arr = np.load(ar)
     predictions.append(arr)
 
-sample = pd.read_csv('./Dacon/_data/climte/sample_submission.csv')
+sample = pd.read_csv('./Dacon/_data/climate/sample_submission.csv')
 sample['label'] = np.argmax(np.mean(predictions,axis=0), axis = 1)
 date_time = datetime.datetime.now().strftime("%y%m%d_%H%M")
 sample.to_csv('./Dacon/_save/csv/climate/predict' + date_time + '.csv', index=False)
