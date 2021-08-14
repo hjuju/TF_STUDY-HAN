@@ -57,7 +57,7 @@ def drop_short_texts(train, target_columns):
 
 def sampling_data(train, target_columns):
     pj_name_len = 21
-    summ_goal_len = 120
+    summ_goal_len = 111
     summ_key_len = 21
 
     max_lens = [pj_name_len, summ_goal_len, summ_key_len]
