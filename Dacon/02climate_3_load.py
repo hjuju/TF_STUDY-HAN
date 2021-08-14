@@ -100,7 +100,7 @@ for train_idx, valid_idx in skf.split(train_inputs[0], labels):
     callbacks = [
         tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=5),
         tf.keras.callbacks.ModelCheckpoint(ckpt_path, monitor = 'val_acc', save_best_only= True, save_weights_only=True),
-        tf.keras.callbacks.ReduceLROnPlateau(monitor = 'val_loss', factor=0.9, patience = 2,),
+        tf.keras.callbacks.ReduceLROnPlateau(monitor = 'val_loss', factor=0.7, patience = 2,),
                 ]
     model = create_model(input_shape0,input_shape1,input_shape2, num_labels, learning_rate)
     model.fit(
@@ -110,7 +110,7 @@ for train_idx, valid_idx in skf.split(train_inputs[0], labels):
                         callbacks=callbacks,
                         validation_data=([X_valid_input0, X_valid_input1, X_valid_input2], X_valid_label),
                         verbose=1,  # Logs once per epoch.
-                        batch_size=4096)
+                        batch_size=1024)
     
     model.load_weights(ckpt_path)
     prediction = model.predict([test_inputs[0], test_inputs[1], test_inputs[2]])

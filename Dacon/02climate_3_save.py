@@ -5,13 +5,6 @@ import re
 import os
 from konlpy.tag import Okt
 
-import matplotlib
-import matplotlib.pyplot as plt
-import matplotlib.font_manager as fm
-matplotlib.rcParams['axes.unicode_minus'] = False
-matplotlib.rc('font', family='Malgun Gothic')
-
-
 from tensorflow.keras.preprocessing.text import Tokenizer
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.feature_selection import SelectKBest, f_classif
@@ -63,17 +56,15 @@ def drop_short_texts(train, target_columns):
     return train
 
 def sampling_data(train, target_columns):
-    pj_name_len = 18
-    summ_goal_len = 210
-    summ_key_len = 18
+    pj_name_len = 21
+    summ_goal_len = 120
+    summ_key_len = 21
 
     max_lens = [pj_name_len, summ_goal_len, summ_key_len]
     total_index = set(train.index)
     for column, max_len in zip(target_columns, max_lens) : 
         temp = train[column].apply(lambda x : len(x.split()) < max_len)
         explained_ratio = temp.values.sum() / train.shape[0]
-      
-
         total_index -= set(train[temp == False].index)
     train = train.loc[list(total_index)].reset_index(drop = True)
     
