@@ -18,7 +18,7 @@ import warnings
 warnings.simplefilter('ignore')
 warnings.filterwarnings('ignore')
 
-from glob import glob
+from glob import glob 
 
 
 def get_input_dataset(data, index, train = False) : 
