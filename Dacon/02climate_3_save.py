@@ -123,7 +123,7 @@ def ngram_vectorize(train_data, label, test_data, top_k) :
     x_train = vectorizer.fit_transform(train_data)
     x_test = vectorizer.transform(test_data)
 
-    selector = SelectKBest(f_classif, k=min(1200,top_k))
+    selector = SelectKBest(f_classif, k=min(12000,top_k))
     selector.fit(x_train, label.values)
     x_train = selector.transform(x_train).astype('float32')
     x_test = selector.transform(x_test).astype('float32')
