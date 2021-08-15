@@ -57,7 +57,7 @@ def drop_short_texts(train, target_columns):
 
 def sampling_data(train, target_columns):
     pj_name_len = 21
-    summ_goal_len = 111
+    summ_goal_len = 150
     summ_key_len = 21
 
     max_lens = [pj_name_len, summ_goal_len, summ_key_len]
@@ -123,7 +123,7 @@ def ngram_vectorize(train_data, label, test_data, top_k) :
     x_train = vectorizer.fit_transform(train_data)
     x_test = vectorizer.transform(test_data)
 
-    selector = SelectKBest(f_classif, k=min(11111,top_k))
+    selector = SelectKBest(f_classif, k=min(13000,top_k))
     selector.fit(x_train, label.values)
     x_train = selector.transform(x_train).astype('float32')
     x_test = selector.transform(x_test).astype('float32')
@@ -134,7 +134,7 @@ def vectorize_data(train, test, top_ks, target_columns):
     train_inputs = []
     test_inputs = []
     for top_k, column in zip(top_ks, target_columns):
-        train_input, test_input = ngram_vectorize(train[column], train['label'], test[column], min(11111,top_k))
+        train_input, test_input = ngram_vectorize(train[column], train['label'], test[column], min(13000,top_k))
         train_inputs.append(train_input)
         test_inputs.append(test_input)
         
