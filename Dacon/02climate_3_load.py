@@ -46,25 +46,28 @@ from glob import glob
 #     x_in1 = Input(input_shape1,)
 #     x_in2 = Input(input_shape2,)
     
-#     fc0 = single_dense(x_in0, 512)
-#     # fc0 = single_dense(fc0, 256)
+#     fc0 = single_dense(x_in0, 1024)
+#     fc0 = single_dense(fc0, 512)
+#     fc0 = single_dense(fc0, 256)
 #     fc0 = single_dense(fc0, 128)
 #     fc0 = single_dense(fc0, 64)
     
-#     # fc1 = single_dense(x_in1, 1024)
-#     fc1 = single_dense(x_in1, 512)
-#     # fc1 = single_dense(fc1, 256)
+#     fc1 = single_dense(x_in1, 1024)
+#     fc1 = single_dense(fc1, 512)
+#     fc1 = single_dense(fc1, 256)
 #     fc1 = single_dense(fc1, 128)
 #     fc1 = single_dense(fc1, 64)
     
-#     fc2 = single_dense(x_in2, 512)
-#     # fc2 = single_dense(fc2, 256)
+#     fc2 = single_dense(x_in2, 1024)
+#     fc2 = single_dense(fc2, 512)
+#     fc2 = single_dense(fc2, 256)
 #     fc2 = single_dense(fc2, 128)
 #     fc2 = single_dense(fc2, 64)
     
 #     fc = Concatenate()([fc0,fc1,fc2])
     
-#     # fc = single_dense(fc, 128)
+#     fc = single_dense(fc, 256)
+#     fc = single_dense(fc, 128)
 #     fc = single_dense(fc, 64)
     
 #     x_out = Dense(num_labels, activation = 'softmax')(fc)
@@ -110,7 +113,7 @@ from glob import glob
 #                         callbacks=callbacks,
 #                         validation_data=([X_valid_input0, X_valid_input1, X_valid_input2], X_valid_label),
 #                         verbose=1,  # Logs once per epoch.
-#                         batch_size=1024)
+#                         batch_size=2048)
     
 #     model.load_weights(ckpt_path)
 #     prediction = model.predict([test_inputs[0], test_inputs[1], test_inputs[2]])
@@ -118,7 +121,7 @@ from glob import glob
 
 
 predictions = []
-for ar in glob('./Dacon/_save/MCP/climate/climate16h29m_prediction.npy'):
+for ar in glob('./Dacon/_save/MCP/climate/climate17h26m_prediction.npy'):
     arr = np.load(ar)
     predictions.append(arr)
 
