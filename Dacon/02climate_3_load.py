@@ -118,7 +118,7 @@ for train_idx, valid_idx in skf.split(train_inputs[0], labels):
 
 
 predictions = []
-for ar in glob('./Dacon/_save/MCP/climate/climate01h03m_prediction.npy'):
+for ar in glob('./Dacon/_save/MCP/climate/climate14h42m_prediction.npy'):
     arr = np.load(ar)
     predictions.append(arr)
 
