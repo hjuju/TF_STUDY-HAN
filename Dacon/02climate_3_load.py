@@ -47,18 +47,18 @@ from glob import glob
 #     x_in2 = Input(input_shape2,)
     
 #     fc0 = single_dense(x_in0, 512)
-#     fc0 = single_dense(fc0, 256)
+#     # fc0 = single_dense(fc0, 256)
 #     fc0 = single_dense(fc0, 128)
 #     fc0 = single_dense(fc0, 64)
     
 #     # fc1 = single_dense(x_in1, 1024)
 #     fc1 = single_dense(x_in1, 512)
-#     fc1 = single_dense(fc1, 256)
+#     # fc1 = single_dense(fc1, 256)
 #     fc1 = single_dense(fc1, 128)
 #     fc1 = single_dense(fc1, 64)
     
 #     fc2 = single_dense(x_in2, 512)
-#     fc2 = single_dense(fc2, 256)
+#     # fc2 = single_dense(fc2, 256)
 #     fc2 = single_dense(fc2, 128)
 #     fc2 = single_dense(fc2, 64)
     
@@ -98,9 +98,9 @@ from glob import glob
 
 
 #     callbacks = [
-#         tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=5),
-#         tf.keras.callbacks.ModelCheckpoint(ckpt_path, monitor = 'val_acc', save_best_only= True, save_weights_only=True),
-#         tf.keras.callbacks.ReduceLROnPlateau(monitor = 'val_loss', factor=0.7, patience = 2,),
+#         tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=4, verbose=1),
+#         tf.keras.callbacks.ModelCheckpoint(ckpt_path, monitor = 'val_acc', save_best_only= True, save_weights_only=True, verbose=1),
+#         tf.keras.callbacks.ReduceLROnPlateau(monitor = 'val_loss', factor=0.7, patience = 2,verbose=1),
 #                 ]
 #     model = create_model(input_shape0,input_shape1,input_shape2, num_labels, learning_rate)
 #     model.fit(
@@ -118,7 +118,7 @@ from glob import glob
 
 
 predictions = []
-for ar in glob('./Dacon/_save/MCP/climate/climate15h41m_prediction.npy'):
+for ar in glob('./Dacon/_save/MCP/climate/climate16h29m_prediction.npy'):
     arr = np.load(ar)
     predictions.append(arr)
 
