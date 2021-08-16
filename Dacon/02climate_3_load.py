@@ -51,8 +51,8 @@ def create_model(input_shape0,input_shape1,input_shape2, num_labels, learning_ra
     fc0 = single_dense(fc0, 128)
     fc0 = single_dense(fc0, 64)
     
-    fc1 = single_dense(x_in1, 1024)
-    fc1 = single_dense(fc1, 512)
+    # fc1 = single_dense(x_in1, 1024)
+    fc1 = single_dense(x_in1, 512)
     fc1 = single_dense(fc1, 256)
     fc1 = single_dense(fc1, 128)
     fc1 = single_dense(fc1, 64)
@@ -64,7 +64,7 @@ def create_model(input_shape0,input_shape1,input_shape2, num_labels, learning_ra
     
     fc = Concatenate()([fc0,fc1,fc2])
     
-    fc = single_dense(fc, 128)
+    # fc = single_dense(fc, 128)
     fc = single_dense(fc, 64)
     
     x_out = Dense(num_labels, activation = 'softmax')(fc)
@@ -110,7 +110,7 @@ for train_idx, valid_idx in skf.split(train_inputs[0], labels):
                         callbacks=callbacks,
                         validation_data=([X_valid_input0, X_valid_input1, X_valid_input2], X_valid_label),
                         verbose=1,  # Logs once per epoch.
-                        batch_size=512)
+                        batch_size=1024)
     
     model.load_weights(ckpt_path)
     prediction = model.predict([test_inputs[0], test_inputs[1], test_inputs[2]])
@@ -118,7 +118,7 @@ for train_idx, valid_idx in skf.split(train_inputs[0], labels):
 
 
 predictions = []
-for ar in glob('./Dacon/_save/MCP/climate/climate00h36m_prediction.npy'):
+for ar in glob('./Dacon/_save/MCP/climate/climate01h03m_prediction.npy'):
     arr = np.load(ar)
     predictions.append(arr)
 
