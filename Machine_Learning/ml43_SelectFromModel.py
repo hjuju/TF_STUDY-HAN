@@ -37,10 +37,13 @@ ic(threshold) # 몇 개의 컬럼을 삭제하고 학습을 시켰을 때 성능
                 0.06949984, 0.30128643, 0.42848358]
 '''
 
+
+# 피쳐 삭제 피쳐를 삭제하고, PCA를 통해 압축하기도 가능
 for thresh in threshold:
-    selection = SelectFromModel(model, threshold=thresh, prefit=True) # 순서대로 0번째, 1번째... 컬럼을 삭제하고, 13개, 12개 줄여가면서 모델 구성
+    selection = SelectFromModel(model, threshold=thresh, prefit=True) 
+    # thresh 미만의 컬럼들은 하나씩 갱신하여 삭제 됨 / 순서대로 0번째, 1번째... 컬럼을 삭제하고, 13개, 12개 줄여가면서 모델 구성
     # ic(selection)
-    select_x_train = selection.transform(x_train) 
+    select_x_train = selection.transform(x_train)
     select_x_test = selection.transform(x_test)
 
     ic(select_x_train.shape, select_x_test.shape)
