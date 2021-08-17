@@ -20,22 +20,6 @@ x_train = x_train.values.reshape(len(x_train),1) # (10, ) -> (10,1) 넘파이로
 ic(x_train.shape, y_train.shape) #  x_train.shape: (10, 1), y_train.shape: (10,)
 
 
-'''
-ic| df:     X   Y
-        0  -3  -3
-        1  31  65
-        2 -11 -19
-        3   4  11
-        4   0   3
-        5  22  47
-        6  -2  -1
-        7  -5  -7
-        8 -25 -47
-        9 -14 -25
-ic| df.shape: (10, 2)
-
-'''
-
 from sklearn.linear_model import LinearRegression
 #2. 모델
 model = LinearRegression()
