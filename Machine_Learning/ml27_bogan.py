@@ -29,5 +29,5 @@ print("=*50")
 ts = Series([1, np.nan, np.nan, 8, 10], index=dates)
 ic(ts)
 
-ts_intp_linear = ts.interpolate() # 결측치들이 중앙값으로 바꿔짐
+ts_intp_linear = ts.interpolate() # 결측치들이 채워짐
 ic(ts_intp_linear)
