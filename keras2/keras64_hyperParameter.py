@@ -46,7 +46,7 @@ model2 = KerasClassifier(build_fn=build_model, verbose=1) # 텐서플로를 사�
 
 model = RandomizedSearchCV(model2, hyperparameters, cv=5) # 서치 모델에 텐서플로 모델 입력안됨 -> 텐서플로모델을 사이킷런으로 wrapping
 
-model.fit(x_train, y_train, verbose=1)
+model.fit(x_train, y_train, verbose=1, epochs=3, validation_split=0.2) # 파라미터가 우선순위로 적용됨
 
 be = model.best_estimator_
 bp = model.best_params_
