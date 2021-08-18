@@ -37,7 +37,7 @@ def outliers(data_out):
         return np.where((data_out>upper_bound) | (data_out<lower_bound))
 
 outliers_loc = outliers(x_train)
-
+# 아웃라이어 개수 count추가
 ic(outliers_loc)
 
 
