@@ -1,6 +1,6 @@
 import imp
 import numpy as np
-from sklearn.datasets import load_iris
+from sklearn.datasets import load_iris, load_breast_cancer, load_diabetes, load_boston, load_wine
 from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Dense, Dropout, Input, Conv2D
 from tensorflow.python.keras.backend import dropout
@@ -14,9 +14,11 @@ from tensorflow.keras.wrappers.scikit_learn import KerasClassifier, KerasRegress
 from tensorflow.keras.callbacks import ReduceLROnPlateau
 from tensorflow.keras.optimizers import Adam, Adadelta
 from tensorflow.python.keras.layers.core import Flatten
+import warnings
+warnings.filterwarnings('ignore')
 
 #1 데이터
-datasets = load_iris()
+datasets = load_breast_cancer()
 x = datasets.data
 y = datasets.target
 
@@ -57,7 +59,7 @@ hyperparameters = create_hyperparameter()
 
 reduce_lr = ReduceLROnPlateau(monitor='val_loss', patience=5, mode='auto', verbose=1, factor=0.05) 
 
-model2 = KerasRegressor(build_fn=build_model, verbose=1) # 텐서플로를 사이킷런에 wrapping
+model2 = KerasClassifier(build_fn=build_model, verbose=1) # 텐서플로를 사이킷런에 wrapping
 
 model = RandomizedSearchCV(model2, hyperparameters, cv=5) # 서치 모델에 텐서플로 모델 입력안됨 -> 텐서플로모델을 사이킷런으로 wrapping
 
@@ -70,7 +72,7 @@ bs = model.best_score_
 print("best_estimator:", be)
 print("best_params: ", bp)
 print("best_score", bs)
-acc = model.score(x_test,y_test)
+acc = model.score(x_test, y_test)
 y_pred = model.predict(x_test)
 r2 = r2_score(y_test, y_pred)
 ic(acc)
