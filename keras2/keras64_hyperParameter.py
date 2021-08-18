@@ -55,4 +55,6 @@ bs = model.best_score_
 print("best_estimator:", be)
 print("best_params: ", bp)
 print("best_score", bs)
+acc = model.score(x_test,y_test)
+ic(acc)
 
