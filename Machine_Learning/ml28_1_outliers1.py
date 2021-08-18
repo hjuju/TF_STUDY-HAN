@@ -2,6 +2,8 @@
 #1. 삭제
 #2. NAN처리후 -> 보간 / linear
 #3. 결측치 처리 방법과 유사
+#4. scaler -> Robust, QuantileTransformer 등등등 스케일러에서 이상치 처리 됨
+#5. 모델링: tree, DT, RF, LGBM, XG(이상치 신경쓸 필요없이 사용가능하지만 수동으로 잡아서 해야할 필요 있음)
 
 
 import numpy as np
