@@ -25,7 +25,6 @@ x_test = x_test.reshape(10000, 28, 28, 1).astype('float32')/255
 # ic(x_train.shape) # (60000, 28, 28, 1)
 # ic(x_test.shape) # (10000, 28, 28, 1)
 
-
 ic(np.unique(y_train)) # [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 one = OneHotEncoder()
 y_train = y_train.reshape(-1,1)
@@ -35,10 +34,6 @@ ic(y_test.shape) # (10000, 1)
 one.fit(y_train)
 y_train = one.transform(y_train).toarray()
 y_test = one.transform(y_test).toarray()
-
-
-
-
 
 #2. 모델
 from tensorflow.keras.models import Sequential
@@ -66,7 +61,6 @@ optimizer = Adam(lr=0.001)
 
 es = EarlyStopping(monitor='val_loss', patience=50, mode='auto', verbose=1)
 reduce_lr = ReduceLROnPlateau(monitor='val_loss', patience=5, mode='auto', verbose=1, factor=0.05) 
-
 
 model.compile(loss='categorical_crossentropy', optimizer=optimizer, metrics=['acc'])
 start = time.time()
