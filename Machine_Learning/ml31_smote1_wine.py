@@ -6,6 +6,8 @@ from xgboost import XGBRFClassifier
 from sklearn.model_selection import train_test_split
 import time
 import warnings
+
+from xgboost.sklearn import XGBClassifier
 warnings.filterwarnings('ignore')
 from icecream import ic
 
@@ -58,10 +60,10 @@ ic(pd.Series(y_train).value_counts())
 '''
 
 model = XGBRFClassifier(n_jobs=-1)
-model.fit(x_train, y_train)
+model.fit(x_train, y_train, eval_metric='mlogloss')
 
 score = model.score(x_test, y_test)
-ic(score)
+ic(score) # score: 0.9459459459459459
 
 ######################################### smote 적용 #########################################
 print("="*40,'smote 적용',"="*40)
@@ -85,11 +87,11 @@ print("smote 후: ", x_smote_train.shape, y_smote_train.shape)
 print("smote 전 레이블 값 분포: \n", pd.Series(y_train).value_counts())
 print("smote 후 레이블 값 분포: \n", pd.Series(y_smote_train).value_counts())
 
-model2 = XGBRFClassifier(n_jobs=-1)
-model2.fit(x_smote_train, y_smote_train)
+model2 = XGBClassifier(n_jobs=-1)
+model2.fit(x_smote_train, y_smote_train, eval_metric='mlogloss')
 
-score = model2.score(x_test, y_test)
-ic(score)
+score2 = model2.score(x_test, y_test)
+ic(score2) # score2: 0.972972972972973
 
 
 
