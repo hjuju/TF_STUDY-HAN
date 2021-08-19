@@ -13,18 +13,6 @@ from icecream import ic
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import accuracy_score, f1_score
 
-'''
-라벨의 범위 바꾸기
-기존 3,4 -> 0
-5,6,7 -> 1
-8,9 -> 2
-
-범위변경
-3,4,5 -> 0 
-6     -> 1
-7,8,9 -> 2
-'''
-
 datasets = pd.read_csv('../_data/wine/winequality-white.csv', index_col=None, header=0, sep=';')
 
 datasets = datasets.values
@@ -58,15 +46,27 @@ for index, value in enumerate(y): # 인덱스와 밸류 반환
     elif value == 8:
         y[index] = 2
     elif value == 7:
-        y[index] = 1
+        y[index] = 2
     elif value == 6:
         y[index] = 1
     elif value == 5:
-        y[index] = 1
+        y[index] = 0
     elif value == 4:
         y[index] = 0
     elif value == 3:
         y[index] = 0
+
+'''
+라벨의 범위 바꾸기
+기존 3,4 -> 0
+5,6,7 -> 1
+8,9 -> 2
+
+범위변경
+3,4,5 -> 0 
+6     -> 1
+7,8,9 -> 2
+'''
     
    
 ic(pd.Series(y).value_counts())
@@ -112,6 +112,10 @@ ic(f1)
 '''
 ic| score: 0.9469387755102041
 ic| f1: 0.6798437163954406
+
+범위변경 후
+ic| score: 0.7081632653061225
+ic| f1: 0.7067707950658404
 '''
 
 ######################################### smote 적용 #########################################
@@ -125,16 +129,6 @@ end = time.time() - start
 
 print("걸린시간:", end)
 ic(pd.Series(y_smote_train).value_counts())
-
-'''
-6.0    1648
-5.0    1648
-4.0    1648
-9.0    1648
-8.0    1648
-7.0    1648
-3.0    1648
-'''
 
 ic(x_smote_train.shape, y_smote_train.shape) # (159, 13), y_smote_train.shape: (159,)
 
@@ -160,4 +154,7 @@ ic(f1)
 ic| score2: 0.9428571428571428
 ic| f1: 0.7214965008148786
 
+범위변경 후
+c| score2: 0.7040816326530612
+ic| f1: 0.7057474154068014
 '''

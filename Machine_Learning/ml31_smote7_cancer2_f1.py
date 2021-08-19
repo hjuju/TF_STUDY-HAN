@@ -1,8 +1,9 @@
-# cancer로 만들기
+# 라벨 0 112개 삭제# cancer로 만들기
 # 지표는 f1
 
 from imblearn.over_sampling import SMOTE
 from numpy.lib.function_base import average
+from pandas.core.series import Series
 from sklearn import datasets
 from sklearn.datasets import load_wine, load_breast_cancer
 import pandas as pd
@@ -21,6 +22,8 @@ datasets = load_breast_cancer()
 x = datasets.data
 y = datasets.target
 
+y = pd.Series(y)
+y= y[:-112]
 ic(x.shape, y.shape) # x.shape: (569, 30), y.shape: (569,)
 
 #############################################
@@ -28,7 +31,6 @@ ic(x.shape, y.shape) # x.shape: (569, 30), y.shape: (569,)
 #############################################
 
 print("="*50)
-
 
 ic(pd.Series(y).value_counts())
 
