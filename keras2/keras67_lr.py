@@ -1,7 +1,7 @@
+weight = 0.5 # 첫번째는 임의의 숫자 줌
 input = 0.5
-weight = 0.5
+lr = 0.1 # lr을 이용해서 goal_prediction이 나오게 함
 goal_prediction = 0.8
-lr = 0.1
 epochs = 200
 
 for iteration in range(epochs) :
