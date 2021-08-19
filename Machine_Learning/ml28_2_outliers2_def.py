@@ -10,21 +10,28 @@ aaa = aaa.transpose()
 
 ic(aaa.shape)
 
-def outliers(data_out):
-    quartile_1, q2, quartile_3 = np.percentile(data_out, [25, 50, 75])
-    print('1사분위: ', quartile_1)
-    print('q2 :', q2)
-    print('3사분위: ', quartile_3)
-    iqr = quartile_3 - quartile_1   # IQR(Inter Quartile Range, 사분범위)
-    lower_bound = quartile_1 - (iqr * 1.5)
-    upper_bound = quartile_3 + (iqr * 1.5)
-    ic(lower_bound, upper_bound)
-    return np.where((data_out > upper_bound) | (data_out < lower_bound))
-print(aaa)
-outliers_loc = outliers(aaa)
-# for i in aaa:
-#     print(i)
-print('이상치의 위치: ', outliers_loc)
+def outlier(data_out):
+    lis = []
+    for i in range(data_out.shape[1]):
+        quartile_1, q2, quartile_3 = np.percentile(data_out[:, i], [25, 50, 75])
+        print("Q1 : ", quartile_1)
+        print("Q2 : ", q2)
+        print("Q3 : ", quartile_3)
+        iqr = quartile_3 - quartile_1
+        print("IQR : ", iqr)
+        lower_bound = quartile_1 - (iqr * 1.5)
+        upper_bound = quartile_3 + (iqr * 1.5)
+        print('lower_bound: ', lower_bound)
+        print('upper_bound: ', upper_bound)
+
+        m = np.where((data_out[:, i]>upper_bound) | (data_out[:, i]<lower_bound))
+        n = np.count_nonzero((data_out[:, i]>upper_bound) | (data_out[:, i]<lower_bound))
+        lis.append([i+1,'columns', m, 'outlier_num :', n])
+
+    return np.array(lis)
+
+outliers_loc = outlier(aaa)
+print("outlier at :\n", outliers_loc)
 
  
 
