@@ -13,6 +13,18 @@ from icecream import ic
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import accuracy_score, f1_score
 
+'''
+라벨의 범위 바꾸기
+기존 3,4 -> 0
+5,6,7 -> 1
+8,9 -> 2
+
+범위변경
+3,4,5 -> 0 
+6     -> 1
+7,8,9 -> 2
+'''
+
 datasets = pd.read_csv('../_data/wine/winequality-white.csv', index_col=None, header=0, sep=';')
 
 datasets = datasets.values
