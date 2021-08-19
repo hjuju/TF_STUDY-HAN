@@ -7,6 +7,7 @@ from pandas.core.series import Series
 from sklearn import datasets
 from sklearn.datasets import load_wine, load_breast_cancer
 import pandas as pd
+import numpy as np
 from xgboost import XGBRFClassifier
 from sklearn.model_selection import train_test_split
 import time
@@ -22,8 +23,21 @@ datasets = load_breast_cancer()
 x = datasets.data
 y = datasets.target
 
-y = pd.Series(y)
-y= y[:-112]
+ic(x.shape, y.shape)
+# x.shape: (457, 29), y.shape: (457,)
+
+y = np.array(y).reshape(569,1)
+# print(y.shape)
+
+# xy = np.concatenate((x,y), axis=1)
+# print(dasd)
+
+# xy = xy[xy[:, 30].argsort()]
+# print(dasd)
+
+x = x[112:,0:-1]
+y = y[112:,-1]
+
 ic(x.shape, y.shape) # x.shape: (569, 30), y.shape: (569,)
 
 #############################################
