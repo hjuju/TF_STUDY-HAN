@@ -41,7 +41,7 @@ vgg16 = VGG16(weights='imagenet', include_top=False, input_shape=(32,32,3))
 # include_top=True -> 이미지넷에 맞는 shape로 맞춰야함 
 # 이미지 크기를 224,224,3으로 맞춰줘야함
 
-vgg16.trainable=False # vgg 훈련을 동결
+vgg16.trainable=True # False일때 vgg 훈련을 동결
 
 model = Sequential()
 model.add(vgg16)
@@ -90,11 +90,12 @@ loss =  3.0443339347839355
 accuracy =  0.3783000111579895
 ic| f'{걸린시간}분': '5.7분'
 
-vgg16.trainable=False
-loss =  1.2045490741729736
-accuracy =  0.583299994468689
+vgg16.trainable=False, Flatten
+loss =  2.4655117988586426
+accuracy =  0.38339999318122864
+ic| f'{걸린시간}분': '1.4분'
 
-vgg16.trainable=True
+vgg16.trainable=True, Flatteb
 loss =  0.8746398687362671
 accuracy =  0.8040000200271606
 
