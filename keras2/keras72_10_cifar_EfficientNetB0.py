@@ -72,13 +72,14 @@ for i in LOSS_ACC_LS:
     print(i)
 
 '''
-[1] cifar_10_True__Flatten :: loss= 2.5657, acc= 0.2253
-[2] cifar_10_True__GAP__2D :: loss= 2.615, acc= 0.251
-[3] cifar_10_False_Flatten :: loss= 2.1281, acc= 0.2343
-[4] cifar_10_False_GAP__2D :: loss= 2.1287, acc= 0.2328
-[5] cifar100_True__Flatten :: loss= 4.2966, acc= 0.0667
-[6] cifar100_True__GAP__2D :: loss= 4.0324, acc= 0.0852
-[7] cifar100_False_Flatten :: loss= 4.4025, acc= 0.0562
-[8] cifar100_False_GAP__2D :: loss= 4.4077, acc= 0.0536
+
+[1] cifar_10_True__Flatten :: loss= 1.2427, acc= 0.6401
+[2] cifar_10_True__GAP__2D :: loss= 1.21, acc= 0.6321
+[3] cifar_10_False_Flatten :: loss= 2.2561, acc= 0.1668
+[4] cifar_10_False_GAP__2D :: loss= 2.2633, acc= 0.148
+[5] cifar100_True__Flatten :: loss= 5.2377, acc= 0.0134
+[6] cifar100_True__GAP__2D :: loss= 5.0885, acc= 0.0161
+[7] cifar100_False_Flatten :: loss= 4.5968, acc= 0.013
+[8] cifar100_False_GAP__2D :: loss= 4.588, acc= 0.0154
 
 '''
