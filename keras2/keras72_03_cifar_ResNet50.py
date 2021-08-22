@@ -39,6 +39,8 @@ for dt_key, dt_val in DATASETS.items():
             transfer_learning.trainable = tf_val
 
             model = Sequential()
+
+            # model.add(UpSampling2D(size=(3,3), input_shape=(32,32,3)))
             model.add(transfer_learning)
             model.add(fg_val)
             if dt_key == 'cifar10':

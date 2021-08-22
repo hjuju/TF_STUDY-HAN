@@ -116,10 +116,11 @@ for dt_key, dt_val in DATASETS.items():
     #2 Model
     for tf_key, tf_val in TRAINABLE.items():
         for fg_key, fg_val in FLATTEN_GAP.items():
-            transfer_learning = Xception(weights='imagenet', include_top=False, input_shape=(32, 32, 3))
+            transfer_learning = Xception(weights='imagenet', include_top=False, input_shape=(96, 96, 3))
             transfer_learning.trainable = tf_val
 
             model = Sequential()
+            model.add(UpSampling2D(size=(3,3), input_shape=(32,32,3)))
             model.add(transfer_learning)
             model.add(fg_val)
             if dt_key == 'cifar10':
@@ -136,8 +137,8 @@ for dt_key, dt_val in DATASETS.items():
             model.compile(loss='sparse_categorical_crossentropy',
                         optimizer=opt, metrics=['acc'])
             es = EarlyStopping(monitor='val_loss', patience=4, mode='min', verbose=1)
-            model.fit(x_train, y_train, epochs=20, batch_size=512,
-                    verbose=1, validation_split=0.25, callbacks=[es])
+            model.fit(x_train, y_train, epochs=20, batch_size=64,
+                    verbose=2, validation_split=0.25, callbacks=[es])
 
             #4 Evaluate
             loss = model.evaluate(x_test, y_test, batch_size=128)
@@ -152,49 +153,14 @@ for i in LOSS_ACC_LS:
     print(i)
 
 '''
-## Cifar10
-
-# trainable = true, Flatten
-loss =  0.8184158205986023
-accuracy =  0.7947999835014343
-
-# trainable = False, Flatten
-loss =  1.2285866737365723
-accuracy =  0.5787000060081482
-ic| f'{걸린시간}분': '2.8분'
-
-# trainable = False, GAP
-loss =  1.2449361085891724
-accuracy =  0.5652999877929688
-ic| f'{걸린시간}분': '2.8분'
-
-# trainable = true, GAP
-loss =  2.3027846813201904
-accuracy =  0.10000000149011612
-ic| f'{걸린시간}분': '4.1분'
-
-
-## Cifar100
-
-# trainable = true, Flatten
-loss =  4.6058549880981445
-accuracy =  0.009999999776482582
-ic| f'{걸린시간}분': '3.6분'
-
-# trainable = False, Flatten
-loss =  2.753312587738037
-accuracy =  0.328900009393692
-ic| f'{걸린시간}분': '2.7분'
-
-# trainable = False, GAP
-loss =  2.7605185508728027
-accuracy =  0.3278000056743622
-ic| f'{걸린시간}분': '1.9분'
-
-# trainable = true, GAP
-loss =  4.605761528015137
-accuracy =  0.009999999776482582
-ic| f'{걸린시간}분': '3.1분'
+[1] cifar_10_True__Flatten :: loss= 0.3428, acc= 0.9089
+[2] cifar_10_True__GAP__2D :: loss= 0.5011, acc= 0.8644
+[3] cifar_10_False_Flatten :: loss= 1.0845, acc= 0.6967
+[4] cifar_10_False_GAP__2D :: loss= 0.9144, acc= 0.7143
+[5] cifar100_True__Flatten :: loss= 1.9819, acc= 0.5952
+[6] cifar100_True__GAP__2D :: loss= 1.8518, acc= 0.6282
+[7] cifar100_False_Flatten :: loss= 2.511, acc= 0.4025
+[8] cifar100_False_GAP__2D :: loss= 2.3905, acc= 0.4541
 
 '''
 
