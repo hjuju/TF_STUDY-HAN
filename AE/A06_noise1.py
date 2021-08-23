@@ -4,7 +4,6 @@
 import numpy as np
 from tensorflow.keras.datasets import mnist
 
-
 # 1. 데이터
 (x_train, _), (x_test, _) = mnist.load_data()
 
@@ -40,7 +39,7 @@ from matplotlib import pyplot as plt
 import random
 
 fig, ((ax1, ax2, ax3, ax4, ax5), (ax11, ax12, ax13, ax14, ax15), (ax6, ax7, ax8, ax9, ax10)) = \
-        plt.subplots(3, 5, figsize=(20, 7))
+        plt.subplots(3, 5, figsize=(15, 7))
 
 
 # 이미지 5개를 무작위로 고른다.
