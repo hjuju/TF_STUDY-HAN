@@ -72,7 +72,7 @@ output_32 = model_32.predict(x_test)
 from matplotlib import pyplot as plt
 import random
 
-fig, axes = plt.subplot(7,5, figsize=(15, 15))
+fig, axes = plt.subplots(7,5, figsize=(15, 15))
 
 random_images = random.sample(range(output_01.shape[0]), 5)
 outputs = [x_test, output_01, output_02, output_04, output_08, output_16, output_32]
