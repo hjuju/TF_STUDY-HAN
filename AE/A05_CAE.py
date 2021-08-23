@@ -32,6 +32,7 @@ from tensorflow.python.keras.layers.pooling import AveragePooling2D
 
 x_train = x_train.reshape(60000, 28, 28, 1).astype('float')/255
 x_test = x_test.reshape(10000, 28, 28, 1).astype('float')/255
+x_train2 = x_train.reshape(60000, 28 * 28)
 
 # 2. 모델
 from tensorflow.keras.models import Model, Sequential
@@ -71,7 +72,7 @@ model = autoencoder(hidden_layer_size=104)      # pca 95%
 
 model.compile(optimizer='adam', loss='mse')
 
-model.fit(x_train, x_train, epochs=10)
+model.fit(x_train, x_train2, epochs=10)
 
 output = model.predict(x_test)
 

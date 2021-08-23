@@ -18,6 +18,9 @@ from tensorflow.keras.layers import Dense, Input
 def autoencoder(hidden_layer_size):
     model = Sequential()
     model.add(Dense(units=hidden_layer_size, input_shape=(784,), activation='relu'))
+    # model.add(Dense(4, activation='relu'))
+    # model.add(Dense(8, activation='relu'))
+    # model.add(Dense(4, activation='relu')) -> 구려짐
     model.add(Dense(units=784, activation='sigmoid'))
     return model
 
@@ -33,7 +36,7 @@ output = model.predict(x_test)
 from matplotlib import pyplot as plt
 import random
 
-fig, ((ax1, ax2, ax3, ax4, ax5), (ax6, ax7, ax8, ax9, ax10)) = plt.subplots(2, 5, figsize=(20, 7))
+fig, ((ax1, ax2, ax3, ax4, ax5), (ax6, ax7, ax8, ax9, ax10)) = plt.subplots(2, 5, figsize=(15, 7))
 
 
 # 이미지 5개를 무작위로 고른다.

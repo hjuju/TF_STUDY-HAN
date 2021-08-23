@@ -29,7 +29,7 @@ def autoencoder2(hidden_layer_size):
     model.add(Dense(units=hidden_layer_size, input_shape=(784,),activation='relu'))
     model.add(Dense(256, activation='relu'))
     model.add(Dense(512, activation='relu'))
-    model.add(Dense(1024, activation='relu'))
+    model.add(Dense(256, activation='relu'))
     model.add(Dense(units=784, activation='sigmoid'))
     return model
 
