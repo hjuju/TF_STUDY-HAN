@@ -12,7 +12,7 @@ from tensorflow.keras.layers import Dense, Input
 
 input_img = Input(shape=(784,))
 # encoded = Dense(64, activation='relu')(input_img)
-encoded = Dense(1024, activation='relu')(input_img)
+encoded = Dense(32, activation='relu')(input_img)
 decoded = Dense(784, activation='sigmoid')(encoded)
 
 
@@ -24,7 +24,8 @@ autoencoder = Model(input_img, decoded)
 
 # autoencoder.summary()
 
-autoencoder.compile(optimizer='adam', loss='mse')
+# autoencoder.compile(optimizer='adam', loss='mse')
+autoencoder.compile(optimizer='adam', loss='binary_crossentropy')
 
 autoencoder.fit(x_train, x_train, epochs=30, batch_size=128, validation_split=0.2)      # y 필요없음 / x 넣어서  x 나옴(앞뒤가 똑같은 오토인코더)
 
