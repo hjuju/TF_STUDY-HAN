@@ -1,4 +1,5 @@
-# 중요하지 않은 특성들을 도태시킴 / 특징이 강한 것을 더 강하게 해주는 것은 아님
+# 노이즈를 제거하려면 노이즈 데이터가 있어야함 
+# ex. 얼굴에 있는 주근깨나 여드름 등
 
 import numpy as np
 from tensorflow.keras.datasets import mnist
@@ -10,6 +11,11 @@ from tensorflow.keras.datasets import mnist
 x_train = x_train.reshape(60000, 784).astype('float')/255
 x_test = x_test.reshape(10000,784).astype('float')/255
 
+x_train_noised = x_train + np.random.normal(0, 0.1, size=x_train.shape) # x_train(0~1) 에 랜덤하게 정규분표로부터 0~0.1의 값을 넣음 
+x_test_noised = x_test + np.random.normal(0, 0.1, size=x_test.shape)
+
+x_train_noised = np.clip(x_train_noised, a_min=0, a_max=1) # 최소값을 벗어나는 것은 0, 최대값은 1로 한다
+x_test_noised = np.clip(x_test_noised, a_min=0, a_max=1)
 
 # 2. 모델
 from tensorflow.keras.models import Model, Sequential
@@ -22,18 +28,19 @@ def autoencoder(hidden_layer_size):
     return model
 
 
-model = autoencoder(hidden_layer_size=104)      # pca 95%
+model = autoencoder(hidden_layer_size=154)      # pca 95%
 
 model.compile(optimizer='adam', loss='mse')
 
-model.fit(x_train, x_train, epochs=10)
+model.fit(x_train_noised, x_train, epochs=10) # 노이즈가 있는것과 없는것을 훈련시킴
 
-output = model.predict(x_test)
+output = model.predict(x_test_noised)
 
 from matplotlib import pyplot as plt
 import random
 
-fig, ((ax1, ax2, ax3, ax4, ax5), (ax6, ax7, ax8, ax9, ax10)) = plt.subplots(2, 5, figsize=(20, 7))
+fig, ((ax1, ax2, ax3, ax4, ax5), (ax11, ax12, ax13, ax14, ax15), (ax6, ax7, ax8, ax9, ax10)) = \
+        plt.subplots(3, 5, figsize=(20, 7))
 
 
 # 이미지 5개를 무작위로 고른다.
@@ -44,6 +51,15 @@ for i, ax in enumerate([ax1, ax2, ax3, ax4, ax5]):
     ax.imshow(x_test[random_images[i]].reshape(28, 28), cmap='gray')
     if i == 0:
         ax.set_ylabel("INPUT", size=20)
+        ax.grid(False)
+        ax.set_xticks([])
+        ax.set_yticks([])
+
+# 노이를 넣은 이미지
+for i, ax in enumerate([ax11, ax12, ax13, ax14, ax15]):
+    ax.imshow(x_test_noised[random_images[i]].reshape(28, 28), cmap='gray')
+    if i == 0:
+        ax.set_ylabel("NOISE", size=20)
         ax.grid(False)
         ax.set_xticks([])
         ax.set_yticks([])
