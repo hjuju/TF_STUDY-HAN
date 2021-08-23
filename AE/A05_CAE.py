@@ -1,42 +1,73 @@
-# 2번 복붙
-# CNN으로 딥하게 구성
-# 2개의 모델 구성 하나는 보통 오토인코더 하나는 딥하게 만든 것
-# 2개의 성능비교
+'''
+2번 복붙
+CNN으로 딥하게 구성
+2개의 모델 구성 하나는 보통 오토인코더 하나는 딥하게 만든 것
+2개의 성능비교
 
-# ConV2D, maxpool 
+ConV2D
+maxpool
+ConV2D
+maxpool 
+ConV2D
+maxpool -> encoder
+
+conV2D
+UpSamplung2D
+ConV2D
+UpSamplung2D
+ConV2D
+UpSamplung2D
+ConV2D(1,) -> Decoder
+
+'''
 
 # 중요하지 않은 특성들을 도태시킴 / 특징이 강한 것을 더 강하게 해주는 것은 아님
 
 import numpy as np
 from tensorflow.keras.datasets import mnist
+from tensorflow.python.keras.layers.pooling import AveragePooling2D
 
 # 1. 데이터
 (x_train, _), (x_test, _) = mnist.load_data()
 
-x_train = x_train.reshape(60000, 784).astype('float')/255
-x_test = x_test.reshape(10000,784).astype('float')/255
+x_train = x_train.reshape(60000, 28, 28, 1).astype('float')/255
+x_test = x_test.reshape(10000, 28, 28, 1).astype('float')/255
 
 # 2. 모델
 from tensorflow.keras.models import Model, Sequential
-from tensorflow.keras.layers import Dense, Input
+from tensorflow.keras.layers import Dense, Input, Conv2D, MaxPooling2D, GlobalAvgPool2D, Flatten
+from tensorflow.python.keras.layers.convolutional import UpSampling2D
 
 def autoencoder(hidden_layer_size):
     model = Sequential()
-    model.add(Dense(units=hidden_layer_size, input_shape=(784,), activation='relu'))
-    model.add(Dense(units=784, activation='sigmoid'))
+    model.add(Conv2D(filters=hidden_layer_size, kernel_size=(2, 2), input_shape=(28, 28, 1), activation='relu', padding='same'))
+    model.add(MaxPooling2D())
+    model.add(Conv2D(128, (2, 2), activation='relu', padding='same'))
+    model.add(MaxPooling2D())
+    model.add(Conv2D(256, (2, 2), activation='relu', padding='same'))
+    model.add(GlobalAvgPool2D())
+    model.add(Dense(1024, activation='relu'))
+    model.add(Dense(784, activation='sigmoid'))
+
     return model
 
 def autoencoder2(hidden_layer_size):
     model = Sequential()
-    model.add(Dense(units=hidden_layer_size, input_shape=(784,),activation='relu'))
-    model.add(Dense(256, activation='relu'))
-    model.add(Dense(512, activation='relu'))
+    model.add(Conv2D(filters=hidden_layer_size, kernel_size=(2, 2), input_shape=(28, 28, 1), activation='relu', padding='same'))
+    model.add(UpSampling2D(size=(2,2)))
+    model.add(MaxPooling2D())
+    model.add(Conv2D(128, (2, 2), activation='relu', padding='same'))
+    model.add(MaxPooling2D())
+    model.add(Conv2D(256, (2, 2), activation='relu', padding='same'))
+    model.add(MaxPooling2D())
+    model.add(Conv2D(512, (2, 2), activation='relu', padding='same'))
+    model.add(Flatten())
     model.add(Dense(1024, activation='relu'))
-    model.add(Dense(units=784, activation='sigmoid'))
+    model.add(Dense(784, activation='sigmoid'))
     return model
 
 
-model = autoencoder2(hidden_layer_size=104)      # pca 95%
+model = autoencoder(hidden_layer_size=104)      # pca 95%
 
 model.compile(optimizer='adam', loss='mse')
 
