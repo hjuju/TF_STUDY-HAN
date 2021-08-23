@@ -50,7 +50,7 @@ for i, ax in enumerate([ax1, ax2, ax3, ax4, ax5]):
 
 # 오토인코더가 출력한 이미지를 아래에 그린다.
 for i, ax in enumerate([ax6, ax7, ax8, ax9, ax10]):
-    ax.imshow(x_test[random_images[i]].reshape(28, 28), cmap='gray')
+    ax.imshow(output[random_images[i]].reshape(28, 28), cmap='gray')
     if i == 0:
         ax.set_ylabel("OUTPUT", size=20)
         ax.grid(False)
