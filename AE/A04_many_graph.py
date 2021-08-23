@@ -39,27 +39,27 @@ model_16 = autoencoder(hidden_layer_size=16)
 model_32 = autoencoder(hidden_layer_size=32)
 
 print("########################### node 1개 시작 ###########################")
-model_01.compile(optimizer='adam', loss='binary_crossentrophy')
+model_01.compile(optimizer='adam', loss='binary_crossentropy')
 model_01.fit(x_train, x_train, epochs=10)
 
 print("########################### node 1개 시작 ###########################")
-model_02.compile(optimizer='adam', loss='binary_crossentrophy')
+model_02.compile(optimizer='adam', loss='binary_crossentropy')
 model_02.fit(x_train, x_train, epochs=10)
 
 print("########################### node 1개 시작 ###########################")
-model_04.compile(optimizer='adam', loss='binary_crossentrophy')
+model_04.compile(optimizer='adam', loss='binary_crossentropy')
 model_04.fit(x_train, x_train, epochs=10)
 
 print("########################### node 1개 시작 ###########################")
-model_08.compile(optimizer='adam', loss='binary_crossentrophy')
+model_08.compile(optimizer='adam', loss='binary_crossentropy')
 model_08.fit(x_train, x_train, epochs=10)
 
 print("########################### node 1개 시작 ###########################")
-model_16.compile(optimizer='adam', loss='binary_crossentrophy')
+model_16.compile(optimizer='adam', loss='binary_crossentropy')
 model_16.fit(x_train, x_train, epochs=10)
 
 print("########################### node 1개 시작 ###########################")
-model_32.compile(optimizer='adam', loss='binary_crossentrophy')
+model_32.compile(optimizer='adam', loss='binary_crossentropy')
 model_32.fit(x_train, x_train, epochs=10)
 
 output_01 = model_01.predict(x_test)
