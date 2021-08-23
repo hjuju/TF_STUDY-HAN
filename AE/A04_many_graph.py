@@ -42,23 +42,23 @@ print("########################### node 1개 시작 ###########################"
 model_01.compile(optimizer='adam', loss='binary_crossentropy')
 model_01.fit(x_train, x_train, epochs=10)
 
-print("########################### node 1개 시작 ###########################")
+print("########################### node 2개 시작 ###########################")
 model_02.compile(optimizer='adam', loss='binary_crossentropy')
 model_02.fit(x_train, x_train, epochs=10)
 
-print("########################### node 1개 시작 ###########################")
+print("########################### node 4개 시작 ###########################")
 model_04.compile(optimizer='adam', loss='binary_crossentropy')
 model_04.fit(x_train, x_train, epochs=10)
 
-print("########################### node 1개 시작 ###########################")
+print("########################### node 8개 시작 ###########################")
 model_08.compile(optimizer='adam', loss='binary_crossentropy')
 model_08.fit(x_train, x_train, epochs=10)
 
-print("########################### node 1개 시작 ###########################")
+print("########################### node 16개 시작 ###########################")
 model_16.compile(optimizer='adam', loss='binary_crossentropy')
 model_16.fit(x_train, x_train, epochs=10)
 
-print("########################### node 1개 시작 ###########################")
+print("########################### node 32개 시작 ###########################")
 model_32.compile(optimizer='adam', loss='binary_crossentropy')
 model_32.fit(x_train, x_train, epochs=10)
 
