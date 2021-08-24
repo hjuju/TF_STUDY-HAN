@@ -78,7 +78,12 @@ hist = model.fit(x_train_noised, x_train, epochs=10) # 노이즈가 있는것과
 prediction = model.predict(x_prd)
 result = (1-prediction) * 100
 
-# ic| result: array([[97.05193]], dtype=float32)
+
+# 전 ic| result: array([[91.861374]]
+
+# 후 ic| result: array([[97.05193]], dtype=float32)
+
+
 
 # from matplotlib import pyplot as plt
 # import random
