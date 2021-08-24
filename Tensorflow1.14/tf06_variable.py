@@ -1,4 +1,3 @@
-from os import name
 import tensorflow as tf
 sess = tf.Session()
 

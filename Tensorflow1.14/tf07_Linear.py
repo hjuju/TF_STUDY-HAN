@@ -7,13 +7,13 @@ y_train = [1,2,3]
 W = tf.Variable(1, dtype=tf.float32) # 랜덤하게 내맘대로 넣어준 값
 b = tf.Variable(1, dtype= tf.float32) # 초기값
 
-hypothesis = x_train * W + b # 모델구현
+hypothesis = x_train * W + b # 모델구현 / 훈련할때 예측한 y값
 # f(x) = wx + b
 
 loss = tf.reduce_mean(tf.square(hypothesis - y_train)) # mse
             # 평균        제곱      오차   => mse
 
-optimizer = tf.train.GradientDescentOptimizer(learning_rate=0.01)
+optimizer = tf.train.GradientDescentOptimizer(learning_rate=0.01) 
 train = optimizer.minimize(loss) # loss의 최소값을 찾아줌
 
 #### 그래프 형태로 만들어줌 출력하려면 sessrun에 넣어줘야함

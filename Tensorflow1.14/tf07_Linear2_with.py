@@ -19,7 +19,7 @@ train = optimizer.minimize(loss) # loss의 최소값을 찾아줌
 #### 그래프 형태로 만들어줌 출력하려면 sessrun에 넣어줘야함
 # sess = tf.Session()
 
-with tf.Session() as sess:
+with tf.Session() as sess: # sess를 선언 한 뒤 임시로 sess를 사용하여 사용이 끝나면 반납(자원한정으로 인해 사용)
 
     sess.run(tf.global_variables_initializer()) # 출력하기전에 gvi 해줌
 
