@@ -4,7 +4,7 @@
 # 3. [6, 7, 8]
 
 import tensorflow as tf
-tf.set_random_seed(66)
+tf.set_random_seed(55)
 
 # x_train = [1,2,3]
 # y_train = [1,2,3]
@@ -21,7 +21,7 @@ hypothesis = x_train * W + b # 모델구현
 loss = tf.reduce_mean(tf.square(hypothesis - y_train)) # mse
             # 평균        제곱      오차   => mse
 
-optimizer = tf.train.AdamOptimizer(learning_rate=0.175993)
+optimizer = tf.train.AdamOptimizer(learning_rate=0.6221792)
 train = optimizer.minimize(loss) # loss의 최소값을 찾아줌
 
 #### 그래프 형태로 만들어줌 출력하려면 sessrun에 넣어줘야함
