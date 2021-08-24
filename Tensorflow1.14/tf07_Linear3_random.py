@@ -1,11 +1,15 @@
 import tensorflow as tf
-tf.set_random_seed(66)
+tf.set_random_seed(77) # 랜덤시드에 따라 랜덤노말의 값이 달라짐
 
 x_train = [1,2,3]
 y_train = [1,2,3]
 
-W = tf.Variable(1, dtype=tf.float32) # 랜덤하게 내맘대로 넣어준 값
-b = tf.Variable(1, dtype= tf.float32) # 초기값
+# W = tf.Variable(1, dtype=tf.float32) # 랜덤하게 내맘대로 넣어준 값
+# b = tf.Variable(1, dtype= tf.float32) # 초기값
+
+W = tf.Variable(tf.random_normal([1]), dtype=tf.float32) # 랜덤하게 내맘대로 넣어준 값
+b = tf.Variable(tf.random_normal([1]), dtype= tf.float32) # 초기값
+
 
 hypothesis = x_train * W + b # 모델구현
 # f(x) = wx + b
@@ -26,4 +30,4 @@ with tf.Session() as sess:
     for step in range(2001): # -> 2000번 epochs
         sess.run(train)
         if step % 20 == 0: # 20번마다 출력 시킴
-            print(step, sess.run(loss), sess.run(W), sess.run(b))
+            print(step, sess.run(loss), sess.run(W), sess.run(b))            
