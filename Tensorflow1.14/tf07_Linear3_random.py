@@ -17,11 +17,13 @@ optimizer = tf.train.GradientDescentOptimizer(learning_rate=0.01)
 train = optimizer.minimize(loss) # loss의 최소값을 찾아줌
 
 #### 그래프 형태로 만들어줌 출력하려면 sessrun에 넣어줘야함
+# sess = tf.Session()
 
-sess = tf.Session()
-sess.run(tf.global_variables_initializer()) # 출력하기전에 gvi 해줌
+with tf.Session() as sess:
 
-for step in range(2001): # -> 2000번 epochs
-    sess.run(train)
-    if step % 20 == 0: # 20번마다 출력 시킴
-        print(step, sess.run(loss), sess.run(W), sess.run(b))
+    sess.run(tf.global_variables_initializer()) # 출력하기전에 gvi 해줌
+
+    for step in range(2001): # -> 2000번 epochs
+        sess.run(train)
+        if step % 20 == 0: # 20번마다 출력 시킴
+            print(step, sess.run(loss), sess.run(W), sess.run(b))
