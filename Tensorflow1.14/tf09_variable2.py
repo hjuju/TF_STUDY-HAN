@@ -13,6 +13,10 @@ hypothesis = x * W + b
 
 sess = tf.Session()
 sess.run(tf.global_variables_initializer()) # 출력하기전에 gvi 해줌
+aaa = sess.run(hypothesis)
+print("aaa: ", aaa) # [2.2086694]
+sess.close()
+
 
 sess = tf.InteractiveSession() 
 sess.run(tf.global_variables_initializer()) # 초기화

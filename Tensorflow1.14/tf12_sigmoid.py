@@ -31,7 +31,7 @@ for epochs in range(5001):
         print(epochs, 'cost: ', cost_val, '\n', hy_val) # nan이 나오는이유 => 러닝레이트가 너무 커서
 
 #4 평가, 예측
-predicted = tf.cast(hypothesis > 0.5, dtype=tf.float32)
+predicted = tf.cast(hypothesis > 0.5, dtype=tf.float32) # 조건에 부합하면 1, 조건에 부합하지않으면 0
 accuracy = tf.reduce_mean(tf.cast(tf.equal(predicted, y), dtype=tf.float32))
 
 c, a = sess.run([predicted, accuracy], feed_dict={x:x_data, y:y_data})
