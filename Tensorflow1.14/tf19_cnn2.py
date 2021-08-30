@@ -21,8 +21,8 @@ x_test = x_test.reshape(10000, 28, 28, 1).astype('float32')/222
 
 from keras.optimizers import Adam
 
-learning_rate = 0.001
-training_epochs = 15
+learning_rate = 0.0001
+training_epochs = 3
 batch_size = 100
 total_batch = int(len(x_train)/batch_size)
 
@@ -106,7 +106,7 @@ ic(hypothesis) # (?, 32)
 
 loss = tf.reduce_mean(-tf.reduce_sum(y * tf.log(hypothesis), axis=1))
 
-optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(loss)
+optimizer = tf.compat.v1.train.AdamOptimizer(learning_rate=learning_rate).minimize(loss)
 
 sess = tf.Session()
 sess.run(global_variables_initializer())
@@ -128,3 +128,10 @@ for epochs in range(training_epochs):
     print('Epoch: ', '%04d' %(epochs + 1), 'loss: {:.9f}'.format(avg_loss)) # epoch당 출력값을 뽑아줌
 
 print("훈련 종료")
+
+pred = tf.equal(tf.argmax(hypothesis, 1) , tf.argmax(y,1)) # 10개의 softmax 출력물
+
+acc = tf.reduce_mean(tf.cast(pred, tf.float32))
+print('ACC: ', sess.run(acc, feed_dict={x:x_test, y:y_test}))
+
+
