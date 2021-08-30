@@ -112,5 +112,19 @@ sess = tf.Session()
 sess.run(global_variables_initializer())
 
 for epochs in range(training_epochs):
-    
-    for i in range(total_batch):
+    avg_loss = 0
+
+    for i in range(total_batch): # 1.../600번 훈련 -> len(여기서는 60,000)/배치사이즈(여기서는 100) 으로 계산
+        start = i * batch_size
+        end = start + batch_size
+        batch_x, batch_y = x_train[start:end], y_train[start:end]
+
+        feed_dict = {x:batch_x, y: batch_y}
+
+        batch_loss, _ = sess.run([loss, optimizer], feed_dict=feed_dict)
+
+        avg_loss += batch_loss/total_batch # 600번씩 15번 돌아감
+
+    print('Epoch: ', '%04d' %(epochs + 1), 'loss: {:.9f}'.format(avg_loss)) # epoch당 출력값을 뽑아줌
+
+print("훈련 종료")
