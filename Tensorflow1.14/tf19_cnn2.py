@@ -4,6 +4,7 @@ import numpy as np
 from icecream import ic
 from keras.models import Sequential
 from keras.layers import Conv2D, MaxPool2D, Flatten
+from tensorflow.python.ops.variables import global_variables_initializer
 
 tf.set_random_seed(66)
 
@@ -103,4 +104,13 @@ L7 = tf.matmul(L6, w7) + b7
 hypothesis = tf.nn.softmax(L7)
 ic(hypothesis) # (?, 32)
 
+loss = tf.reduce_mean(-tf.reduce_sum(y * tf.log(hypothesis), axis=1))
+
+optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(loss)
+
 sess = tf.Session()
+sess.run(global_variables_initializer())
+
+for epochs in range(training_epochs):
+    
+    for i in range(total_batch):
