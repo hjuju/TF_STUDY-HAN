@@ -16,8 +16,8 @@ from keras.utils import to_categorical
 y_train = to_categorical(y_train)
 y_test = to_categorical(y_test)
 
-x_train = x_train.reshape(60000, 28, 28, 1).astype('float32')/222
-x_test = x_test.reshape(10000, 28, 28, 1).astype('float32')/222
+x_train = x_train.reshape(60000, 28, 28, 1).astype('float32')/255
+x_test = x_test.reshape(10000, 28, 28, 1).astype('float32')/255
 
 from keras.optimizers import Adam
 
@@ -33,7 +33,7 @@ y = tf.placeholder(tf.float32, [None, 10])
 
 # layer 1
 w1 = tf.get_variable('w1', shape=[3, 3, 1, 32])
-                                # [kernel_size(3,3), input(1), output(32)]
+                                # [kernel_size(3,3), chanel(1), output(32)]
 L1 = tf.nn.conv2d(x, w1, strides=[1, 1, 1, 1], padding='SAME')
                     # [1(차원맞춤), stride, 1(차원맞춤)]
 L1 = tf.nn.relu(L1) # activation 
@@ -43,7 +43,7 @@ L1_maxpool = tf.nn.max_pool(L1, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], paddin
 
 # model = Sequential()
 # model.add(Conv2D(filters=32, kernel_size=(3,3), strides=1, input_shape=(28,28,1), padding='same'))
-# model.add(MaxPool2D)
+# model.add(MaxPool2D(2,2))
 
 ic(w1)         # (3, 3, 1, 32)
 ic(L1)         # ( ?, 28, 28, 32)
@@ -77,7 +77,7 @@ ic(L4)          # (?, 4, 4, 64)
 ic(L4_maxpool)  # (?, 2, 2, 64)
 
 # Flatten
-L_flat = tf.reshape(L4_maxpool, [-1, 2*2*64])
+L_flat = tf.reshape(L4_maxpool, [-1, 2*2*64]) # 마지막으로 나온 텐서값 모두 곱해줌 
 ic(L_flat) # (?, 256)
 
 # layer5 DNN
