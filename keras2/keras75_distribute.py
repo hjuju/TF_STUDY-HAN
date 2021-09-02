@@ -61,7 +61,6 @@ ic(x_train)
 strategy = tf.distribute.MirroredStrategy(
             cross_device_ops=tf.distribute.HierarchicalCopyAllReduce())
             # tf.distribute.ReductionToOneDevice()) # 텐서플로우의 분산처리
-            
 '''
 starategy = tf.distribute.MirroredStrategy(
             devices=['/gpu:0'])
