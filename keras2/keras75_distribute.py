@@ -63,6 +63,8 @@ strategy = tf.distribute.MirroredStrategy(
             # tf.distribute.ReductionToOneDevice()) # 텐서플로우의 분산처리
             
 '''
+분산처리할때는 배치사이즈를 크게 주는 것이 좋음
+
 starategy = tf.distribute.MirroredStrategy(
             devices=['/gpu:0'])
             # devices=['/gpu:1']
