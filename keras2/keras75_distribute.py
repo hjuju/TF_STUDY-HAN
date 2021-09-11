@@ -144,7 +144,7 @@ with strategy.scope(): # 모델을 strategy로 감싸줌
 # plt.xlabel('epoch')
 # plt.legend(['acc', 'val_acc'])
 
-# plt.show()
+# plt.
 
 
 # '''
