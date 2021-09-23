@@ -1,4 +1,3 @@
-from sklearn.preprocessing.data import normalize
 import autokeras as ak
 from tensorflow.keras.datasets import mnist
 
