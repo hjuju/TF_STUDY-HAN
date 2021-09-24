@@ -42,7 +42,7 @@ model = ak.AutoModel(
 model.fit(x_train, y_train, epochs=2)
 
 # 4. 평가, 예측
-y_predict = model.predict(x_test) rtyuiii
+y_predict = model.predict(x_test)
 print(y_predict[:10])
 
 results = model.evaluate(x_test, y_test)
